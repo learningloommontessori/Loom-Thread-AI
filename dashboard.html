@@ -1,0 +1,318 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Loom Thread AI - Dashboard</title>
+    
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+
+        /* --- 1. GLASSMORPHISM CARDS --- */
+        .glass-card {
+            background: rgba(255, 255, 255, 0.03);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.3);
+            transition: all 0.3s ease;
+        }
+        .glass-card:hover {
+            background: rgba(255, 255, 255, 0.08);
+            transform: translateY(-4px);
+            border-color: rgba(255, 255, 255, 0.2);
+            box-shadow: 0 12px 40px 0 rgba(139, 92, 246, 0.15);
+        }
+
+        /* --- 2. SHINE ANIMATION --- */
+        @keyframes shine {
+            100% { transform: translateX(100%); }
+        }
+        .animate-shine {
+            animation: shine 0.7s;
+        }
+
+        /* --- 3. BEAMS BACKGROUND OVERLAY --- */
+        @keyframes pulse-overlay {
+            0% { opacity: 0.05; }
+            50% { opacity: 0.15; }
+            100% { opacity: 0.05; }
+        }
+        .beam-overlay {
+            animation: pulse-overlay 10s ease-in-out infinite;
+            backdrop-filter: blur(50px);
+        }
+
+        /* --- 4. MENU POP ANIMATION --- */
+        @keyframes menu-pop-entry {
+            0% { opacity: 0; transform: translateY(-10px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        .menu-animate-item {
+            opacity: 0; 
+            animation: menu-pop-entry 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+        }
+        
+        /* Stagger Delays */
+        .menu-animate-item:nth-child(1) { animation-delay: 0.05s; }
+        .menu-animate-item:nth-child(2) { animation-delay: 0.1s; }
+        .menu-animate-item:nth-child(3) { animation-delay: 0.15s; }
+        .menu-animate-item:nth-child(4) { animation-delay: 0.2s; }
+        
+        /* Button Rotate Transition */
+        .rotate-icon {
+            transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .rotate-active {
+            transform: rotate(90deg);
+        }
+    </style>
+</head>
+
+<body class="bg-neutral-950 text-white selection:bg-purple-500/30">
+
+    <canvas id="beams-canvas" class="fixed inset-0 w-full h-full z-0" style="filter: blur(15px); opacity: 0.6; pointer-events: none;"></canvas>
+    <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none z-0"></div>
+
+
+    <div class="relative min-h-screen z-10 flex flex-col">
+        
+        <header class="relative z-20 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center border-b border-white/5 bg-black/20 backdrop-blur-sm">
+            <div class="flex items-center space-x-4">
+                
+                <div x-data="{ open: false }" class="relative">
+                    <button 
+                        @click="open = !open" 
+                        class="text-white focus:outline-none hover:text-purple-400 transition flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5"
+                    >
+                        <span 
+                            class="material-symbols-outlined text-3xl rotate-icon select-none"
+                            :class="{ 'rotate-active': open }"
+                            x-text="open ? 'close' : 'menu'"
+                        >
+                            menu
+                        </span>
+                    </button>
+
+                    <div 
+                        x-show="open" 
+                        @click.away="open = false"
+                        class="absolute left-0 mt-3 w-64 flex flex-col space-y-2 z-50" 
+                        style="display: none;"
+                    >
+                        <a class="menu-animate-item flex items-center px-3 py-2 text-sm font-bold text-white bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-purple-500/50 hover:shadow-purple-500/20 transition-all duration-300" href="/dashboard.html">
+                            <span class="material-symbols-outlined mr-3 text-purple-400">dashboard</span> Dashboard
+                        </a>
+                        <a class="menu-animate-item flex items-center px-3 py-2 text-sm text-gray-300 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-white/30 hover:text-white transition-all duration-300" href="/new-chat.html">
+                            <span class="material-symbols-outlined mr-3 text-gray-400">add</span> Weave a New Lesson
+                        </a>
+                        <a class="menu-animate-item flex items-center px-3 py-2 text-sm text-gray-300 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-white/30 hover:text-white transition-all duration-300" href="/History.html">
+                            <span class="material-symbols-outlined mr-3 text-gray-400">history</span> Threads of the Past
+                        </a>
+                        <a class="menu-animate-item flex items-center px-3 py-2 text-sm text-gray-300 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-white/30 hover:text-white transition-all duration-300" href="/collective-loom.html">
+                            <span class="material-symbols-outlined mr-3 text-gray-400">groups</span> The Collective Loom
+                        </a>
+                    </div>
+                </div>
+                
+                <h1 class="text-2xl font-bold tracking-tight">Loom Thread AI</h1>
+            </div>
+            
+            <div class="flex items-center">
+                <div x-data="{ open: false }" class="relative">
+                    <button 
+                        @click="open = !open" 
+                        class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group"
+                    >
+                        <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition">Welcome, User!</span>
+                        <div class="flex items-center justify-center w-10 h-10 rounded-full hover:bg-white/5 transition">
+                            <span 
+                                class="material-symbols-outlined text-4xl rotate-icon select-none"
+                                :class="{ 'rotate-active': open, 'text-purple-400': open }"
+                                x-text="open ? 'close' : 'account_circle'"
+                            >
+                                account_circle
+                            </span>
+                        </div>
+                    </button>
+
+                    <div 
+                        x-show="open" 
+                        @click.away="open = false" 
+                        class="absolute right-0 mt-3 w-64 flex flex-col space-y-2 z-50" 
+                        style="display: none;"
+                    >
+                        <a class="menu-animate-item flex items-center px-3 py-2 text-sm text-gray-300 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-white/30 hover:text-white transition-all duration-300" href="/profile.html">
+                            <span class="material-symbols-outlined mr-3 text-gray-400">account_circle</span> The Weaver
+                        </a>
+                        <a class="menu-animate-item flex items-center px-3 py-2 text-sm text-gray-300 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-white/30 hover:text-white transition-all duration-300" href="/change-password.html">
+                            <span class="material-symbols-outlined mr-3 text-gray-400">lock_reset</span> Twist a Stronger Cord
+                        </a>
+                        <button id="logoutButton" class="menu-animate-item w-full text-left flex items-center px-3 py-2 text-sm text-red-400 bg-gray-900/90 backdrop-blur-xl border border-white/10 rounded-full shadow-lg hover:bg-gray-800 hover:border-red-500/50 hover:text-red-300 transition-all duration-300">
+                            <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="relative flex-grow flex flex-col items-center justify-center p-4 sm:px-6 lg:px-8">
+            <div class="max-w-7xl w-full py-12">
+                <h2 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-12 text-center text-transparent bg-clip-text bg-gradient-to-r from-white to-gray-400" id="user-name-main">
+                    Welcome, User
+                </h2>
+                
+                <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+                    
+                    <a class="glass-card group relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center" href="/new-chat.html">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine z-0 pointer-events-none"></div>
+                        <span class="material-symbols-outlined text-5xl mb-4 relative z-10 text-purple-400 group-hover:text-white transition">auto_stories</span>
+                        <span class="relative z-10 text-center">Weave a New Lesson</span>
+                    </a>
+
+                    <a class="glass-card group relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center" href="/History.html">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine z-0 pointer-events-none"></div>
+                        <span class="material-symbols-outlined text-5xl mb-4 relative z-10 text-purple-400 group-hover:text-white transition">history</span>
+                        <span class="relative z-10 text-center">Threads of the Past</span>
+                    </a>
+
+                    <a class="glass-card group relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center col-span-1 md:col-span-2 lg:col-span-1 xl:col-span-2" href="/collective-loom.html">
+                        <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine z-0 pointer-events-none"></div>
+                        <span class="material-symbols-outlined text-5xl mb-4 relative z-10 text-purple-400 group-hover:text-white transition">groups</span>
+                        <span class="relative z-10 text-center">The Collective Loom</span>
+                    </a>
+
+                    <div class="glass-card relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5]">
+                        <span class="material-symbols-outlined text-5xl mb-4">event_note</span>
+                        <span class="text-center">Lesson Planner</span>
+                        <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+
+                    <div class="glass-card relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5]">
+                        <span class="material-symbols-outlined text-5xl mb-4">quiz</span>
+                        <span class="text-center">Assessment Generator</span>
+                        <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+
+                    <div class="glass-card relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5]">
+                        <span class="material-symbols-outlined text-5xl mb-4">edit_document</span>
+                        <span class="text-center">Worksheet Creator</span>
+                        <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+
+                    <div class="glass-card relative overflow-hidden text-white font-bold py-10 px-6 rounded-2xl text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5]">
+                        <span class="material-symbols-outlined text-5xl mb-4">calendar_view_week</span>
+                        <span class="text-center">Weekly Planner</span>
+                        <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full">Coming Soon</span>
+                    </div>
+
+                </div>
+            </div>
+        </main>
+
+        <footer class="w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto z-20">
+            <p class="text-xs text-gray-500">Made By: Monika Pathak</p>
+        </footer>
+    </div>
+
+    <script type="module" src="/js/dashboard.js"></script>
+
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('beams-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        
+        let beams = [];
+        const MINIMUM_BEAMS = 50; 
+        const intensity = 'strong'; 
+        const opacityMap = { subtle: 0.7, medium: 0.85, strong: 1 };
+        
+        function createBeam(width, height) {
+            const angle = -35 + Math.random() * 10;
+            return {
+                x: Math.random() * width * 1.5 - width * 0.25,
+                y: Math.random() * height * 1.5 - height * 0.25,
+                width: 30 + Math.random() * 60,
+                length: height * 2.5,
+                angle: angle,
+                speed: 0.6 + Math.random() * 1.2,
+                opacity: 0.12 + Math.random() * 0.16,
+                // THEME: Deep Purple to Pink (250-290)
+                hue: 250 + Math.random() * 40, 
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.03
+            };
+        }
+
+        function resetBeam(beam, index, totalBeams) {
+            const column = index % 3;
+            const spacing = canvas.width / 3;
+            beam.y = canvas.height + 100;
+            beam.x = column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+            beam.width = 100 + Math.random() * 100;
+            beam.speed = 0.5 + Math.random() * 0.4;
+            // Spread hue across the spectrum
+            beam.hue = 240 + (index * 50) / totalBeams;
+            beam.opacity = 0.2 + Math.random() * 0.1;
+        }
+
+        function drawBeam(ctx, beam) {
+            ctx.save();
+            ctx.translate(beam.x, beam.y);
+            ctx.rotate((beam.angle * Math.PI) / 180);
+
+            const pulsingOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2) * opacityMap[intensity];
+
+            const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+            gradient.addColorStop(0, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            gradient.addColorStop(0.1, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(0.4, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.6, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.9, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(1, `hsla(${beam.hue}, 85%, 65%, 0)`);
+
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+            ctx.restore();
+        }
+
+        function updateCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            const totalBeams = MINIMUM_BEAMS * 1.5;
+            beams = Array.from({ length: totalBeams }, () => createBeam(canvas.width, canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            beams.forEach((beam, index) => {
+                beam.y -= beam.speed;
+                beam.pulse += beam.pulseSpeed;
+                if (beam.y + beam.length < -100) {
+                    resetBeam(beam, index, beams.length);
+                }
+                drawBeam(ctx, beam);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', updateCanvasSize);
+        updateCanvasSize();
+        animate();
+    });
+    </script>
+</body>
+</html>

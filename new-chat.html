@@ -1,0 +1,141 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Loom Play AI - New Chat</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="relative min-h-screen flex flex-col">
+        <div class="absolute inset-0">
+            <img alt="Abstract purple and blue waves on a black background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZu9QWRIEFnKKG6SMF74gPyyMfKcVyImI8TeqE1aWnAEy17Z3Ob2KGfLCIeZhHwB3m8sldZ1JAvfz-y5wpsgDaZBSRb6S0wGB7p4XJL3VQ2JsWLB9gz3iT3yeNwq-tNnZaFJxCUbLxoqWIsjBrpFCc0ZdkKon35yRcmiw-mgn98WRAe4u-dsImTEuWVOqThZVmtgidaXz8oNaw_j2UG7odXaYWTgDIAYkh0fnLndUDkSH7Ho0BSd03oOllL7bpSfju2Yxnxa_HiMs" />
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+        </div>
+        <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <!-- Main Navigation Menu -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="text-white focus:outline-none">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/dashboard.html">
+                            <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm font-bold text-white bg-purple-600" href="/new-chat.html">
+                            <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/History.html">
+                            <span class="material-symbols-outlined mr-3">history</span> Threads of the Past
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/collective-loom.html">
+                            <span class="material-symbols-outlined mr-3">groups</span> The Collective Loom
+                        </a>
+                    </div>
+                </div>
+                <h1 class="text-2xl font-bold">Loom Play AI</h1>
+            </div>
+            <div class="flex items-center">
+                <!-- User Profile Menu -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                        <span id="welcome-message" class="hidden sm:inline mr-2">Welcome, User!</span>
+                        <span class="material-symbols-outlined text-4xl">account_circle</span>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/profile.html">
+                            <span class="material-symbols-outlined mr-3">account_circle</span> The Weaver
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/change-password.html">
+                            <span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord
+                        </a>
+                        <div class="border-t border-gray-700 my-1"></div>
+                        <button id="logoutButton" class="w-full text-left flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white">
+                            <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+        <main class="relative flex flex-col flex-grow items-center justify-center text-center px-4 sm:px-6 lg:px-8">
+            <div class="max-w-3xl w-full bg-black/30 backdrop-blur-sm p-8 rounded-lg">
+                 <a href="/dashboard.html" class="flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-300 mb-6 inline-flex">
+                    <span class="material-symbols-outlined mr-2">arrow_back</span>
+                    Back to Dashboard
+                </a>
+                <h2 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-8">Spin a New Thread of Learning</h2>
+                
+                <div id="error-message" class="hidden bg-red-900/50 border border-red-500 rounded-md p-3 mb-6">
+                    <div class="flex">
+                        <div class="flex-shrink-0">
+                            <span class="material-symbols-outlined text-red-400">error</span>
+                        </div>
+                        <div class="ml-3 text-left">
+                            <p class="text-sm text-red-300" id="error-text"></p>
+                        </div>
+                    </div>
+                </div>
+
+                <form class="space-y-6 text-left" id="generator-form">
+                    <div>
+                        <label for="topic" class="block text-sm font-medium text-gray-300 mb-1">Enter a Topic or Idea for a Montessori Lesson</label>
+                        <input id="topic" name="topic" type="text" required class="w-full py-3 px-4 bg-gray-800/60 border border-purple-500 rounded-lg text-white placeholder-gray-400 focus:ring-purple-400 focus:border-purple-400 text-lg" placeholder="e.g., Practical life: Pouring water" />
+                    </div>
+                    
+                    <!-- ** THE FIX **: Language selector added -->
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">Choose Generation Language</label>
+                        <fieldset class="flex space-x-4">
+                            <label for="lang-en" class="flex items-center space-x-2 text-white cursor-pointer">
+                                <input type="radio" id="lang-en" name="language" value="English" class="h-4 w-4 text-purple-600 bg-gray-700 border-gray-500 focus:ring-purple-500" checked>
+                                <span>English</span>
+                            </label>
+                            <label for="lang-hi" class="flex items-center space-x-2 text-white cursor-pointer">
+                                <input type="radio" id="lang-hi" name="language" value="Hindi" class="h-4 w-4 text-purple-600 bg-gray-700 border-gray-500 focus:ring-purple-500">
+                                <span>Hindi</span>
+                            </label>
+                        </fieldset>
+                    </div>
+<div class="mt-6">
+    <label for="age-select" class="block text-sm font-medium text-gray-300 mb-2">
+        <span class="material-symbols-outlined align-middle text-lg mr-1">school</span>
+        Class Level
+    </label>
+    <select id="age-select" class="w-full bg-gray-800 border border-gray-700 text-white rounded-md px-4 py-3 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all cursor-pointer hover:border-purple-500">
+        <option value="Nursery">Nursery</option>
+        <option value="Juniors">Juniors</option>
+        <option value="Seniors">Seniors</option>
+    </select>
+    <p class="text-xs text-gray-500 mt-2 ml-1">The AI will adapt the lesson complexity for this class.</p>
+</div>
+
+
+                    <div class="text-center pt-4">
+                         <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 flex items-center justify-center w-full sm:w-auto sm:min-w-[200px] mx-auto" type="submit" id="generate-btn">
+                            <span class="material-symbols-outlined align-middle mr-2 button-text">
+                                auto_awesome
+                            </span>
+                            <span class="button-text">Weave Lesson</span>
+                            <div class="button-spinner hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                        </button>
+                    </div>
+                </form>
+            </div>
+        </main>
+        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8">
+            <p class="text-sm text-gray-400">Made By: Monika Pathak</p>
+        </footer>
+    </div>
+    <script type="module" src="js/new-chat.js"></script>
+</body>
+</html>
+

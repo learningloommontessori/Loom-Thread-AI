@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+  <title>Loom Play AI – Sign Up</title>
+  <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+  <style>
+    body { font-family: 'Roboto', sans-serif; }
+    .material-symbols-outlined {
+      font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+    }
+  </style>
+</head>
+<body class="bg-gray-900 text-white">
+  <div class="relative min-h-screen flex flex-col">
+    <div class="absolute inset-0 z-0">
+      <img alt="Abstract purple and blue waves" class="w-full h-full object-cover"
+           src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZu9QWRIEFnKKG6SMF74gPyyMfKcVyImI8TeqE1aWnAEy17Z3Ob2KGfLCIeZhHwB3m8sldZ1JAvfz-y5wpsgDaZBSRb6S0wGB7p4XJL3VQ2JsWLB9gz3iT3yeNwq-tNnZaFJxCUbLxoqWIsjBrpFCc0ZdkKon35yRcmiw-mgn98WRAe4u-dsImTEuWVOqThZVmtgidaXz8oNaw_j2UG7odXaYWTgDIAYkh0fnLndUDkSH7Ho0BSd03oOllL7bpSfju2Yxnxa_HiMs" />
+      <div class="absolute inset-0 bg-black opacity-50"></div>
+    </div>
+    <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-4 flex items-center">
+      <h1 class="text-2xl font-bold">Loom Play AI</h1>
+    </header>
+    <main class="relative z-10 flex-grow px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-center">
+      <div class="bg-black/30 backdrop-blur-sm rounded-lg shadow-lg p-8 w-full max-w-md">
+        <h2 class="text-3xl font-bold tracking-tight text-center text-white mb-6">Join the Loom of Inspired Teaching</h2>
+        <div class="space-y-4">
+          <button id="google-signin-btn" class="w-full flex items-center justify-center py-3 px-4 border border-gray-600 rounded-md shadow-sm text-sm font-medium text-white bg-gray-800/60 hover:bg-gray-700/60 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-500 transition-colors duration-300" type="button">
+            <svg class="h-5 w-5 mr-3" fill="currentColor" viewBox="0 0 24 24"><path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/><path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/><path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l3-2.84z" fill="#FBBC05"/><path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/></svg>
+            Weave In with Google
+          </button>
+          <div class="relative"><div class="absolute inset-0 flex items-center"><div class="w-full border-t border-gray-600"></div></div><div class="relative flex justify-center text-sm"><span class="px-2 bg-gray-800/80 text-gray-400">Or continue with</span></div></div>
+        </div>
+        <form class="space-y-6 mt-6" id="signUpForm">
+          <div id="success-message" class="bg-green-900/50 border border-green-500 rounded-md p-3 hidden"><div class="flex"><span class="material-symbols-outlined text-green-400">check_circle</span><div class="ml-3"><h3 class="text-sm font-medium text-green-300">Success!</h3><p id="success-text" class="mt-2 text-sm text-green-400">Please check your email for a confirmation link.</p></div></div></div>
+          <div id="error-message" class="bg-red-900/50 border border-red-500 rounded-md p-3 hidden"><div class="flex"><span class="material-symbols-outlined text-red-400">error</span><div class="ml-3"><h3 class="text-sm font-medium text-red-300">Something went wrong</h3><p id="error-text" class="mt-2 text-sm text-red-400">Could not sign up. Please try again.</p></div></div></div>
+          <div><label class="block text-sm font-medium text-gray-300" for="full-name">Full Name</label><input class="w-full pl-3 pr-4 py-2 bg-gray-800/60 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" id="full-name" name="full-name" placeholder="e.g., Jane Doe" required type="text" /></div>
+          <div><label class="block text-sm font-medium text-gray-300" for="email">Email Address</label><input autocomplete="email" class="w-full pl-3 pr-4 py-2 bg-gray-800/60 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" id="email" name="email" placeholder="you@example.com" required type="email" /></div>
+
+<div>
+    <label class="block text-sm font-medium text-gray-300" for="employee-id">
+        School / Employee ID
+    </label>
+    <input 
+        class="w-full pl-3 pr-4 py-2 bg-gray-800/60 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" 
+        id="employee-id" 
+        name="employee-id" 
+        placeholder="e.g., 1234" 
+        required 
+        type="text" 
+    />
+</div>
+          <div><label class="block text-sm font-medium text-gray-300" for="password">Password</label><input autocomplete="new-password" class="w-full pl-3 pr-4 py-2 bg-gray-800/60 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-purple-500" id="password" name="password" placeholder="Min. 8 characters" required type="password" /><div id="password-strength-meter" class="mt-2 space-y-2"><div class="w-full h-2 rounded-full bg-gray-700"><div id="password-strength-bar" class="h-2 rounded-full transition-all duration-300" style="width: 0%;"></div></div><p id="password-strength-text" class="text-xs text-gray-400 font-medium"></p><ul id="password-criteria" class="text-xs text-gray-400 list-disc list-inside space-y-1 pl-1"><li id="length-check">At least 8 characters</li><li id="case-check">Mix of uppercase & lowercase</li><li id="number-check">At least one number or symbol</li></ul></div></div>
+          <div><label class="block text-sm font-medium text-gray-300" for="confirm-password">Confirm Password</label><div class="mt-1 relative"><input autocomplete="new-password" class="w-full pl-3 pr-10 py-2 bg-gray-800/60 border border-gray-600 rounded-md text-white placeholder-gray-400 focus:outline-none focus:ring-2 focus:ring-purple-500" id="confirm-password" name="confirm-password" required type="password" /><span id="password-match-icon" class="material-symbols-outlined absolute inset-y-0 right-0 pr-3 flex items-center text-green-500 hidden"></span></div><p id="password-match-text" class="mt-2 text-xs text-green-400 hidden"></p></div>
+          <div class="flex items-start"><div class="flex items-center h-5"><input class="h-4 w-4 rounded border-gray-500 bg-gray-700 text-purple-600 focus:ring-purple-500 focus:ring-offset-gray-900" id="terms" name="terms" required type="checkbox" /></div><div class="ml-3 text-sm"><label class="font-medium text-gray-300" for="terms">I agree to the <a class="text-purple-400 hover:text-purple-300" href="#">Terms of Service</a></label></div></div>
+          <div class="relative" id="submit-wrapper"><div id="tooltip" class="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 w-max whitespace-nowrap hidden bg-gray-700 text-white text-xs font-semibold rounded-md py-1.5 px-3 pointer-events-none transition-opacity duration-300 z-20">Please agree to the Terms of Service.</div><button id="submit-btn" class="w-full flex justify-center items-center py-3 px-4 border border-transparent rounded-md shadow-sm text-sm font-medium text-white bg-purple-600 hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-500 transition-colors duration-300 disabled:opacity-50 disabled:cursor-not-allowed" type="submit" disabled><span class="button-text">Weave My Account</span><svg class="animate-spin h-5 w-5 text-white hidden button-spinner" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg></button></div>
+        </form>
+        <p class="mt-6 text-center text-sm text-gray-400">Already part of the loom? <a class="font-medium text-purple-400 hover:text-purple-300" href="/sign-in.html">Rejoin here.</a></p>
+      </div>
+    </main>
+    <footer class="relative z-10 w-full text-right py-4 px-4 sm:px-6 lg:px-8"><p class="text-sm text-gray-400">Made By: Monika Pathak</p></footer>
+  </div>
+  <script>document.addEventListener('DOMContentLoaded',()=>{const e=document.getElementById("signUpForm");if(!e)return;const t=document.getElementById("password"),n=document.getElementById("confirm-password"),o=document.getElementById("password-match-icon"),s=document.getElementById("password-match-text"),i=document.getElementById("password-strength-bar"),a=document.getElementById("password-strength-text"),l=document.getElementById("length-check"),r=document.getElementById("case-check"),d=document.getElementById("number-check"),c=document.getElementById("terms"),u=document.getElementById("submit-btn"),m=document.getElementById("submit-wrapper"),p=document.getElementById("tooltip");t.addEventListener("input",()=>{const e=t.value;let n=0;const o="text-gray-400",s="text-green-400";l.innerHTML=e.length>=8?"✓ At least 8 characters":"At least 8 characters",l.className=e.length>=8?s:o,r.innerHTML=/[a-z]/.test(e)&&/[A-Z]/.test(e)?"✓ Mix of uppercase & lowercase":"Mix of uppercase & lowercase",r.className=/[a-z]/.test(e)&&/[A-Z]/.test(e)?s:o,d.innerHTML=/[\d\W]/.test(e)?"✓ At least one number or symbol":"At least one number or symbol",d.className=/[\d\W]/.test(e)?s:o,e.length>=8&&n++,/[a-z]/.test(e)&&/[A-Z]/.test(e)&&n++,/[\d\W]/.test(e)&&n++;let c="";switch(n){case 1:c="Weak",i.style.width="33%",i.className="h-2 rounded-full bg-red-500 transition-all duration-300";break;case 2:c="Medium",i.style.width="66%",i.className="h-2 rounded-full bg-yellow-500 transition-all duration-300";break;case 3:c="Strong",i.style.width="100%",i.className="h-2 rounded-full bg-green-500 transition-all duration-300";break;default:c="",i.style.width="0%",i.className="h-2 rounded-full transition-all duration-300"}a.textContent=c,a.className=`text-xs font-medium ${1===n?"text-red-400":2===n?"text-yellow-400":3===n?"text-green-400":"text-gray-400"}`});const g=()=>{const e=t.value,i=n.value,a="border-green-500 focus:ring-green-500",l="border-red-500 focus:ring-red-500";0===i.length?(o.classList.add("hidden"),s.classList.add("hidden"),n.classList.remove(...a.split(" "),...l.split(" "))):e===i?(o.textContent="check_circle",o.classList.remove("text-red-500","hidden"),o.classList.add("text-green-500"),s.textContent="Passwords match!",s.classList.remove("text-red-400","hidden"),s.classList.add("text-green-400"),n.classList.remove(...l.split(" ")),n.classList.add(...a.split(" "))):(o.textContent="cancel",o.classList.remove("text-green-500","hidden"),o.classList.add("text-red-500"),s.textContent="Passwords do not match.",s.classList.remove("text-green-400","hidden"),s.classList.add("text-red-400"),n.classList.remove(...a.split(" ")),n.classList.add(...l.split(" ")))};t.addEventListener("input",g),n.addEventListener("input",g),c.addEventListener("input",()=>{u.disabled=!c.checked}),m.addEventListener("mouseover",()=>{u.disabled&&p.classList.remove("hidden")}),m.addEventListener("mouseout",()=>{p.classList.add("hidden")})});</script>
+  <script src="/js/main.js" type="module"></script>
+</body>
+</html>

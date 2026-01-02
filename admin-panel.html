@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin - User Approvals</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+</head>
+<body class="bg-gray-900 text-white font-sans">
+    <div class="max-w-4xl mx-auto p-8">
+        <header class="flex justify-between items-center mb-8 pb-4 border-b border-gray-700">
+            <div>
+                <h1 class="text-3xl font-bold text-white">Admin Control</h1>
+                <p class="text-gray-400">Manage user access requests</p>
+            </div>
+            <a href="/dashboard.html" class="text-gray-400 hover:text-white flex items-center">
+                <span class="material-symbols-outlined mr-1">arrow_back</span> Back to Dashboard
+            </a>
+        </header>
+
+        <div class="grid grid-cols-2 gap-4 mb-8">
+            <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-yellow-500">
+                <h3 class="text-gray-400 text-sm">Pending Requests</h3>
+                <p class="text-3xl font-bold text-white" id="pending-count">0</p>
+            </div>
+            <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-green-500">
+                <h3 class="text-gray-400 text-sm">Active Users</h3>
+                <p class="text-3xl font-bold text-white" id="active-count">0</p>
+            </div>
+        </div>
+
+        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
+            <div class="p-4 bg-gray-700/50 border-b border-gray-600 flex justify-between items-center">
+                <h2 class="font-bold text-lg">User Registry</h2>
+                <button id="refresh-btn" class="text-sm text-purple-400 hover:text-white flex items-center">
+                    <span class="material-symbols-outlined text-sm mr-1">refresh</span> Refresh
+                </button>
+            </div>
+            <div id="user-list" class="divide-y divide-gray-700">
+                <div class="p-8 text-center text-gray-500">Loading...</div>
+            </div>
+        </div>
+    </div>
+
+    <script type="module">
+        import getSupabase from './js/supabaseClient.js';
+        
+        // ** ADMIN CONFIGURATION (Updated to match main.js) **
+        const ADMIN_EMAILS = [
+            "monika.pathak@choithramschool.com",
+            "vip.pathak.ai@gmail.com", 
+            "learningloom.montessori@gmail.com"
+        ];
+
+        document.addEventListener('DOMContentLoaded', async () => {
+            const supabase = await getSupabase();
+            
+            // 1. Verify Admin
+            const { data: { session } } = await supabase.auth.getSession();
+            
+            // Debugging: Log the user attempting to access
+            if (session) {
+                console.log("Logged in as:", session.user.email);
+            }
+
+            if (!session || !ADMIN_EMAILS.includes(session.user.email)) {
+                alert("Unauthorized Access.");
+                window.location.href = '/index.html';
+                return;
+            }
+
+            loadUsers(supabase);
+            document.getElementById('refresh-btn').addEventListener('click', () => loadUsers(supabase));
+        });
+
+        async function loadUsers(supabase) {
+            const listContainer = document.getElementById('user-list');
+            listContainer.innerHTML = '<div class="p-8 text-center text-gray-500">Loading...</div>';
+
+            const { data: users, error } = await supabase
+                .from('profiles')
+                .select('*')
+                .order('created_at', { ascending: false });
+
+            if (error) {
+                listContainer.innerHTML = `<div class="p-4 text-red-400">Error: ${error.message}</div>`;
+                return;
+            }
+
+            // Update Counts
+            const pending = users.filter(u => !u.is_approved).length;
+            const active = users.filter(u => u.is_approved).length;
+            document.getElementById('pending-count').textContent = pending;
+            document.getElementById('active-count').textContent = active;
+
+            if (users.length === 0) {
+                listContainer.innerHTML = `<div class="p-8 text-center text-gray-500">No users found.</div>`;
+                return;
+            }
+
+            // Render List
+            let html = '';
+            users.forEach(user => {
+                const statusBadge = user.is_approved 
+                    ? `<span class="bg-green-900/50 text-green-300 text-xs px-2 py-1 rounded border border-green-700">Active</span>`
+                    : `<span class="bg-yellow-900/50 text-yellow-300 text-xs px-2 py-1 rounded border border-yellow-700">Pending</span>`;
+
+                const actionButton = user.is_approved
+                    ? `<button onclick="window.toggleUser('${user.id}', false)" class="text-red-400 hover:text-red-300 text-sm border border-red-500/50 px-3 py-1 rounded hover:bg-red-900/20">Revoke</button>`
+                    : `<button onclick="window.toggleUser('${user.id}', true)" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-1.5 rounded hover:bg-green-600/80">Approve</button>`;
+
+                // Protect Admins from being revoked
+                const actions = ADMIN_EMAILS.includes(user.email) 
+                    ? '<span class="text-gray-500 text-sm font-bold">Admin</span>' 
+                    : actionButton;
+
+                html += `
+                    <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-gray-700/30 transition">
+                        <div class="mb-2 sm:mb-0">
+                            <div class="flex items-center gap-3">
+                                <h3 class="font-bold text-white text-lg">${user.full_name || 'Unknown'}</h3>
+                                ${statusBadge}
+                            </div>
+                            <p class="text-sm text-gray-400">${user.email}</p>
+                            <p class="text-xs text-gray-600 mt-1">Joined: ${new Date(user.created_at).toLocaleDateString()}</p>
+                        </div>
+                        <div>${actions}</div>
+                    </div>
+                `;
+            });
+
+            listContainer.innerHTML = html;
+        }
+
+        // Attach toggle function to window so onclick works
+        window.toggleUser = async (userId, newStatus) => {
+            const supabase = await getSupabase();
+            if(!confirm(newStatus ? "Grant access?" : "Revoke access?")) return;
+
+            const { error } = await supabase.from('profiles').update({ is_approved: newStatus }).eq('id', userId);
+            if (error) alert("Error: " + error.message);
+            else loadUsers(supabase);
+        };
+    </script>
+</body>
+</html>

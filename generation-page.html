@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Loom Play AI - Generated Content</title>
+    <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    <style type="text/tailwindcss">
+        body {
+            font-family: 'Roboto', sans-serif;
+        }
+        .active-tab {
+            background-color: #A855F7;
+            color: white;
+            font-weight: 700;
+        }
+        .tab-content, .tag-content {
+            display: none;
+        }
+        .active-tab-content, .active-tag-content {
+            display: block;
+        }
+        .active-tag {
+            background-color: #6D28D9 !important;
+            color: white !important;
+        }
+    </style>
+</head>
+<body class="bg-gray-900 text-white">
+    <div class="relative min-h-screen flex flex-col">
+        <div class="absolute inset-0">
+            <img alt="Abstract purple and blue waves on a black background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZu9QWRIEFnKKG6SMF74gPyyMfKcVyImI8TeqE1aWnAEy17Z3Ob2KGfLCIeZhHwB3m8sldZ1JAvfz-y5wpsgDaZBSRb6S0wGB7p4XJL3VQ2JsWLB9gz3iT3yeNwq-tNnZaFJxCUbLxoqWIsjBrpFCc0ZdkKon35yRcmiw-mgn98WRAe4u-dsImTEuWVOqThZVmtgidaXz8oNaw_j2UG7odXaYWTgDIAYkh0fnLndUDkSH7Ho0BSd03oOllL7bpSfju2Yxnxa_HiMs" />
+            <div class="absolute inset-0 bg-black opacity-50"></div>
+        </div>
+        <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+            <div class="flex items-center space-x-4">
+                <!-- Main Navigation Menu -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="text-white focus:outline-none">
+                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/dashboard.html">
+                            <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/new-chat.html">
+                            <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/History.html">
+                            <span class="material-symbols-outlined mr-3">history</span> Threads of the Past
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/collective-loom.html">
+                            <span class="material-symbols-outlined mr-3">groups</span> The Collective Loom
+                        </a>
+                    </div>
+                </div>
+                <h1 class="text-2xl font-bold">Loom Play AI</h1>
+            </div>
+            <div class="flex items-center">
+                <!-- User Profile Menu -->
+                <div x-data="{ open: false }" class="relative">
+                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
+                        <span id="welcome-message" class="hidden sm:inline mr-2">Welcome, User!</span>
+                        <span class="material-symbols-outlined text-4xl">account_circle</span>
+                    </button>
+                    <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/profile.html">
+                            <span class="material-symbols-outlined mr-3">account_circle</span> The Weaver
+                        </a>
+                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/change-password.html">
+                            <span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord
+                        </a>
+                        <div class="border-t border-gray-700 my-1"></div>
+                        <button id="logoutButton" class="w-full text-left flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white">
+                            <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </header>
+
+        <main class="relative flex-grow flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
+            <!-- Loading Spinner -->
+            <div id="loader" class="flex flex-col items-center justify-center h-full w-full flex-grow">
+                <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
+                <p class="mt-4 text-xl font-semibold">Weaving your lesson...</p>
+            </div>
+
+            <!-- Main Content (hidden by default) -->
+            <div class="w-full max-w-7xl bg-black/30 backdrop-blur-sm p-8 rounded-lg hidden" id="main-content">
+                <div class="flex flex-col lg:flex-row">
+                    <!-- Vertical Tabs Navigation -->
+                    <nav id="tabs-navigation" aria-label="Tabs" class="flex flex-col space-y-2 w-full lg:w-1/4 lg:pr-8 mb-8 lg:mb-0 lg:border-r lg:border-gray-700">
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="generatedImage" href="#"><span class="material-symbols-outlined mr-3">image</span>Generated Image</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200 active-tab" data-tab="newlyCreatedContent" href="#"><span class="material-symbols-outlined mr-3">auto_awesome</span>Newly Created</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="newActivities" href="#"><span class="material-symbols-outlined mr-3">pan_tool</span>New Activities</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="classicResources" href="#"><span class="material-symbols-outlined mr-3">menu_book</span>Classic Resources</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="montessoriConnections" href="#"><span class="material-symbols-outlined mr-3">child_care</span>Montessori Connections</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="movementAndMusic" href="#"><span class="material-symbols-outlined mr-3">sports_gymnastics</span>Movement & Music</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="socialAndEmotionalLearning" href="#"><span class="material-symbols-outlined mr-3">psychology</span>Social & Emotional</a>
+                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="teacherResources" href="#"><span class="material-symbols-outlined mr-3">school</span>Teacher Resources</a>
+                    </nav>
+                    
+                    <!-- Tab Content Area: JS will populate this -->
+                    <div class="w-full lg:w-3/4 lg:pl-8" id="content-container">
+                     
+
+  <!-- Empty containers for each tab's content -->
+<div id="generatedImage-content" class="tab-content">
+    <div class="p-6">
+        <div class="mb-6 text-center">
+            <h3 class="text-2xl font-bold text-gray-200">✨ Visual Gallery</h3>
+            <p class="text-gray-400">Create illustrations for specific parts of your lesson.</p>
+        </div>
+
+        <div id="image-gallery-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-10">
+            </div>
+    </div>
+</div>
+                        <div id="newlyCreatedContent-content" class="tab-content active-tab-content"></div>
+                        <div id="newActivities-content" class="tab-content"></div>
+                        <div id="classicResources-content" class="tab-content"></div>
+                        <div id="montessoriConnections-content" class="tab-content"></div>
+                        <div id="movementAndMusic-content" class="tab-content"></div>
+                        <div id="socialAndEmotionalLearning-content" class="tab-content"></div>
+                        <div id="teacherResources-content" class="tab-content"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto">
+            <p class="text-sm text-gray-400">Made By: Monika Pathak</p>
+        </footer>
+    </div>
+
+    <!-- JS Libraries for Exporting -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/html-to-docx@1.8.0/dist/html-to-docx.js"></script>
+    
+    <!-- Main page logic -->
+    <script type="module" src="js/generation-page.js"></script>
+</body>
+</html>
