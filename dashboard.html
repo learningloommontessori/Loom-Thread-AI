@@ -419,69 +419,117 @@
                 if (event.persisted) { curtain.classList.add('opacity-0'); }
             });
 
-            // 2. Set Ticker Content (Feedback/Alerts)
-            const tickerHTML = `
-                <span class="ticker-item">
-                    <span class="material-symbols-outlined text-yellow-400 mr-2">campaign</span>
-                    <strong class="text-yellow-300 mr-2">New Feature Alert:</strong> 
-                    We value your voice! Share your feedback with the team to help us improve Loom Thread AI.
-                </span>
-                <span class="ticker-item">
-                    <span class="material-symbols-outlined text-purple-400 mr-2">update</span>
-                    <strong class="text-purple-300 mr-2">System Update:</strong> 
-                    Enhanced lesson generation speed is now live.
-                </span>
-            `;
-            // Duplicate content for smooth looping
-            document.getElementById('ticker-content').innerHTML = tickerHTML + tickerHTML + tickerHTML;
-
-            // 3. Populate Slide-Out Drawer (Word/Quote/Calendar)
-            // Hardcoded Data for Visualization
-            const mockData = {
-                word: "Serendipity",
-                pronunciation: "/ˌser.ənˈdɪp.ə.ti/",
-                meaning: "The occurrence and development of events by chance in a happy or beneficial way.",
-                quote: "Education is not the filling of a pail, but the lighting of a fire.",
-                author: "W.B. Yeats",
-                holidays: [
-                    { date: "2025-11-12", name: "Diwali" },
-                    { date: "2025-12-25", name: "Christmas" }
-                ]
-            };
-
-            // Populate Fields
-            document.getElementById('wod-word').textContent = mockData.word;
-            document.getElementById('wod-pronunciation').textContent = mockData.pronunciation;
-            document.getElementById('wod-meaning').textContent = mockData.meaning;
-            document.getElementById('qod-text').textContent = mockData.quote;
-            document.getElementById('qod-author').textContent = `— ${mockData.author}`;
-
-            // Populate Holidays List
-            const holidayList = document.getElementById('holidays-list');
-            holidayList.innerHTML = ''; 
+            // ---------------------------------------------------------
+            // DATA FETCHING LOGIC
+            // ---------------------------------------------------------
             
-            mockData.holidays.forEach(h => {
-                const dateObj = new Date(h.date);
-                const day = dateObj.getDate();
-                const month = dateObj.toLocaleString('default', { month: 'short' });
-                
-                const li = document.createElement('li');
-                li.className = 'flex items-center text-gray-200 bg-white/5 p-2 rounded-lg';
-                li.innerHTML = `
-                    <div class="flex-shrink-0 w-10 text-center mr-3 bg-white/10 rounded p-1">
-                        <div class="text-[10px] uppercase text-teal-300 font-bold">${month}</div>
-                        <div class="text-sm font-bold">${day}</div>
-                    </div>
-                    <span class="text-sm font-medium truncate">${h.name}</span>
-                `;
-                holidayList.appendChild(li);
-            });
+            // URLs for your files (Relative paths work best on Vercel)
+            const WORDS_URL = './words.json';
+            const QUOTES_URL = './quotes.json';
+            const TICKER_URL = './ticker_message.txt';
 
-            // Text-to-Speech
-            document.getElementById('speak-word-btn').onclick = () => {
-                const utterance = new SpeechSynthesisUtterance(mockData.word);
-                window.speechSynthesis.speak(utterance);
-            };
+            async function fetchAllData() {
+                try {
+                    // Fetch all 3 files in parallel
+                    const [wordsRes, quotesRes, tickerRes] = await Promise.all([
+                        fetch(WORDS_URL),
+                        fetch(QUOTES_URL),
+                        fetch(TICKER_URL)
+                    ]);
+
+                    // --- 1. HANDLE TICKER MESSAGE ---
+                    let tickerText = "Welcome to Loom Thread AI.";
+                    if (tickerRes.ok) {
+                        tickerText = await tickerRes.text();
+                    }
+
+                    // Wrap the text in your specific HTML structure
+                    // We check if the text contains "feedback" to add the link dynamically
+                    let tickerInnerContent = tickerText;
+                    if (tickerText.toLowerCase().includes('feedback')) {
+                        tickerInnerContent = tickerText.replace(/feedback/i, '<a href="feedback.html" class="text-white hover:text-purple-300 underline">feedback</a>');
+                    }
+
+                    const formattedTickerHTML = `
+                        <span class="ticker-item">
+                            <span class="material-symbols-outlined text-yellow-400 mr-2">campaign</span>
+                            <strong class="text-yellow-300 mr-2">Update:</strong> 
+                            ${tickerInnerContent}
+                        </span>
+                    `;
+                    
+                    // Duplicate 3 times for smooth infinite scrolling loop
+                    document.getElementById('ticker-content').innerHTML = formattedTickerHTML.repeat(3);
+
+
+                    // --- 2. HANDLE WORD & QUOTE OF THE DAY ---
+                    if (!wordsRes.ok || !quotesRes.ok) throw new Error("Failed to load JSON data");
+
+                    const wordsData = await wordsRes.json();
+                    const quotesData = await quotesRes.json();
+
+                    // Generate today's date in "DD/MM/YYYY" format
+                    const today = new Date();
+                    const dd = String(today.getDate()).padStart(2, '0');
+                    const mm = String(today.getMonth() + 1).padStart(2, '0'); 
+                    const yyyy = today.getFullYear();
+                    const todayFormatted = `${dd}/${mm}/${yyyy}`;
+
+                    console.log("Looking for date:", todayFormatted);
+
+                    // Find entries for today
+                    let wordEntry = wordsData.find(item => item.date === todayFormatted);
+                    let quoteEntry = quotesData.find(item => item.date === todayFormatted);
+
+                    // Fallback to random if today's date isn't in the file
+                    if (!wordEntry && wordsData.length > 0) {
+                        wordEntry = wordsData[Math.floor(Math.random() * wordsData.length)];
+                    }
+                    if (!quoteEntry && quotesData.length > 0) {
+                        quoteEntry = quotesData[Math.floor(Math.random() * quotesData.length)];
+                    }
+
+                    // Update DOM: Word
+                    if (wordEntry) {
+                        document.getElementById('wod-word').textContent = wordEntry.word;
+                        document.getElementById('wod-pronunciation').textContent = wordEntry.pronunciation;
+                        document.getElementById('wod-meaning').textContent = wordEntry.meaning;
+                        
+                        // Text-to-Speech
+                        document.getElementById('speak-word-btn').onclick = () => {
+                            const utterance = new SpeechSynthesisUtterance(wordEntry.word);
+                            window.speechSynthesis.speak(utterance);
+                        };
+                    }
+
+                    // Update DOM: Quote
+                    if (quoteEntry) {
+                        document.getElementById('qod-text').textContent = quoteEntry.quote;
+                        document.getElementById('qod-author').textContent = `— ${quoteEntry.author}`;
+                    }
+
+                    // Update DOM: Date/Holidays (Simple display)
+                    const holidayList = document.getElementById('holidays-list');
+                    holidayList.innerHTML = `
+                        <li class="flex items-center text-sm text-gray-200 bg-white/5 p-2 rounded-lg">
+                            <div class="flex-shrink-0 w-10 text-center mr-3 bg-white/10 rounded p-1">
+                                <div class="text-[10px] uppercase text-teal-300 font-bold">${today.toLocaleString('default', { month: 'short' })}</div>
+                                <div class="text-sm font-bold">${dd}</div>
+                            </div>
+                            <span class="text-sm font-medium truncate">Today is a great day to learn!</span>
+                        </li>`;
+
+                } catch (error) {
+                    console.error("Error loading dashboard content:", error);
+                    // Fallback display
+                    document.getElementById('ticker-content').innerHTML = '<span class="ticker-item">Welcome to Loom Thread AI</span>'.repeat(3);
+                    document.getElementById('wod-word').textContent = "Welcome";
+                    document.getElementById('wod-meaning').textContent = "Start your learning journey.";
+                }
+            }
+
+            // Run the function
+            fetchAllData();
         });
     </script>
 
