@@ -6,100 +6,96 @@
     <title>Loom Thread AI - Dashboard</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
-    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Roboto', sans-serif;
-        }
+        body { font-family: 'Roboto', sans-serif; }
 
-        /* --- PRO 3D LIQUID GLASS CARDS (Dashboard Items) --- */
+        /* --- PRO 3D LIQUID GLASS --- */
         .pro-glass {
-            background: linear-gradient(
-                135deg, 
-                rgba(255, 255, 255, 0.03) 0%, 
-                rgba(255, 255, 255, 0.01) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
             backdrop-filter: blur(20px) saturate(120%);
             -webkit-backdrop-filter: blur(20px) saturate(120%);
             border-radius: 1.5rem;
-            
             border-top: 1px solid rgba(255, 255, 255, 0.2);
             border-left: 1px solid rgba(255, 255, 255, 0.1);
             border-right: 1px solid rgba(255, 255, 255, 0.05);
             border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-
-            box-shadow: 
-                0 15px 35px -5px rgba(0, 0, 0, 0.5),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.02),
-                inset 0 10px 20px rgba(255, 255, 255, 0.03);
-            
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 10px 20px rgba(255, 255, 255, 0.03);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
-        .pro-glass:hover:not(.cursor-not-allowed) {
+        .pro-glass:hover:not(.no-hover) {
             transform: translateY(-5px) scale(1.01);
-            background: linear-gradient(
-                135deg, 
-                rgba(255, 255, 255, 0.08) 0%, 
-                rgba(255, 255, 255, 0.03) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.08) 0%, rgba(255, 255, 255, 0.03) 100%);
             border-top: 1px solid rgba(255, 255, 255, 0.4);
-            box-shadow: 
-                0 25px 50px -12px rgba(139, 92, 246, 0.25),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 25px 50px -12px rgba(139, 92, 246, 0.25), inset 0 0 0 1px rgba(255, 255, 255, 0.1);
         }
 
-        /* --- PRO 3D GLASS BUTTONS (Floating Menu Items) --- */
+        /* --- DRAWER GLASS --- */
+        .drawer-glass {
+            background: linear-gradient(135deg, rgba(20, 20, 25, 0.95) 0%, rgba(30, 30, 40, 0.95) 100%);
+            backdrop-filter: blur(40px) saturate(150%);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: -10px 0 50px rgba(0, 0, 0, 0.8);
+        }
+
+        /* --- TICKER ANIMATION --- */
+        .ticker-wrap {
+            width: 100%;
+            overflow: hidden;
+            white-space: nowrap;
+            mask-image: linear-gradient(to right, transparent, black 10%, black 90%, transparent);
+        }
+        .ticker {
+            display: inline-block;
+            animation: ticker 35s linear infinite;
+            padding-left: 100%; 
+        }
+        .ticker-item {
+            display: inline-flex;
+            align-items: center;
+            padding: 0 2rem;
+        }
+        .ticker-wrap:hover .ticker {
+            animation-play-state: paused;
+        }
+        @keyframes ticker {
+            0% { transform: translate3d(0, 0, 0); }
+            100% { transform: translate3d(-100%, 0, 0); }
+        }
+
+        /* --- PRO GLASS BUTTONS --- */
         .pro-glass-btn {
-            background: linear-gradient(
-                135deg, 
-                rgba(255, 255, 255, 0.05) 0%, 
-                rgba(255, 255, 255, 0.01) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
             backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
             border-radius: 9999px; 
-            
             border: 1px solid rgba(255, 255, 255, 0.05);
             border-top: 1px solid rgba(255, 255, 255, 0.3); 
             border-left: 1px solid rgba(255, 255, 255, 0.2);
-            
-            box-shadow: 
-                0 4px 10px rgba(0, 0, 0, 0.3),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.05),
-                inset 0 2px 5px rgba(255, 255, 255, 0.05);
-            
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-
         .pro-glass-btn:hover {
             transform: translateY(-2px) scale(1.02);
-            background: linear-gradient(
-                135deg, 
-                rgba(255, 255, 255, 0.1) 0%, 
-                rgba(255, 255, 255, 0.05) 100%
-            );
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
             border-top-color: rgba(255, 255, 255, 0.5); 
-            box-shadow: 
-                0 8px 20px rgba(139, 92, 246, 0.3),
-                inset 0 0 0 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
 
-        /* --- CIRCULAR GLASS BUTTON (Menu Toggle - BORDER REMOVED) --- */
+        /* --- CIRCULAR GLASS BUTTON --- */
         .glass-circle-btn {
             background: rgba(255, 255, 255, 0.05);
             backdrop-filter: blur(10px);
-            /* BORDER REMOVED AS REQUESTED */
             border: none; 
             box-shadow: 0 4px 10px rgba(0,0,0,0.2);
             transition: all 0.3s ease;
         }
         .glass-circle-btn:hover {
-            background: rgba(255, 255, 255, 0.15); /* Slightly brighter on hover */
+            background: rgba(255, 255, 255, 0.15); 
             box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
             transform: scale(1.05);
         }
@@ -107,67 +103,41 @@
         /* --- ANIMATIONS --- */
         @keyframes shine { 100% { transform: translateX(100%); } }
         .animate-shine { animation: shine 0.7s; }
-
-        @keyframes pulse-overlay {
-            0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; }
-        }
+        @keyframes pulse-overlay { 0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; } }
         .beam-overlay { animation: pulse-overlay 10s ease-in-out infinite; backdrop-filter: blur(50px); }
-
-        @keyframes menu-pop-entry {
-            0% { opacity: 0; transform: translateY(-10px) scale(0.95); }
-            100% { opacity: 1; transform: translateY(0) scale(1); }
-        }
+        @keyframes menu-pop-entry { 0% { opacity: 0; transform: translateY(-10px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
         .menu-animate-item { opacity: 0; animation: menu-pop-entry 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
-        .menu-animate-item:nth-child(1) { animation-delay: 0.05s; }
-        .menu-animate-item:nth-child(2) { animation-delay: 0.1s; }
-        .menu-animate-item:nth-child(3) { animation-delay: 0.15s; }
-        .menu-animate-item:nth-child(4) { animation-delay: 0.2s; }
-        
         .rotate-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
         .rotate-active { transform: rotate(90deg); }
     </style>
 </head>
 
-<body class="bg-neutral-950 text-white selection:bg-purple-500/30 overflow-x-hidden">
+<body class="bg-neutral-950 text-white selection:bg-purple-500/30 overflow-x-hidden" x-data="{ showInspiration: false }">
 
     <div id="page-curtain" class="fixed inset-0 bg-neutral-950 z-[100] transition-opacity duration-500 ease-in-out pointer-events-none opacity-100"></div>
 
     <canvas id="beams-canvas" class="fixed inset-0 w-full h-full z-0" style="filter: blur(15px); opacity: 0.6; pointer-events: none;"></canvas>
     <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none z-0"></div>
 
-    <div class="relative min-h-screen z-10 flex flex-col">
+    <div class="relative min-h-screen z-10 flex flex-col pb-20"> 
         
         <header class="relative z-20 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center bg-transparent border-none">
             <div class="flex items-center space-x-4">
                 
                 <div x-data="{ open: false }" class="relative">
-                    <button 
-                        @click="open = !open" 
-                        class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full"
-                    >
-                        <span 
-                            class="material-symbols-outlined text-3xl rotate-icon select-none"
-                            :class="{ 'rotate-active': open }"
-                            x-text="open ? 'close' : 'menu'"
-                        >
-                            menu
-                        </span>
+                    <button @click="open = !open" class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full">
+                        <span class="material-symbols-outlined text-3xl rotate-icon select-none" :class="{ 'rotate-active': open }" x-text="open ? 'close' : 'menu'">menu</span>
                     </button>
 
-                    <div 
-                        x-show="open" 
-                        @click.away="open = false"
-                        class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" 
-                        style="display: none;"
-                    >
+                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm font-bold text-white" href="dashboard.html">
                             <span class="material-symbols-outlined mr-3 text-purple-400">dashboard</span> Dashboard
                         </a>
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="new-chat.html">
-                            <span class="material-symbols-outlined mr-3 text-gray-400">add</span> Weave a New Lesson
+                            <span class="material-symbols-outlined mr-3 text-gray-400">add</span> New Lesson
                         </a>
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="History.html">
-                            <span class="material-symbols-outlined mr-3 text-gray-400">history</span> Past Threads
+                            <span class="material-symbols-outlined mr-3 text-gray-400">history</span> History
                         </a>
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="collective-loom.html">
                             <span class="material-symbols-outlined mr-3 text-gray-400">groups</span> Collective Loom
@@ -178,35 +148,31 @@
                 <h1 class="text-2xl font-bold tracking-tight text-white drop-shadow-md">Loom Thread AI</h1>
             </div>
             
-            <div class="flex items-center">
+            <div class="flex items-center gap-4">
+                
+                <button 
+                    @click="showInspiration = !showInspiration" 
+                    class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full transition-colors"
+                    :class="{ 'bg-purple-600/30 border-purple-500/50 shadow-[0_0_15px_rgba(147,51,234,0.3)]': showInspiration }"
+                    title="Daily Inspiration & Calendar"
+                >
+                    <span class="material-symbols-outlined text-2xl" :class="{ 'text-yellow-300': showInspiration }">lightbulb</span>
+                </button>
+
                 <div x-data="{ open: false }" class="relative">
-                    <button 
-                        @click="open = !open" 
-                        class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group"
-                    >
-                        <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition text-shadow">Welcome, User!</span>
+                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group">
+                        <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition">Welcome, User!</span>
                         <div class="glass-circle-btn flex items-center justify-center w-10 h-10 rounded-full">
-                            <span 
-                                class="material-symbols-outlined text-4xl rotate-icon select-none"
-                                :class="{ 'rotate-active': open, 'text-purple-400': open }"
-                                x-text="open ? 'close' : 'account_circle'"
-                            >
-                                account_circle
-                            </span>
+                            <span class="material-symbols-outlined text-4xl rotate-icon select-none" :class="{ 'rotate-active': open, 'text-purple-400': open }" x-text="open ? 'close' : 'account_circle'">account_circle</span>
                         </div>
                     </button>
 
-                    <div 
-                        x-show="open" 
-                        @click.away="open = false" 
-                        class="absolute right-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" 
-                        style="display: none;"
-                    >
+                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-56 flex flex-col space-y-2 z-50" style="display: none;">
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="profile.html">
                             <span class="material-symbols-outlined mr-3 text-gray-400">account_circle</span> The Weaver
                         </a>
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="change-password.html">
-                            <span class="material-symbols-outlined mr-3 text-gray-400">lock_reset</span> Strengthen Cord
+                            <span class="material-symbols-outlined mr-3 text-gray-400">lock_reset</span> Password
                         </a>
                         <button id="logoutButton" class="menu-animate-item pro-glass-btn w-full text-left flex items-center px-4 py-3 text-sm text-red-400 hover:text-red-300">
                             <span class="material-symbols-outlined mr-3">logout</span> Logout
@@ -224,43 +190,43 @@
                 
                 <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
                     
-                    <a class="transition-link pro-glass group relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center" href="new-chat.html">
+                    <a class="transition-link pro-glass group relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center min-h-[220px]" href="new-chat.html">
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine z-0 pointer-events-none"></div>
                         <span class="material-symbols-outlined text-5xl mb-4 relative z-10 text-purple-400 group-hover:text-white transition duration-300">auto_stories</span>
                         <span class="relative z-10 text-center text-gray-200 group-hover:text-white transition duration-300">Weave a New Lesson</span>
                     </a>
 
-                    <a class="transition-link pro-glass group relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center" href="History.html">
+                    <a class="transition-link pro-glass group relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center min-h-[220px]" href="History.html">
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine z-0 pointer-events-none"></div>
                         <span class="material-symbols-outlined text-5xl mb-4 relative z-10 text-purple-400 group-hover:text-white transition duration-300">history</span>
                         <span class="relative z-10 text-center text-gray-200 group-hover:text-white transition duration-300">Threads of the Past</span>
                     </a>
 
-                    <a class="transition-link pro-glass group relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center col-span-1 md:col-span-2 lg:col-span-1 xl:col-span-2" href="collective-loom.html">
+                    <a class="transition-link pro-glass group relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center min-h-[220px]" href="collective-loom.html">
                         <div class="absolute inset-0 bg-gradient-to-r from-transparent via-white/10 to-transparent -translate-x-full group-hover:animate-shine z-0 pointer-events-none"></div>
                         <span class="material-symbols-outlined text-5xl mb-4 relative z-10 text-purple-400 group-hover:text-white transition duration-300">groups</span>
                         <span class="relative z-10 text-center text-gray-200 group-hover:text-white transition duration-300">The Collective Loom</span>
                     </a>
 
-                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent">
+                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent min-h-[220px]">
                         <span class="material-symbols-outlined text-5xl mb-4 text-gray-400">event_note</span>
                         <span class="text-center text-gray-400">Lesson Planner</span>
                         <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full shadow-lg">Coming Soon</span>
                     </div>
 
-                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent">
+                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent min-h-[220px]">
                         <span class="material-symbols-outlined text-5xl mb-4 text-gray-400">quiz</span>
-                        <span class="text-center text-gray-400">Assessment Generator</span>
+                        <span class="text-center text-gray-400">Assessments</span>
                         <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full shadow-lg">Coming Soon</span>
                     </div>
 
-                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent">
+                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent min-h-[220px]">
                         <span class="material-symbols-outlined text-5xl mb-4 text-gray-400">edit_document</span>
-                        <span class="text-center text-gray-400">Worksheet Creator</span>
+                        <span class="text-center text-gray-400">Worksheets</span>
                         <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full shadow-lg">Coming Soon</span>
                     </div>
 
-                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent">
+                    <div class="pro-glass relative overflow-hidden text-white font-bold py-10 px-6 text-xl flex flex-col items-center justify-center opacity-50 cursor-not-allowed grayscale-[0.5] hover:transform-none hover:shadow-none hover:bg-transparent min-h-[220px]">
                         <span class="material-symbols-outlined text-5xl mb-4 text-gray-400">calendar_view_week</span>
                         <span class="text-center text-gray-400">Weekly Planner</span>
                         <span class="absolute bottom-4 text-xs font-bold bg-yellow-500/80 text-black px-2 py-1 rounded-full shadow-lg">Coming Soon</span>
@@ -273,6 +239,82 @@
         <footer class="w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto z-20">
             <p class="text-xs text-gray-500">Made By: Monika Pathak</p>
         </footer>
+    </div>
+
+    <div 
+        class="fixed inset-y-0 right-0 w-96 drawer-glass shadow-2xl transform transition-transform duration-500 ease-out z-50 overflow-y-auto"
+        :class="showInspiration ? 'translate-x-0' : 'translate-x-full'"
+        @click.away="showInspiration = false"
+        x-cloak
+    >
+        <div class="p-6 flex flex-col h-full">
+            <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
+                <h3 class="text-xl font-bold text-white flex items-center">
+                    <span class="material-symbols-outlined text-yellow-400 mr-2">lightbulb</span> Daily Inspiration
+                </h3>
+                <button @click="showInspiration = false" class="text-gray-400 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined">close</span>
+                </button>
+            </div>
+
+            <div class="space-y-8 flex-grow">
+                <div>
+                    <div class="flex justify-between items-center mb-2">
+                        <h4 class="text-purple-400 text-xs font-bold uppercase tracking-widest">Word of the Day</h4>
+                        <button id="speak-word-btn" class="text-gray-400 hover:text-white transition-colors" title="Listen">
+                            <span class="material-symbols-outlined text-lg">volume_up</span>
+                        </button>
+                    </div>
+                    <div class="pro-glass p-5 relative overflow-hidden bg-gradient-to-br from-purple-500/5 to-blue-500/5">
+                        <h2 id="wod-word" class="text-2xl font-extrabold text-white mb-1">Loading...</h2>
+                        <p id="wod-pronunciation" class="text-sm text-gray-400 italic mb-3">...</p>
+                        <p id="wod-meaning" class="text-sm text-gray-300 leading-snug">Fetching today's wisdom...</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-blue-400 text-xs font-bold uppercase tracking-widest mb-2">Quote of the Day</h4>
+                    <div class="pro-glass p-5 relative overflow-hidden">
+                        <span class="material-symbols-outlined text-white/20 text-4xl absolute top-2 right-2">format_quote</span>
+                        <blockquote class="text-md font-medium text-gray-200 italic mb-3 leading-relaxed relative z-10">
+                            "<span id="qod-text">Loading...</span>"
+                        </blockquote>
+                        <p id="qod-author" class="text-xs text-purple-300 font-bold text-right relative z-10">— ...</p>
+                    </div>
+                </div>
+
+                <div>
+                    <h4 class="text-teal-400 text-xs font-bold uppercase tracking-widest mb-2">Upcoming Holidays</h4>
+                    <div class="pro-glass p-5">
+                        <ul id="holidays-list" class="space-y-4">
+                            <li class="flex items-center text-sm text-gray-400 animate-pulse">
+                                <span class="w-1.5 h-1.5 rounded-full bg-gray-600 mr-3"></span> Loading...
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div 
+        class="fixed inset-0 bg-black/50 backdrop-blur-sm z-40 transition-opacity duration-500"
+        x-show="showInspiration"
+        x-transition:enter="ease-out duration-300"
+        x-transition:enter-start="opacity-0"
+        x-transition:enter-end="opacity-100"
+        x-transition:leave="ease-in duration-200"
+        x-transition:leave-start="opacity-100"
+        x-transition:leave-end="opacity-0"
+        @click="showInspiration = false"
+        x-cloak
+    ></div>
+
+    <div class="fixed bottom-0 left-0 right-0 z-30 pro-glass no-hover border-b-0 border-l-0 border-r-0 rounded-b-none h-12 flex items-center border-t border-white/20 bg-black/40 backdrop-blur-xl">
+        <div class="ticker-wrap">
+            <div class="ticker text-sm font-medium text-gray-300" id="ticker-content">
+                </div>
+        </div>
     </div>
 
     <script type="module" src="/js/dashboard.js"></script>
@@ -361,32 +403,85 @@
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
+            // 1. Page Transitions
             const curtain = document.getElementById('page-curtain');
-            
-            setTimeout(() => {
-                curtain.classList.add('opacity-0');
-            }, 100); 
-
+            setTimeout(() => { curtain.classList.add('opacity-0'); }, 100); 
             const links = document.querySelectorAll('.transition-link');
-            
             links.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const target = link.getAttribute('href');
-                    
                     curtain.classList.remove('opacity-0');
-                    
-                    setTimeout(() => {
-                        window.location.href = target;
-                    }, 500); 
+                    setTimeout(() => { window.location.href = target; }, 500); 
                 });
             });
-
             window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    curtain.classList.add('opacity-0');
-                }
+                if (event.persisted) { curtain.classList.add('opacity-0'); }
             });
+
+            // 2. Set Ticker Content (Feedback/Alerts)
+            const tickerHTML = `
+                <span class="ticker-item">
+                    <span class="material-symbols-outlined text-yellow-400 mr-2">campaign</span>
+                    <strong class="text-yellow-300 mr-2">New Feature Alert:</strong> 
+                    We value your voice! Share your feedback with the team to help us improve Loom Thread AI.
+                </span>
+                <span class="ticker-item">
+                    <span class="material-symbols-outlined text-purple-400 mr-2">update</span>
+                    <strong class="text-purple-300 mr-2">System Update:</strong> 
+                    Enhanced lesson generation speed is now live.
+                </span>
+            `;
+            // Duplicate content for smooth looping
+            document.getElementById('ticker-content').innerHTML = tickerHTML + tickerHTML + tickerHTML;
+
+            // 3. Populate Slide-Out Drawer (Word/Quote/Calendar)
+            // Hardcoded Data for Visualization
+            const mockData = {
+                word: "Serendipity",
+                pronunciation: "/ˌser.ənˈdɪp.ə.ti/",
+                meaning: "The occurrence and development of events by chance in a happy or beneficial way.",
+                quote: "Education is not the filling of a pail, but the lighting of a fire.",
+                author: "W.B. Yeats",
+                holidays: [
+                    { date: "2025-11-12", name: "Diwali" },
+                    { date: "2025-12-25", name: "Christmas" }
+                ]
+            };
+
+            // Populate Fields
+            document.getElementById('wod-word').textContent = mockData.word;
+            document.getElementById('wod-pronunciation').textContent = mockData.pronunciation;
+            document.getElementById('wod-meaning').textContent = mockData.meaning;
+            document.getElementById('qod-text').textContent = mockData.quote;
+            document.getElementById('qod-author').textContent = `— ${mockData.author}`;
+
+            // Populate Holidays List
+            const holidayList = document.getElementById('holidays-list');
+            holidayList.innerHTML = ''; 
+            
+            mockData.holidays.forEach(h => {
+                const dateObj = new Date(h.date);
+                const day = dateObj.getDate();
+                const month = dateObj.toLocaleString('default', { month: 'short' });
+                
+                const li = document.createElement('li');
+                li.className = 'flex items-center text-gray-200 bg-white/5 p-2 rounded-lg';
+                li.innerHTML = `
+                    <div class="flex-shrink-0 w-10 text-center mr-3 bg-white/10 rounded p-1">
+                        <div class="text-[10px] uppercase text-teal-300 font-bold">${month}</div>
+                        <div class="text-sm font-bold">${day}</div>
+                    </div>
+                    <span class="text-sm font-medium truncate">${h.name}</span>
+                `;
+                holidayList.appendChild(li);
+            });
+
+            // Text-to-Speech
+            document.getElementById('speak-word-btn').onclick = () => {
+                const utterance = new SpeechSynthesisUtterance(mockData.word);
+                window.speechSynthesis.speak(utterance);
+            };
         });
     </script>
 
