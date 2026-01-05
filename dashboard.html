@@ -12,6 +12,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     
     <style type="text/tailwindcss">
+[x-cloak] { display: none !important; }
         body { font-family: 'Roboto', sans-serif; }
 
         /* --- PRO 3D LIQUID GLASS --- */
@@ -244,8 +245,7 @@
     <div 
         class="fixed inset-y-0 right-0 w-96 drawer-glass shadow-2xl transform transition-transform duration-500 ease-out z-50 overflow-y-auto"
         :class="showInspiration ? 'translate-x-0' : 'translate-x-full'"
-        @click.away="showInspiration = false"
-        x-cloak
+                x-cloak
     >
         <div class="p-6 flex flex-col h-full">
             <div class="flex justify-between items-center mb-8 border-b border-white/10 pb-4">
