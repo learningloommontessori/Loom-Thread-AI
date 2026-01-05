@@ -65,7 +65,6 @@
 
     /* --- INPUTS: FORCE DARK BACKGROUND --- */
     .glass-input {
-        /* !important added to override Tailwind Forms Plugin default white background */
         background-color: rgba(0, 0, 0, 0.3) !important; 
         box-shadow: 
             inset 0 2px 4px rgba(0, 0, 0, 0.5), /* Deep inner shadow */
@@ -93,6 +92,8 @@
 
 <body class="bg-neutral-950 text-white overflow-x-hidden selection:bg-purple-500/30">
 
+  <div id="page-curtain" class="fixed inset-0 bg-neutral-950 z-[100] transition-opacity duration-500 ease-in-out pointer-events-none opacity-100"></div>
+
   <canvas id="beams-canvas" class="fixed inset-0 w-full h-full" style="filter: blur(15px); opacity: 0.6; pointer-events: none; z-index: 0;"></canvas>
   <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none" style="z-index: 0;"></div>
 
@@ -100,7 +101,8 @@
     
     <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-6 flex items-center justify-between">
       <h1 class="text-2xl font-bold tracking-tight text-white drop-shadow-[0_2px_10px_rgba(255,255,255,0.2)]">Loom Thread AI</h1>
-      <a href="index.html" class="text-sm text-gray-400 hover:text-white transition-colors">Back to Home</a>
+      
+      <a href="index.html" class="transition-link text-sm text-gray-400 hover:text-white transition-colors">Back to Home</a>
     </header>
 
     <main class="relative z-10 flex-grow px-4 sm:px-6 lg:px-8 py-8 flex items-center justify-center">
@@ -285,5 +287,42 @@
         animate();
     });
   </script>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const curtain = document.getElementById('page-curtain');
+        
+        // 1. Reveal page on load
+        setTimeout(() => {
+            curtain.classList.add('opacity-0');
+        }, 100); 
+
+        // 2. Handle links with class 'transition-link'
+        const links = document.querySelectorAll('.transition-link');
+        
+        links.forEach(link => {
+            link.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = link.getAttribute('href');
+                
+                // Fade to black
+                curtain.classList.remove('opacity-0');
+                
+                // Wait for fade, then navigate
+                setTimeout(() => {
+                    window.location.href = target;
+                }, 500); 
+            });
+        });
+
+        // 3. Fix back button issue
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                curtain.classList.add('opacity-0');
+            }
+        });
+    });
+  </script>
+
 </body>
 </html>

@@ -1,19 +1,19 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="utf-8"/>
-    <meta content="width=device-width, initial-scale=1.0" name="viewport"/>
-    <title>Loom Thread AI - History</title>
+    <meta charset="utf-8" />
+    <meta content="width=device-width, initial-scale=1.0" name="viewport" />
+    <title>Loom Thread AI - Share Feedback</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js" defer></script>
     
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet"/>
-    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"/>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
     
     <style type="text/tailwindcss">
         body { font-family: 'Roboto', sans-serif; }
-        
+
         /* --- PRO 3D LIQUID GLASS --- */
         .pro-glass {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
@@ -27,7 +27,22 @@
             box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 10px 20px rgba(255, 255, 255, 0.03);
         }
 
-        /* --- PRO GLASS BUTTONS (Dropdowns & Actions) --- */
+        /* --- GLASS INPUTS --- */
+        .glass-input {
+            background-color: rgba(0, 0, 0, 0.3) !important; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            transition: all 0.3s ease;
+            color: white; 
+        }
+        .glass-input:focus {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            border-color: rgba(168, 85, 247, 0.5) !important; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(168, 85, 247, 0.2); 
+            outline: none;
+        }
+
+        /* --- PRO GLASS BUTTONS (Dropdowns) --- */
         .pro-glass-btn {
             background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
             backdrop-filter: blur(12px);
@@ -59,26 +74,19 @@
             transform: scale(1.05);
         }
 
-        /* --- GLASS INPUTS (Search & Filter) --- */
-        .glass-input {
-            background-color: rgba(0, 0, 0, 0.3) !important; 
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.1);
-            border: 1px solid rgba(255, 255, 255, 0.08) !important;
-            transition: all 0.3s ease;
-            color: white; 
+        /* --- STAR RATING --- */
+        .star-rating input { display: none; }
+        .star-rating label { 
+            cursor: pointer; 
+            transition: color 0.2s; 
+            color: #4b5563; /* Gray-600 */
         }
-        .glass-input:focus {
-            background-color: rgba(0, 0, 0, 0.5) !important;
-            border-color: rgba(168, 85, 247, 0.5) !important; 
-            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(168, 85, 247, 0.2); 
-            outline: none;
+        .star-rating input:checked ~ label,
+        .star-rating label:hover,
+        .star-rating label:hover ~ label {
+            color: #fbbf24; /* Amber-400 */
+            text-shadow: 0 0 10px rgba(251, 191, 36, 0.5);
         }
-
-        /* --- MODAL CONTENT STYLING --- */
-        .modal-content h4 { @apply text-xl font-semibold text-purple-300 mt-6 mb-2 border-b border-white/10 pb-2; }
-        .modal-content h5 { @apply text-lg font-bold text-gray-200 mt-4 mb-1; }
-        .modal-content p, .modal-content ul { @apply text-gray-300 leading-relaxed; }
-        .modal-content ul { @apply list-disc list-inside pl-4; }
 
         /* --- ANIMATIONS --- */
         @keyframes pulse-overlay { 0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; } }
@@ -106,23 +114,23 @@
         <header class="relative z-20 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center bg-transparent">
             <div class="flex items-center space-x-4">
                 
-                <div class="relative" x-data="{ open: false }">
+                <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full">
                         <span class="material-symbols-outlined text-3xl rotate-icon select-none" :class="{ 'rotate-active': open }" x-text="open ? 'close' : 'menu'">menu</span>
                     </button>
                     
-                    <div @click.away="open = false" class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;" x-show="open">
+                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/dashboard.html">
                             <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
                         </a>
-                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm font-bold text-white bg-purple-600/20" href="/History.html">
-                            <span class="material-symbols-outlined mr-3 text-purple-400">history</span> Threads of the Past
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/new-chat.html">
+                            <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
+                        </a>
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/History.html">
+                            <span class="material-symbols-outlined mr-3">history</span> Threads of the Past
                         </a>
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/collective-loom.html">
                             <span class="material-symbols-outlined mr-3">groups</span> The Collective Loom
-                        </a>
-                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/new-chat.html">
-                            <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
                         </a>
                     </div>
                 </div>
@@ -130,7 +138,7 @@
             </div>
             
             <div class="flex items-center">
-                <div class="relative" x-data="{ open: false }">
+                <div x-data="{ open: false }" class="relative">
                     <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group">
                         <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition text-shadow">Welcome, User!</span>
                         <div class="glass-circle-btn flex items-center justify-center w-10 h-10 rounded-full">
@@ -138,97 +146,96 @@
                         </div>
                     </button>
                     
-                    <div @click.away="open = false" class="absolute right-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;" x-show="open">
+                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/profile.html">
                             <span class="material-symbols-outlined mr-3">account_circle</span> The Weaver
                         </a>
                         <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/change-password.html">
-                            <span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord
+                            <span class="material-symbols-outlined mr-3">lock_reset</span> Password
                         </a>
-                        <button class="menu-animate-item pro-glass-btn w-full text-left flex items-center px-4 py-3 text-sm text-red-400 hover:text-red-300" id="logoutButton">
-                            <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
+                        <button id="logoutButton" class="menu-animate-item pro-glass-btn w-full text-left flex items-center px-4 py-3 text-sm text-red-400 hover:text-red-300">
+                            <span class="material-symbols-outlined mr-3">logout</span> Logout
                         </button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <main class="relative px-4 sm:px-6 lg:px-8 py-8 flex-grow z-10">
-            <div class="max-w-7xl mx-auto">
-                <div class="flex flex-col lg:flex-row justify-between items-start lg:items-center mb-8 gap-6">
+        <main class="relative flex-grow flex flex-col items-center justify-center px-4 sm:px-6 lg:px-8 py-8 z-10">
+            
+            <div class="max-w-2xl w-full pro-glass p-8 relative overflow-hidden shadow-2xl">
+                
+                <div class="absolute -top-[150px] -right-[150px] w-[300px] h-[300px] bg-purple-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <a href="/dashboard.html" class="transition-link flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-300 mb-6 inline-flex relative z-10 font-medium text-sm">
+                    <span class="material-symbols-outlined mr-2 text-lg">arrow_back</span>
+                    Back to Dashboard
+                </a>
+                
+                <div class="text-center mb-8 relative z-10">
+                    <span class="material-symbols-outlined text-yellow-400 text-5xl mb-3 drop-shadow-md">campaign</span>
+                    <h2 class="text-3xl sm:text-4xl font-extrabold leading-tight text-white drop-shadow-md">We Value Your Voice</h2>
+                    <p class="text-gray-400 mt-2">Help us weave a better experience. Your feedback shapes the Loom.</p>
+                </div>
+                
+                <form class="space-y-6 relative z-10" id="feedback-form">
                     
-                    <div class="flex-shrink-0">
-                        <h2 class="text-3xl font-bold tracking-tight text-white drop-shadow-md">Your Woven Lessons</h2>
-                        <p class="text-gray-300 mt-1">Review, share, or delete your previously generated lesson plans.</p>
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div>
+                            <label for="name" class="block text-sm font-medium text-gray-300 mb-1">Your Name (Optional)</label>
+                            <input id="name" type="text" class="glass-input w-full py-2.5 px-4 rounded-xl text-white placeholder-gray-500 focus:outline-none" placeholder="John Doe" />
+                        </div>
+                        <div>
+                            <label for="email" class="block text-sm font-medium text-gray-300 mb-1">Email Address</label>
+                            <input id="email" type="email" class="glass-input w-full py-2.5 px-4 rounded-xl text-white placeholder-gray-500 focus:outline-none" placeholder="you@example.com" />
+                        </div>
                     </div>
 
-                    <div class="flex flex-col sm:flex-row gap-3 w-full lg:w-auto">
-                        
-                        <div class="relative min-w-[160px]">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <span class="material-symbols-outlined text-gray-400">filter_alt</span>
-                            </div>
-                            <select id="age-filter" class="glass-input w-full pl-10 pr-10 py-2.5 rounded-xl text-white appearance-none cursor-pointer">
-                                <option value="all" class="bg-gray-900 text-white">All Ages</option>
-                                <option value="Nursery" class="bg-gray-900 text-white">Nursery</option>
-                                <option value="Juniors" class="bg-gray-900 text-white">Juniors</option>
-                                <option value="Seniors" class="bg-gray-900 text-white">Seniors</option>
+                    <div>
+                        <label for="category" class="block text-sm font-medium text-gray-300 mb-1">Feedback Type</label>
+                        <div class="relative">
+                            <select id="category" class="glass-input w-full py-2.5 px-4 rounded-xl text-white appearance-none cursor-pointer">
+                                <option value="general" class="bg-gray-900">General Inquiry</option>
+                                <option value="feature" class="bg-gray-900">Feature Request</option>
+                                <option value="bug" class="bg-gray-900">Report a Bug</option>
+                                <option value="content" class="bg-gray-900">Content Issue</option>
                             </select>
                             <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
-                                <span class="material-symbols-outlined text-gray-400 text-sm">expand_more</span>
+                                <span class="material-symbols-outlined text-gray-400">expand_more</span>
                             </div>
                         </div>
+                    </div>
 
-                        <div class="relative w-full sm:w-72">
-                            <div class="absolute inset-y-0 left-0 flex items-center pl-3 pointer-events-none">
-                                <span class="material-symbols-outlined text-gray-400">search</span>
-                            </div>
-                            <input id="search-input" class="glass-input w-full pl-10 pr-4 py-2.5 rounded-xl text-white placeholder-gray-400" placeholder="Search your lessons..." type="search" />
+                    <div>
+                        <label class="block text-sm font-medium text-gray-300 mb-2">How would you rate your experience?</label>
+                        <div class="star-rating flex flex-row-reverse justify-center md:justify-start gap-1">
+                            <input type="radio" id="star5" name="rating" value="5" /><label for="star5" title="5 stars"><span class="material-symbols-outlined text-3xl">star</span></label>
+                            <input type="radio" id="star4" name="rating" value="4" /><label for="star4" title="4 stars"><span class="material-symbols-outlined text-3xl">star</span></label>
+                            <input type="radio" id="star3" name="rating" value="3" /><label for="star3" title="3 stars"><span class="material-symbols-outlined text-3xl">star</span></label>
+                            <input type="radio" id="star2" name="rating" value="2" /><label for="star2" title="2 stars"><span class="material-symbols-outlined text-3xl">star</span></label>
+                            <input type="radio" id="star1" name="rating" value="1" /><label for="star1" title="1 star"><span class="material-symbols-outlined text-3xl">star</span></label>
                         </div>
+                    </div>
 
-                        <a href="/new-chat.html" class="pro-glass-btn bg-purple-600/30 border-purple-500/50 hover:bg-purple-600/50 text-white font-bold py-2.5 px-6 transition duration-300 flex items-center justify-center whitespace-nowrap shadow-[0_0_15px_rgba(147,51,234,0.3)] hover:shadow-[0_0_25px_rgba(147,51,234,0.5)]">
-                            <span class="material-symbols-outlined mr-2">add</span> Weave New
-                        </a>
+                    <div>
+                        <label for="message" class="block text-sm font-medium text-gray-300 mb-1">Your Message</label>
+                        <textarea id="message" rows="4" required class="glass-input w-full py-3 px-4 rounded-xl text-white placeholder-gray-500 focus:outline-none resize-none" placeholder="Tell us what you think..."></textarea>
                     </div>
-                </div>
 
-                <div id="history-grid" class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
-                    <div id="loader" class="col-span-full flex flex-col items-center justify-center h-64">
-                        <div class="animate-spin rounded-full h-16 w-16 border-t-2 border-b-2 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                        <p class="mt-4 text-lg text-gray-300 animate-pulse">Weaving your history...</p>
+                    <div class="text-center pt-2">
+                         <button class="w-full sm:w-auto sm:min-w-[200px] flex justify-center items-center py-3.5 px-8 border border-transparent rounded-xl shadow-[0_4px_15px_rgba(147,51,234,0.4)] text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 hover:shadow-[0_6px_25px_rgba(147,51,234,0.6)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-500 transition-all duration-300 transform hover:-translate-y-0.5" type="submit">
+                            <span class="material-symbols-outlined align-middle mr-2">send</span>
+                            Submit Feedback
+                        </button>
                     </div>
-                    <div id="empty-state" class="col-span-full hidden flex-col items-center justify-center h-64 pro-glass p-8 text-center">
-                        <span class="material-symbols-outlined text-7xl text-purple-400 drop-shadow-md">history_edu</span>
-                        <h3 class="text-2xl font-bold mt-4 text-white">No Lessons Found</h3>
-                        <p class="text-gray-400 mt-2">Try adjusting your filters or search term.</p>
-                    </div>
-                </div>
+                </form>
             </div>
         </main>
         
         <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto z-10">
-            <p class="text-sm text-gray-500">Made By: Monika Pathak</p>
+            <p class="text-xs text-gray-500">Made By: Monika Pathak</p>
         </footer>
     </div>
-
-    <div id="lesson-modal" class="fixed inset-0 bg-black/80 backdrop-blur-sm flex items-center justify-center p-4 z-[60] hidden">
-        <div id="modal-container" class="pro-glass w-full max-w-4xl max-h-[90vh] flex flex-col shadow-2xl">
-            <header class="flex items-center justify-between p-6 border-b border-white/10">
-                <h3 id="modal-title" class="text-2xl font-bold text-white drop-shadow-sm">Lesson Details</h3>
-                <button id="modal-close-btn" class="text-gray-400 hover:text-white transition-colors">
-                    <span class="material-symbols-outlined text-3xl">close</span>
-                </button>
-            </header>
-            <main id="modal-content" class="p-6 overflow-y-auto modal-content custom-scrollbar">
-                <div id="modal-loader" class="flex justify-center items-center h-48">
-                    <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
-                </div>
-            </main>
-        </div>
-    </div>
-
-    <script type="module" src="js/History.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
     <script>
     document.addEventListener('DOMContentLoaded', () => {
@@ -315,30 +322,40 @@
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             const curtain = document.getElementById('page-curtain');
-            
-            setTimeout(() => {
-                curtain.classList.add('opacity-0');
-            }, 100); 
+            setTimeout(() => { curtain.classList.add('opacity-0'); }, 100); 
 
             const links = document.querySelectorAll('.transition-link');
-            
             links.forEach(link => {
                 link.addEventListener('click', (e) => {
                     e.preventDefault();
                     const target = link.getAttribute('href');
-                    
                     curtain.classList.remove('opacity-0');
-                    
-                    setTimeout(() => {
-                        window.location.href = target;
-                    }, 500); 
+                    setTimeout(() => { window.location.href = target; }, 500); 
                 });
             });
 
             window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    curtain.classList.add('opacity-0');
-                }
+                if (event.persisted) { curtain.classList.add('opacity-0'); }
+            });
+            
+            // --- USER DATA PRE-POPULATION (Mock) ---
+            // In a real app, this would be fetched from your backend/API
+            const user = {
+                name: "Jane Doe",
+                email: "jane.doe@example.com"
+            };
+
+            const nameInput = document.getElementById('name');
+            const emailInput = document.getElementById('email');
+
+            if (nameInput) nameInput.value = user.name;
+            if (emailInput) emailInput.value = user.email;
+
+            // Form Handler
+            document.getElementById('feedback-form').addEventListener('submit', (e) => {
+                e.preventDefault();
+                alert('Thank you for your feedback! We are listening.');
+                window.location.href = 'dashboard.html';
             });
         });
     </script>

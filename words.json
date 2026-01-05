@@ -1,0 +1,2198 @@
+[
+  {
+    "date": "01/01/2026",
+    "word": "Absolution",
+    "pronunciation": "/ˌæb.səˈluː.ʃən/",
+    "meaning": "The act of forgiving or freeing from guilt."
+  },
+  {
+    "date": "02/01/2026",
+    "word": "Abundance",
+    "pronunciation": "/əˈbʌn.dəns/",
+    "meaning": "A large quantity; the state of plenty."
+  },
+  {
+    "date": "03/01/2026",
+    "word": "Acceptance",
+    "pronunciation": "/əkˈsep.təns/",
+    "meaning": "The act of receiving or agreeing to something offered."
+  },
+  {
+    "date": "04/01/2026",
+    "word": "Acumen",
+    "pronunciation": "/ˈæk.jʊ.mən/",
+    "meaning": "Sharpness of mind and judgment."
+  },
+  {
+    "date": "05/01/2026",
+    "word": "Adaptability",
+    "pronunciation": "/əˌdæp.təˈbɪl.ɪ.ti/",
+    "meaning": "Flexibility to adjust to changing circumstances."
+  },
+  {
+    "date": "06/01/2026",
+    "word": "Adversity",
+    "pronunciation": "/ədˈvɜː.sɪ.ti/",
+    "meaning": "A difficult or unpleasant situation."
+  },
+  {
+    "date": "07/01/2026",
+    "word": "Aesthetic",
+    "pronunciation": "/iːsˈθet.ɪk/",
+    "meaning": "Concerned with beauty or artistic expression."
+  },
+  {
+    "date": "08/01/2026",
+    "word": "Altruism",
+    "pronunciation": "/ˈæl.truː.ɪ.zəm/",
+    "meaning": "Selfless concern for others' well-being."
+  },
+  {
+    "date": "09/01/2026",
+    "word": "Ambience",
+    "pronunciation": "/ˈæm.bi.əns/",
+    "meaning": "The atmosphere or mood of a place."
+  },
+  {
+    "date": "10/01/2026",
+    "word": "Ambivalence",
+    "pronunciation": "/æmˈbɪv.ə.ləns/",
+    "meaning": "Mixed or contradictory feelings."
+  },
+  {
+    "date": "11/01/2026",
+    "word": "Amelioration",
+    "pronunciation": "/əˌmiːl.jəˈreɪ.ʃən/",
+    "meaning": "The process of improvement or betterment."
+  },
+  {
+    "date": "12/01/2026",
+    "word": "Anachronism",
+    "pronunciation": "/əˈnæk.rə.nɪ.zəm/",
+    "meaning": "Something placed out of its proper time period."
+  },
+  {
+    "date": "13/01/2026",
+    "word": "Anguish",
+    "pronunciation": "/ˈæŋ.ɡwɪʃ/",
+    "meaning": "Severe mental or physical pain."
+  },
+  {
+    "date": "14/01/2026",
+    "word": "Apathy",
+    "pronunciation": "/ˈæp.ə.θi/",
+    "meaning": "Lack of interest, enthusiasm, or concern."
+  },
+  {
+    "date": "15/01/2026",
+    "word": "Aperture",
+    "pronunciation": "/ˈæp.ə.tʃər/",
+    "meaning": "An opening or gap that lets light in."
+  },
+  {
+    "date": "16/01/2026",
+    "word": "Apparition",
+    "pronunciation": "/ˌæp.əˈrɪʃ.ən/",
+    "meaning": "A ghostly figure or sudden appearance."
+  },
+  {
+    "date": "17/01/2026",
+    "word": "Aspiration",
+    "pronunciation": "/ˌæs.pɪˈreɪ.ʃən/",
+    "meaning": "A strong desire to achieve something great."
+  },
+  {
+    "date": "18/01/2026",
+    "word": "Authenticity",
+    "pronunciation": "/ˌɔː.θenˈtɪs.ɪ.ti/",
+    "meaning": "Being genuine, real, or true to one's nature."
+  },
+  {
+    "date": "19/01/2026",
+    "word": "Awakening",
+    "pronunciation": "/əˈweɪ.kən.ɪŋ/",
+    "meaning": "A sudden awareness or realization."
+  },
+  {
+    "date": "20/01/2026",
+    "word": "Awareness",
+    "pronunciation": "/əˈweə.nəs/",
+    "meaning": "Conscious understanding or perception."
+  },
+  {
+    "date": "21/01/2026",
+    "word": "Balance",
+    "pronunciation": "/ˈbæl.əns/",
+    "meaning": "Stability and harmony between parts."
+  },
+  {
+    "date": "22/01/2026",
+    "word": "Beauty",
+    "pronunciation": "/ˈbjuː.ti/",
+    "meaning": "Qualities that give pleasure to senses or spirit."
+  },
+  {
+    "date": "23/01/2026",
+    "word": "Benevolence",
+    "pronunciation": "/bəˈnev.ə.ləns/",
+    "meaning": "Kindness and goodwill toward others."
+  },
+  {
+    "date": "24/01/2026",
+    "word": "Bravery",
+    "pronunciation": "/ˈbreɪ.vər.i/",
+    "meaning": "Courage in the face of fear or difficulty."
+  },
+  {
+    "date": "25/01/2026",
+    "word": "Brilliance",
+    "pronunciation": "/ˈbrɪl.jəns/",
+    "meaning": "Exceptional talent or intelligence."
+  },
+  {
+    "date": "26/01/2026",
+    "word": "Candor",
+    "pronunciation": "/ˈkæn.dər/",
+    "meaning": "The quality of being open and honest."
+  },
+  {
+    "date": "27/01/2026",
+    "word": "Care",
+    "pronunciation": "/keər/",
+    "meaning": "Serious attention or consideration; concern for others."
+  },
+  {
+    "date": "28/01/2026",
+    "word": "Catharsis",
+    "pronunciation": "/kəˈθɑː.sɪs/",
+    "meaning": "Emotional release through art or experience."
+  },
+  {
+    "date": "29/01/2026",
+    "word": "Celebrative",
+    "pronunciation": "/ˈsel.ɪ.brə.tɪv/",
+    "meaning": "Expressing joy or appreciation through celebration."
+  },
+  {
+    "date": "30/01/2026",
+    "word": "Charity",
+    "pronunciation": "/ˈtʃær.ɪ.ti/",
+    "meaning": "Love and kindness toward those in need."
+  },
+  {
+    "date": "31/01/2026",
+    "word": "Clarity",
+    "pronunciation": "/ˈklær.ɪ.ti/",
+    "meaning": "Clearness of thought, expression, or purpose."
+  },
+  {
+    "date": "01/02/2026",
+    "word": "Coherence",
+    "pronunciation": "/kəʊˈhɪə.rəns/",
+    "meaning": "Logical and consistent connection."
+  },
+  {
+    "date": "02/02/2026",
+    "word": "Collectivism",
+    "pronunciation": "/kəˈlek.tɪ.vɪ.zəm/",
+    "meaning": "A focus on group over individual interests."
+  },
+  {
+    "date": "03/02/2026",
+    "word": "Commitment",
+    "pronunciation": "/kəˈmɪt.mənt/",
+    "meaning": "Dedication to a person, cause, or goal."
+  },
+  {
+    "date": "04/02/2026",
+    "word": "Compassion",
+    "pronunciation": "/kəmˈpæʃ.ən/",
+    "meaning": "Feeling concern and wanting to help others."
+  },
+  {
+    "date": "05/02/2026",
+    "word": "Compassionate",
+    "pronunciation": "/kəmˈpæʃ.ən.ət/",
+    "meaning": "Feeling and showing concern for others' suffering."
+  },
+  {
+    "date": "06/02/2026",
+    "word": "Composure",
+    "pronunciation": "/kəmˈpəʊ.ʒər/",
+    "meaning": "A calm state of mind and self-control."
+  },
+  {
+    "date": "07/02/2026",
+    "word": "Conscience",
+    "pronunciation": "/ˈkɒn.ʃəns/",
+    "meaning": "An inner sense of right and wrong."
+  },
+  {
+    "date": "08/02/2026",
+    "word": "Conscientious",
+    "pronunciation": "/ˌkɒn.ʃiˈen.ʃəs/",
+    "meaning": "Doing work carefully and responsibly."
+  },
+  {
+    "date": "09/02/2026",
+    "word": "Conscientiousness",
+    "pronunciation": "/ˌkɒn.ʃiˈen.ʃəs.nəs/",
+    "meaning": "Thoroughness; doing one's work with care."
+  },
+  {
+    "date": "10/02/2026",
+    "word": "Consistency",
+    "pronunciation": "/kənˈsɪs.tən.si/",
+    "meaning": "Reliability and uniformity of action or thought."
+  },
+  {
+    "date": "11/02/2026",
+    "word": "Convergence",
+    "pronunciation": "/kənˈvɜː.dʒəns/",
+    "meaning": "Coming together from different directions."
+  },
+  {
+    "date": "12/02/2026",
+    "word": "Conviction",
+    "pronunciation": "/kənˈvɪk.ʃən/",
+    "meaning": "A firmly held belief or opinion."
+  },
+  {
+    "date": "13/02/2026",
+    "word": "Cooperation",
+    "pronunciation": "/kəʊˌɒp.ərˈeɪ.ʃən/",
+    "meaning": "Working together toward a common goal."
+  },
+  {
+    "date": "14/02/2026",
+    "word": "Courage",
+    "pronunciation": "/ˈkʌr.ɪdʒ/",
+    "meaning": "Bravery to face fear or adversity."
+  },
+  {
+    "date": "15/02/2026",
+    "word": "Courageousness",
+    "pronunciation": "/kəˈreɪ.dʒəs.nəs/",
+    "meaning": "Willingness to face fears bravely."
+  },
+  {
+    "date": "16/02/2026",
+    "word": "Creativity",
+    "pronunciation": "/ˌkriː.eɪˈtɪv.ɪ.ti/",
+    "meaning": "The ability to think imaginatively and inventively."
+  },
+  {
+    "date": "17/02/2026",
+    "word": "Curiosity",
+    "pronunciation": "/ˌkjʊə.riˈɒs.ɪ.ti/",
+    "meaning": "The desire to know or learn something new."
+  },
+  {
+    "date": "18/02/2026",
+    "word": "Daring",
+    "pronunciation": "/ˈdeə.rɪŋ/",
+    "meaning": "Adventurous courage; willingness to take risks."
+  },
+  {
+    "date": "19/02/2026",
+    "word": "Dedication",
+    "pronunciation": "/ˌded.ɪˈkeɪ.ʃən/",
+    "meaning": "Devotion to a purpose or task."
+  },
+  {
+    "date": "20/02/2026",
+    "word": "Deliberation",
+    "pronunciation": "/dɪˌlɪb.əˈreɪ.ʃən/",
+    "meaning": "Careful thought before making a decision."
+  },
+  {
+    "date": "21/02/2026",
+    "word": "Delight",
+    "pronunciation": "/dɪˈlaɪt/",
+    "meaning": "A strong feeling of joy or pleasure."
+  },
+  {
+    "date": "22/02/2026",
+    "word": "Demeanor",
+    "pronunciation": "/dɪˈmiː.nər/",
+    "meaning": "A person's outward behavior or bearing."
+  },
+  {
+    "date": "23/02/2026",
+    "word": "Dependability",
+    "pronunciation": "/dɪˌpen.dəˈbɪl.ɪ.ti/",
+    "meaning": "The quality of being trustworthy and reliable."
+  },
+  {
+    "date": "24/02/2026",
+    "word": "Determination",
+    "pronunciation": "/dɪˌtɜː.mɪˈneɪ.ʃən/",
+    "meaning": "Strong will to achieve goals."
+  },
+  {
+    "date": "25/02/2026",
+    "word": "Dignified",
+    "pronunciation": "/ˈdɪɡ.nɪ.faɪd/",
+    "meaning": "Showing calm seriousness and self-respect."
+  },
+  {
+    "date": "26/02/2026",
+    "word": "Dignity",
+    "pronunciation": "/ˈdɪɡ.nɪ.ti/",
+    "meaning": "The state of being worthy of respect."
+  },
+  {
+    "date": "27/02/2026",
+    "word": "Diligence",
+    "pronunciation": "/ˈdɪl.ɪ.dʒəns/",
+    "meaning": "Careful and persistent work effort."
+  },
+  {
+    "date": "28/02/2026",
+    "word": "Discipline",
+    "pronunciation": "/ˈdɪs.ɪ.plɪn/",
+    "meaning": "Training to develop control or order."
+  },
+  {
+    "date": "01/03/2026",
+    "word": "Discovery",
+    "pronunciation": "/dɪˈskʌ.vər.i/",
+    "meaning": "The act of finding or learning something new."
+  },
+  {
+    "date": "02/03/2026",
+    "word": "Diversity",
+    "pronunciation": "/daɪˈvɜː.sə.ti/",
+    "meaning": "Variety; inclusion of different forms or ideas."
+  },
+  {
+    "date": "03/03/2026",
+    "word": "Empathy",
+    "pronunciation": "/ˈem.pə.θi/",
+    "meaning": "The ability to understand and share the feelings of others."
+  },
+  {
+    "date": "04/03/2026",
+    "word": "Empirical",
+    "pronunciation": "/ɪmˈpɪr.ɪ.kəl/",
+    "meaning": "Based on observation or experience rather than theory."
+  },
+  {
+    "date": "05/03/2026",
+    "word": "Encouragement",
+    "pronunciation": "/ɪnˈkʌr.ɪdʒ.mənt/",
+    "meaning": "Giving confidence or support."
+  },
+  {
+    "date": "06/03/2026",
+    "word": "Endurance",
+    "pronunciation": "/ɪnˈdjʊə.rəns/",
+    "meaning": "The ability to keep going despite difficulties."
+  },
+  {
+    "date": "07/03/2026",
+    "word": "Enigma",
+    "pronunciation": "/ɪˈnɪɡ.mə/",
+    "meaning": "A person or thing that is mysterious or puzzling."
+  },
+  {
+    "date": "08/03/2026",
+    "word": "Enlightened",
+    "pronunciation": "/ɪnˈlaɪ.tənd/",
+    "meaning": "Having spiritual or intellectual insight."
+  },
+  {
+    "date": "09/03/2026",
+    "word": "Enlightenment",
+    "pronunciation": "/ɪnˈlaɪ.tən.mənt/",
+    "meaning": "A state of deep intellectual or spiritual insight."
+  },
+  {
+    "date": "10/03/2026",
+    "word": "Equanimity",
+    "pronunciation": "/ˌek.wəˈnɪ.mɪ.ti/",
+    "meaning": "Calmness and composure, especially under pressure."
+  },
+  {
+    "date": "11/03/2026",
+    "word": "Equilibrium",
+    "pronunciation": "/ˌiː.kwɪˈlɪb.ri.əm/",
+    "meaning": "A balanced state of mind or system."
+  },
+  {
+    "date": "12/03/2026",
+    "word": "Ethics",
+    "pronunciation": "/ˈeθ.ɪks/",
+    "meaning": "Moral principles guiding behavior."
+  },
+  {
+    "date": "13/03/2026",
+    "word": "Ethos",
+    "pronunciation": "/ˈiː.θɒs/",
+    "meaning": "The guiding character or spirit of a culture or group."
+  },
+  {
+    "date": "14/03/2026",
+    "word": "Euphoria",
+    "pronunciation": "/juːˈfɔː.ri.ə/",
+    "meaning": "A strong feeling of happiness and excitement."
+  },
+  {
+    "date": "15/03/2026",
+    "word": "Evaluation",
+    "pronunciation": "/ɪˌvæl.juˈeɪ.ʃən/",
+    "meaning": "Careful judgment about value or quality."
+  },
+  {
+    "date": "16/03/2026",
+    "word": "Evolution",
+    "pronunciation": "/ˌiː.vəˈluː.ʃən/",
+    "meaning": "Gradual development or change over time."
+  },
+  {
+    "date": "17/03/2026",
+    "word": "Exuberance",
+    "pronunciation": "/ɪɡˈzjuː.bə.rəns/",
+    "meaning": "Energetic liveliness and enthusiasm."
+  },
+  {
+    "date": "18/03/2026",
+    "word": "Fairness",
+    "pronunciation": "/ˈfeə.nəs/",
+    "meaning": "The quality of being impartial and just."
+  },
+  {
+    "date": "19/03/2026",
+    "word": "Faith",
+    "pronunciation": "/feɪθ/",
+    "meaning": "Complete trust or confidence in something or someone."
+  },
+  {
+    "date": "20/03/2026",
+    "word": "Faithfulness",
+    "pronunciation": "/ˈfeɪθ.fəl.nəs/",
+    "meaning": "Loyalty and steadfastness."
+  },
+  {
+    "date": "21/03/2026",
+    "word": "Fervor",
+    "pronunciation": "/ˈfɜː.vər/",
+    "meaning": "Intense passion or emotion."
+  },
+  {
+    "date": "22/03/2026",
+    "word": "Fidelity",
+    "pronunciation": "/fɪˈdel.ɪ.ti/",
+    "meaning": "Faithfulness and loyalty."
+  },
+  {
+    "date": "23/03/2026",
+    "word": "Flexibility",
+    "pronunciation": "/ˌflek.sɪˈbɪl.ɪ.ti/",
+    "meaning": "Willingness to change or be adaptable."
+  },
+  {
+    "date": "24/03/2026",
+    "word": "Forgiveness",
+    "pronunciation": "/fəˈɡɪv.nəs/",
+    "meaning": "Letting go of resentment or anger."
+  },
+  {
+    "date": "25/03/2026",
+    "word": "Fortitude",
+    "pronunciation": "/ˈfɔː.tɪ.tjuːd/",
+    "meaning": "Courage in facing difficulties."
+  },
+  {
+    "date": "26/03/2026",
+    "word": "Fraternity",
+    "pronunciation": "/frəˈtɜː.nɪ.ti/",
+    "meaning": "Brotherhood or companionship among people."
+  },
+  {
+    "date": "27/03/2026",
+    "word": "Freedom",
+    "pronunciation": "/ˈfriː.dəm/",
+    "meaning": "The power or right to act, speak, or think freely."
+  },
+  {
+    "date": "28/03/2026",
+    "word": "Fulfillment",
+    "pronunciation": "/fʊlˈfɪl.mənt/",
+    "meaning": "Satisfaction from achieving purpose or desire."
+  },
+  {
+    "date": "29/03/2026",
+    "word": "Generosity",
+    "pronunciation": "/ˌdʒen.əˈrɒs.ɪ.ti/",
+    "meaning": "Willingness to give or share freely."
+  },
+  {
+    "date": "30/03/2026",
+    "word": "Gentleness",
+    "pronunciation": "/ˈdʒen.təl.nəs/",
+    "meaning": "Mildness; tenderness in behavior."
+  },
+  {
+    "date": "31/03/2026",
+    "word": "Grace",
+    "pronunciation": "/ɡreɪs/",
+    "meaning": "Elegance and calm kindness in action."
+  },
+  {
+    "date": "01/04/2026",
+    "word": "Gratification",
+    "pronunciation": "/ˌɡræt.ɪ.fɪˈkeɪ.ʃən/",
+    "meaning": "Pleasure or satisfaction gained from something."
+  },
+  {
+    "date": "02/04/2026",
+    "word": "Gratitude",
+    "pronunciation": "/ˈɡræt.ɪ.tjuːd/",
+    "meaning": "Deep appreciation for kindness or gifts received."
+  },
+  {
+    "date": "03/04/2026",
+    "word": "Growth",
+    "pronunciation": "/ɡrəʊθ/",
+    "meaning": "Development or positive change over time."
+  },
+  {
+    "date": "04/04/2026",
+    "word": "Harmony",
+    "pronunciation": "/ˈhɑː.mə.ni/",
+    "meaning": "Peaceful and balanced coexistence."
+  },
+  {
+    "date": "05/04/2026",
+    "word": "Healing",
+    "pronunciation": "/ˈhiː.lɪŋ/",
+    "meaning": "The process of becoming whole and healthy."
+  },
+  {
+    "date": "06/04/2026",
+    "word": "Hope",
+    "pronunciation": "/həʊp/",
+    "meaning": "Expectation and desire for positive outcomes."
+  },
+  {
+    "date": "07/04/2026",
+    "word": "Hopefulness",
+    "pronunciation": "/ˈhəʊp.fəl.nəs/",
+    "meaning": "The feeling of optimism or expectation of good."
+  },
+  {
+    "date": "08/04/2026",
+    "word": "Honor",
+    "pronunciation": "/ˈɒn.ər/",
+    "meaning": "High respect; adherence to moral code."
+  },
+  {
+    "date": "09/04/2026",
+    "word": "Honesty",
+    "pronunciation": "/ˈɒn.ɪ.sti/",
+    "meaning": "The quality of being truthful and sincere."
+  },
+  {
+    "date": "10/04/2026",
+    "word": "Humanity",
+    "pronunciation": "/hjuːˈmæn.ɪ.ti/",
+    "meaning": "The quality of being kind, compassionate, and humane."
+  }
+]
+[
+  {
+    "date": "11/04/2026",
+    "word": "Humility",
+    "pronunciation": "/hjuːˈmɪl.ɪ.ti/",
+    "meaning": "Modest view of one's own importance."
+  },
+  {
+    "date": "12/04/2026",
+    "word": "Idealism",
+    "pronunciation": "/aɪˈdɪə.lɪ.zəm/",
+    "meaning": "Belief in pursuing noble or perfect goals."
+  },
+  {
+    "date": "13/04/2026",
+    "word": "Illumination",
+    "pronunciation": "/ɪˌluː.mɪˈneɪ.ʃən/",
+    "meaning": "Insight or enlightenment."
+  },
+  {
+    "date": "14/04/2026",
+    "word": "Imagination",
+    "pronunciation": "/ɪˌmædʒ.ɪˈneɪ.ʃən/",
+    "meaning": "The power to create ideas in the mind."
+  },
+  {
+    "date": "15/04/2026",
+    "word": "Impeccability",
+    "pronunciation": "/ɪmˌpek.əˈbɪl.ɪ.ti/",
+    "meaning": "The quality of being flawless or perfect."
+  },
+  {
+    "date": "16/04/2026",
+    "word": "Imperturbability",
+    "pronunciation": "/ɪmˌpɜː.tɜː.bəˈbɪl.ɪ.ti/",
+    "meaning": "Remaining calm in difficult situations."
+  },
+  {
+    "date": "17/04/2026",
+    "word": "Inclusion",
+    "pronunciation": "/ɪnˈkluː.ʒən/",
+    "meaning": "The act of involving and valuing everyone equally."
+  },
+  {
+    "date": "18/04/2026",
+    "word": "Indelibility",
+    "pronunciation": "/ɪnˌdel.ɪˈbɪl.ɪ.ti/",
+    "meaning": "Permanence; inability to be erased."
+  },
+  {
+    "date": "19/04/2026",
+    "word": "Independence",
+    "pronunciation": "/ˌɪn.dɪˈpen.dəns/",
+    "meaning": "Freedom to act or think for oneself."
+  },
+  {
+    "date": "20/04/2026",
+    "word": "Industry",
+    "pronunciation": "/ˈɪn.də.stri/",
+    "meaning": "Steady, diligent, and hardworking effort."
+  },
+  {
+    "date": "21/04/2026",
+    "word": "Ineffable",
+    "pronunciation": "/ɪnˈef.ə.bəl/",
+    "meaning": "Too great or beautiful to be expressed in words."
+  },
+  {
+    "date": "22/04/2026",
+    "word": "Inevitability",
+    "pronunciation": "/ɪnˌev.ɪ.təˈbɪl.ɪ.ti/",
+    "meaning": "The state of being certain to happen."
+  },
+  {
+    "date": "23/04/2026",
+    "word": "Ingenuity",
+    "pronunciation": "/ˌɪn.dʒəˈnjuː.ɪ.ti/",
+    "meaning": "Cleverness and inventiveness."
+  },
+  {
+    "date": "24/04/2026",
+    "word": "Innocence",
+    "pronunciation": "/ˈɪn.ə.səns/",
+    "meaning": "The state of being pure and free from guilt."
+  },
+  {
+    "date": "25/04/2026",
+    "word": "Insight",
+    "pronunciation": "/ˈɪn.saɪt/",
+    "meaning": "Deep understanding of a person or situation."
+  },
+  {
+    "date": "26/04/2026",
+    "word": "Insightfulness",
+    "pronunciation": "/ˈɪn.saɪt.fəl.nəs/",
+    "meaning": "Having deep perception and understanding."
+  },
+  {
+    "date": "27/04/2026",
+    "word": "Inspiration",
+    "pronunciation": "/ˌɪn.spɪˈreɪ.ʃən/",
+    "meaning": "The process of being mentally stimulated to act."
+  },
+  {
+    "date": "28/04/2026",
+    "word": "Integrity",
+    "pronunciation": "/ɪnˈteɡ.rə.ti/",
+    "meaning": "Moral uprightness; unity between thought and action."
+  },
+  {
+    "date": "29/04/2026",
+    "word": "Introspection",
+    "pronunciation": "/ˌɪn.trəˈspek.ʃən/",
+    "meaning": "Thoughtful examination of one's feelings."
+  },
+  {
+    "date": "30/04/2026",
+    "word": "Intuition",
+    "pronunciation": "/ˌɪn.tjuˈɪ.ʃən/",
+    "meaning": "Knowing something instinctively, without reasoning."
+  },
+  {
+    "date": "01/05/2026",
+    "word": "Invigoration",
+    "pronunciation": "/ɪnˌvɪɡ.əˈreɪ.ʃən/",
+    "meaning": "A feeling of renewed energy or vitality."
+  },
+  {
+    "date": "02/05/2026",
+    "word": "Joy",
+    "pronunciation": "/dʒɔɪ/",
+    "meaning": "Great happiness and delight."
+  },
+  {
+    "date": "03/05/2026",
+    "word": "Judiciousness",
+    "pronunciation": "/dʒuːˈdɪʃ.əs.nəs/",
+    "meaning": "Wisdom in making fair and sensible decisions."
+  },
+  {
+    "date": "04/05/2026",
+    "word": "Justice",
+    "pronunciation": "/ˈdʒʌs.tɪs/",
+    "meaning": "Fair treatment and moral rightness."
+  },
+  {
+    "date": "05/05/2026",
+    "word": "Kindheartedness",
+    "pronunciation": "/ˌkaɪndˈhɑː.tɪd.nəs/",
+    "meaning": "Warm, generous nature full of goodwill."
+  },
+  {
+    "date": "06/05/2026",
+    "word": "Kindness",
+    "pronunciation": "/ˈkaɪnd.nəs/",
+    "meaning": "The quality of being friendly, generous, and considerate."
+  },
+  {
+    "date": "07/05/2026",
+    "word": "Kindred",
+    "pronunciation": "/ˈkɪn.drɪd/",
+    "meaning": "Having a natural connection or similarity."
+  },
+  {
+    "date": "08/05/2026",
+    "word": "Knowledge",
+    "pronunciation": "/ˈnɒl.ɪdʒ/",
+    "meaning": "Information, awareness, and understanding gained by learning."
+  },
+  {
+    "date": "09/05/2026",
+    "word": "Learning",
+    "pronunciation": "/ˈlɜː.nɪŋ/",
+    "meaning": "Acquiring new knowledge, skills, or attitudes."
+  },
+  {
+    "date": "10/05/2026",
+    "word": "Legacy",
+    "pronunciation": "/ˈleɡ.ə.si/",
+    "meaning": "Something handed down from the past; lasting impact."
+  },
+  {
+    "date": "11/05/2026",
+    "word": "Liberty",
+    "pronunciation": "/ˈlɪb.ə.ti/",
+    "meaning": "Freedom to think and act according to one's will."
+  },
+  {
+    "date": "12/05/2026",
+    "word": "Listening",
+    "pronunciation": "/ˈlɪs.ən.ɪŋ/",
+    "meaning": "Giving thoughtful attention to what is said."
+  },
+  {
+    "date": "13/05/2026",
+    "word": "Logic",
+    "pronunciation": "/ˈlɒdʒ.ɪk/",
+    "meaning": "Reasoning conducted according to principles of validity."
+  },
+  {
+    "date": "14/05/2026",
+    "word": "Longevity",
+    "pronunciation": "/lɒnˈdʒev.ɪ.ti/",
+    "meaning": "Long life or duration of existence."
+  },
+  {
+    "date": "15/05/2026",
+    "word": "Love",
+    "pronunciation": "/lʌv/",
+    "meaning": "Deep affection, care, and connectedness."
+  },
+  {
+    "date": "16/05/2026",
+    "word": "Lucidity",
+    "pronunciation": "/luːˈsɪd.ɪ.ti/",
+    "meaning": "Clarity of thought and expression."
+  },
+  {
+    "date": "17/05/2026",
+    "word": "Magnanimity",
+    "pronunciation": "/ˌmæɡ.nəˈnɪ.mɪ.ti/",
+    "meaning": "Generosity toward those less powerful."
+  },
+  {
+    "date": "18/05/2026",
+    "word": "Maturity",
+    "pronunciation": "/məˈtʃʊə.rɪ.ti/",
+    "meaning": "Full development of mind or character."
+  },
+  {
+    "date": "19/05/2026",
+    "word": "Meditation",
+    "pronunciation": "/ˌmed.ɪˈteɪ.ʃən/",
+    "meaning": "Focused practice to develop awareness or calm."
+  },
+  {
+    "date": "20/05/2026",
+    "word": "Metacognition",
+    "pronunciation": "/ˌmet.ə.kɒɡˈnɪ.ʃən/",
+    "meaning": "Thinking about one's own thinking process."
+  },
+  {
+    "date": "21/05/2026",
+    "word": "Metamorphosis",
+    "pronunciation": "/ˌmet.əˈmɔː.fə.sɪs/",
+    "meaning": "A profound transformation or change."
+  },
+  {
+    "date": "22/05/2026",
+    "word": "Mindfulness",
+    "pronunciation": "/ˈmaɪnd.f(ə)l.nəs/",
+    "meaning": "Focused awareness on the present moment."
+  },
+  {
+    "date": "23/05/2026",
+    "word": "Mindset",
+    "pronunciation": "/ˈmaɪnd.set/",
+    "meaning": "Established set of attitudes or outlook."
+  },
+  {
+    "date": "24/05/2026",
+    "word": "Mitigation",
+    "pronunciation": "/ˌmɪt.ɪˈɡeɪ.ʃən/",
+    "meaning": "The act of making something less severe or harmful."
+  },
+  {
+    "date": "25/05/2026",
+    "word": "Modesty",
+    "pronunciation": "/ˈmɒd.ɪ.sti/",
+    "meaning": "Humbleness; not seeking attention for oneself."
+  },
+  {
+    "date": "26/05/2026",
+    "word": "Morality",
+    "pronunciation": "/məˈræl.ɪ.ti/",
+    "meaning": "Principles concerning right and wrong behavior."
+  },
+  {
+    "date": "27/05/2026",
+    "word": "Motivation",
+    "pronunciation": "/ˌməʊ.tɪˈveɪ.ʃən/",
+    "meaning": "The reason or drive behind actions."
+  },
+  {
+    "date": "28/05/2026",
+    "word": "Nobility",
+    "pronunciation": "/nəʊˈbɪl.ɪ.ti/",
+    "meaning": "The quality of having high moral character."
+  },
+  {
+    "date": "29/05/2026",
+    "word": "Nostalgia",
+    "pronunciation": "/nɒˈstæl.dʒə/",
+    "meaning": "A sentimental longing for the past."
+  },
+  {
+    "date": "30/05/2026",
+    "word": "Nurturing",
+    "pronunciation": "/ˈnɜː.tʃər.ɪŋ/",
+    "meaning": "Supporting growth and development with care."
+  },
+  {
+    "date": "31/05/2026",
+    "word": "Objectivity",
+    "pronunciation": "/ˌɒb.dʒekˈtɪv.ɪ.ti/",
+    "meaning": "Judgment free from bias or emotion."
+  },
+  {
+    "date": "01/06/2026",
+    "word": "Observation",
+    "pronunciation": "/ˌɒb.zəˈveɪ.ʃən/",
+    "meaning": "Careful attention to details and patterns."
+  },
+  {
+    "date": "02/06/2026",
+    "word": "Omniscience",
+    "pronunciation": "/ɒmˈnɪʃ.əns/",
+    "meaning": "Unlimited knowledge and understanding."
+  },
+  {
+    "date": "03/06/2026",
+    "word": "Openness",
+    "pronunciation": "/ˈəʊ.pən.nəs/",
+    "meaning": "Willingness to listen and accept new ideas."
+  },
+  {
+    "date": "04/06/2026",
+    "word": "Optimism",
+    "pronunciation": "/ˈɒp.tɪ.mɪ.zəm/",
+    "meaning": "Hopeful confidence about future outcomes."
+  },
+  {
+    "date": "05/06/2026",
+    "word": "Order",
+    "pronunciation": "/ˈɔː.dər/",
+    "meaning": "Neat, harmonious arrangement; structure."
+  },
+  {
+    "date": "06/06/2026",
+    "word": "Orderliness",
+    "pronunciation": "/ˈɔː.də.li.nəs/",
+    "meaning": "The state of being well-organized and tidy."
+  },
+  {
+    "date": "07/06/2026",
+    "word": "Originality",
+    "pronunciation": "/əˌrɪdʒ.ɪˈnæl.ɪ.ti/",
+    "meaning": "The ability to think or do something new and creative."
+  },
+  {
+    "date": "08/06/2026",
+    "word": "Paradox",
+    "pronunciation": "/ˈpær.ə.dɒks/",
+    "meaning": "A statement that seems contradictory yet true."
+  },
+  {
+    "date": "09/06/2026",
+    "word": "Passion",
+    "pronunciation": "/ˈpæʃ.ən/",
+    "meaning": "Intense enthusiasm or strong emotion."
+  },
+  {
+    "date": "10/06/2026",
+    "word": "Patience",
+    "pronunciation": "/ˈpeɪ.ʃəns/",
+    "meaning": "Calm endurance during delay or trouble."
+  },
+  {
+    "date": "11/06/2026",
+    "word": "Perception",
+    "pronunciation": "/pəˈsep.ʃən/",
+    "meaning": "The ability to notice or understand through senses or mind."
+  },
+  {
+    "date": "12/06/2026",
+    "word": "Perseverance",
+    "pronunciation": "/ˌpɜː.sɪˈvɪə.rəns/",
+    "meaning": "Steady persistence despite difficulty."
+  },
+  {
+    "date": "13/06/2026",
+    "word": "Persistence",
+    "pronunciation": "/pəˈsɪs.təns/",
+    "meaning": "Continuing firmly in purpose despite obstacles."
+  },
+  {
+    "date": "14/06/2026",
+    "word": "Pertinence",
+    "pronunciation": "/ˈpɜː.tɪ.nəns/",
+    "meaning": "Relevance or appropriateness."
+  },
+  {
+    "date": "15/06/2026",
+    "word": "Philanthropy",
+    "pronunciation": "/fɪˈlæn.θrə.pi/",
+    "meaning": "The desire to promote the welfare of others."
+  },
+  {
+    "date": "16/06/2026",
+    "word": "Philosophical",
+    "pronunciation": "/ˌfɪl.əˈsɒf.ɪ.kəl/",
+    "meaning": "Relating to deep, rational thought."
+  },
+  {
+    "date": "17/06/2026",
+    "word": "Poignancy",
+    "pronunciation": "/ˈpɔɪn.jən.si/",
+    "meaning": "The quality of evoking deep emotions."
+  },
+  {
+    "date": "18/06/2026",
+    "word": "Poise",
+    "pronunciation": "/pɔɪz/",
+    "meaning": "Graceful balance and self-assured bearing."
+  },
+  {
+    "date": "19/06/2026",
+    "word": "Ponder",
+    "pronunciation": "/ˈpɒn.dər/",
+    "meaning": "To think carefully about something."
+  },
+  {
+    "date": "20/06/2026",
+    "word": "Positivity",
+    "pronunciation": "/ˌpɒ.zɪˈtɪ.vɪ.ti/",
+    "meaning": "The practice of focusing on good and hopeful outcomes."
+  },
+  {
+    "date": "21/06/2026",
+    "word": "Potential",
+    "pronunciation": "/pəˈten.ʃəl/",
+    "meaning": "Hidden ability or capacity for growth."
+  },
+  {
+    "date": "22/06/2026",
+    "word": "Pragmatism",
+    "pronunciation": "/ˈpræɡ.mə.tɪ.zəm/",
+    "meaning": "A practical approach to problems or ideas."
+  },
+  {
+    "date": "23/06/2026",
+    "word": "Predilection",
+    "pronunciation": "/ˌpriː.dɪˈlek.ʃən/",
+    "meaning": "A special liking or preference."
+  },
+  {
+    "date": "24/06/2026",
+    "word": "Presence",
+    "pronunciation": "/ˈprez.əns/",
+    "meaning": "The quality of being alert and fully engaged."
+  },
+  {
+    "date": "25/06/2026",
+    "word": "Preservation",
+    "pronunciation": "/ˌprez.əˈveɪ.ʃən/",
+    "meaning": "Maintaining something in its original state."
+  },
+  {
+    "date": "26/06/2026",
+    "word": "Preventive",
+    "pronunciation": "/prɪˈven.tɪv/",
+    "meaning": "Designed to stop something undesirable from happening."
+  },
+  {
+    "date": "27/06/2026",
+    "word": "Probity",
+    "pronunciation": "/ˈprəʊ.bɪ.ti/",
+    "meaning": "The quality of having strong moral integrity."
+  },
+  {
+    "date": "28/06/2026",
+    "word": "Productivity",
+    "pronunciation": "/ˌprɒd.ʌkˈtɪv.ɪ.ti/",
+    "meaning": "Efficiency and creativity in accomplishing work."
+  },
+  {
+    "date": "29/06/2026",
+    "word": "Profundity",
+    "pronunciation": "/prəˈfʌn.dɪ.ti/",
+    "meaning": "Depth of insight, knowledge, or feeling."
+  },
+  {
+    "date": "30/06/2026",
+    "word": "Progress",
+    "pronunciation": "/ˈprəʊ.ɡres/",
+    "meaning": "Forward movement or improvement."
+  },
+  {
+    "date": "01/07/2026",
+    "word": "Prudence",
+    "pronunciation": "/ˈpruː.dəns/",
+    "meaning": "Careful judgment that avoids risks."
+  },
+  {
+    "date": "02/07/2026",
+    "word": "Purpose",
+    "pronunciation": "/ˈpɜː.pəs/",
+    "meaning": "The reason for which something is done."
+  },
+  {
+    "date": "03/07/2026",
+    "word": "Purposefulness",
+    "pronunciation": "/ˈpɜː.pəs.fəl.nəs/",
+    "meaning": "Acting with clear direction and meaning."
+  },
+  {
+    "date": "04/07/2026",
+    "word": "Radiance",
+    "pronunciation": "/ˈreɪ.di.əns/",
+    "meaning": "Brightness or shining beauty."
+  },
+  {
+    "date": "05/07/2026",
+    "word": "Rationality",
+    "pronunciation": "/ˌræʃ.əˈnæl.ɪ.ti/",
+    "meaning": "Logic and reasoning in thought and action."
+  },
+  {
+    "date": "06/07/2026",
+    "word": "Realization",
+    "pronunciation": "/ˌrɪə.laɪˈzeɪ.ʃən/",
+    "meaning": "The act of becoming aware of something."
+  },
+  {
+    "date": "07/07/2026",
+    "word": "Reciprocity",
+    "pronunciation": "/ˌres.ɪˈprɒs.ɪ.ti/",
+    "meaning": "Mutual exchange of benefits or kindness."
+  },
+  {
+    "date": "08/07/2026",
+    "word": "Rectitude",
+    "pronunciation": "/ˈrek.tɪ.tjuːd/",
+    "meaning": "Moral integrity and righteousness."
+  },
+  {
+    "date": "09/07/2026",
+    "word": "Reflection",
+    "pronunciation": "/rɪˈflek.ʃən/",
+    "meaning": "Serious consideration or thought."
+  },
+  {
+    "date": "10/07/2026",
+    "word": "Refinement",
+    "pronunciation": "/rɪˈfaɪn.mənt/",
+    "meaning": "Elegance and purity of character or taste."
+  },
+  {
+    "date": "11/07/2026",
+    "word": "Regeneration",
+    "pronunciation": "/rɪˌdʒen.əˈreɪ.ʃən/",
+    "meaning": "Renewal or restoration of life or energy."
+  },
+  {
+    "date": "12/07/2026",
+    "word": "Rejuvenation",
+    "pronunciation": "/rɪˌdʒuː.vəˈneɪ.ʃən/",
+    "meaning": "The act of making young or new again."
+  },
+  {
+    "date": "13/07/2026",
+    "word": "Reliability",
+    "pronunciation": "/rɪˌlaɪ.əˈbɪl.ɪ.ti/",
+    "meaning": "Dependability; being consistently trustworthy."
+  },
+  {
+    "date": "14/07/2026",
+    "word": "Renewal",
+    "pronunciation": "/rɪˈnjuː.əl/",
+    "meaning": "The act of starting again with fresh energy."
+  },
+  {
+    "date": "15/07/2026",
+    "word": "Resilience",
+    "pronunciation": "/rɪˈzɪl.jəns/",
+    "meaning": "The ability to recover from challenges."
+  },
+  {
+    "date": "16/07/2026",
+    "word": "Resolution",
+    "pronunciation": "/ˌrez.əˈluː.ʃən/",
+    "meaning": "Firm determination to act."
+  },
+  {
+    "date": "17/07/2026",
+    "word": "Resourcefulness",
+    "pronunciation": "/rɪˈsɔːs.fəl.nəs/",
+    "meaning": "The ability to handle situations creatively and effectively."
+  },
+  {
+    "date": "18/07/2026",
+    "word": "Respect",
+    "pronunciation": "/rɪˈspekt/",
+    "meaning": "The ability to value and honor others equally."
+  },
+  {
+    "date": "19/07/2026",
+    "word": "Responsibility",
+    "pronunciation": "/rɪˌspɒn.sɪˈbɪl.ɪ.ti/",
+    "meaning": "Accountability for one's actions and duties."
+  },
+  {
+    "date": "20/07/2026",
+    "word": "Reverence",
+    "pronunciation": "/ˈrev.ər.əns/",
+    "meaning": "Deep respect, often spiritual in nature."
+  }
+]
+[
+  {
+    "date": "21/07/2026",
+    "word": "Rhythm",
+    "pronunciation": "/ˈrɪð.əm/",
+    "meaning": "Ordered movement or natural flow."
+  },
+  {
+    "date": "22/07/2026",
+    "word": "Righteousness",
+    "pronunciation": "/ˈraɪ.tʃəs.nəs/",
+    "meaning": "Moral uprightness or virtue."
+  },
+  {
+    "date": "23/07/2026",
+    "word": "Rigor",
+    "pronunciation": "/ˈrɪɡ.ər/",
+    "meaning": "Thoroughness and accuracy in process or action."
+  },
+  {
+    "date": "24/07/2026",
+    "word": "Sagacious",
+    "pronunciation": "/səˈɡeɪ.ʃəs/",
+    "meaning": "Wise and shrewd in understanding."
+  },
+  {
+    "date": "25/07/2026",
+    "word": "Sagacity",
+    "pronunciation": "/səˈɡæs.ɪ.ti/",
+    "meaning": "Keen mental discernment and wisdom."
+  },
+  {
+    "date": "26/07/2026",
+    "word": "Sanctity",
+    "pronunciation": "/ˈsæŋk.tɪ.ti/",
+    "meaning": "The state or quality of being holy or sacred."
+  },
+  {
+    "date": "27/07/2026",
+    "word": "Sanguinity",
+    "pronunciation": "/sæŋˈɡwɪ.nɪ.ti/",
+    "meaning": "Optimistic hopefulness, especially in hardship."
+  },
+  {
+    "date": "28/07/2026",
+    "word": "Self-awareness",
+    "pronunciation": "/self əˈweə.nəs/",
+    "meaning": "Conscious knowledge of one's character and emotions."
+  },
+  {
+    "date": "29/07/2026",
+    "word": "Self-discipline",
+    "pronunciation": "/self ˈdɪs.ɪ.plɪn/",
+    "meaning": "The ability to control one's impulses."
+  },
+  {
+    "date": "30/07/2026",
+    "word": "Sensitivity",
+    "pronunciation": "/ˌsen.sɪˈtɪv.ɪ.ti/",
+    "meaning": "Awareness and gentleness toward others' emotions."
+  },
+  {
+    "date": "31/07/2026",
+    "word": "Serenity",
+    "pronunciation": "/səˈren.ɪ.ti/",
+    "meaning": "A tranquil, calm state of being."
+  },
+  {
+    "date": "01/08/2026",
+    "word": "Serendipity",
+    "pronunciation": "/ˌser.ənˈdɪp.ɪ.ti/",
+    "meaning": "The occurrence of happy coincidences by chance."
+  },
+  {
+    "date": "02/08/2026",
+    "word": "Service",
+    "pronunciation": "/ˈsɜː.vɪs/",
+    "meaning": "Helping or contributing to others' welfare."
+  },
+  {
+    "date": "03/08/2026",
+    "word": "Simplicity",
+    "pronunciation": "/sɪmˈplɪs.ɪ.ti/",
+    "meaning": "Purity; absence of unnecessary complication."
+  },
+  {
+    "date": "04/08/2026",
+    "word": "Sincerity",
+    "pronunciation": "/sɪnˈseə.rɪ.ti/",
+    "meaning": "Genuine, honest expression without pretense."
+  },
+  {
+    "date": "05/08/2026",
+    "word": "Skillfulness",
+    "pronunciation": "/ˈskɪl.fəl.nəs/",
+    "meaning": "The quality of competence and dexterity."
+  },
+  {
+    "date": "06/08/2026",
+    "word": "Sobriety",
+    "pronunciation": "/səˈbraɪ.ə.ti/",
+    "meaning": "Seriousness, self-control, or freedom from excess."
+  },
+  {
+    "date": "07/08/2026",
+    "word": "Solitude",
+    "pronunciation": "/ˈsɒl.ɪ.tjuːd/",
+    "meaning": "The state of being alone but peaceful."
+  },
+  {
+    "date": "08/08/2026",
+    "word": "Solidarity",
+    "pronunciation": "/ˌsɒl.ɪˈdær.ɪ.ti/",
+    "meaning": "Unity and mutual support in a group."
+  },
+  {
+    "date": "09/08/2026",
+    "word": "Sophistication",
+    "pronunciation": "/səˌfɪs.tɪˈkeɪ.ʃən/",
+    "meaning": "Refinement and worldly experience."
+  },
+  {
+    "date": "10/08/2026",
+    "word": "Spirit",
+    "pronunciation": "/ˈspɪr.ɪt/",
+    "meaning": "The non-physical essence animating a person."
+  },
+  {
+    "date": "11/08/2026",
+    "word": "Spirituality",
+    "pronunciation": "/ˌspɪr.ɪ.tʃuˈæl.ɪ.ti/",
+    "meaning": "Connection with deeper purpose or higher self."
+  },
+  {
+    "date": "12/08/2026",
+    "word": "Spontaneity",
+    "pronunciation": "/ˌspɒn.təˈneɪ.ɪ.ti/",
+    "meaning": "Natural, unforced action or expression."
+  },
+  {
+    "date": "13/08/2026",
+    "word": "Stability",
+    "pronunciation": "/stəˈbɪl.ɪ.ti/",
+    "meaning": "The state of being strong and steady."
+  },
+  {
+    "date": "14/08/2026",
+    "word": "Stewardship",
+    "pronunciation": "/ˈstjuː.əd.ʃɪp/",
+    "meaning": "Responsible care for one's environment or duties."
+  },
+  {
+    "date": "15/08/2026",
+    "word": "Stoicism",
+    "pronunciation": "/ˈstəʊ.ɪ.sɪ.zəm/",
+    "meaning": "Enduring pain or hardship without complaint."
+  },
+  {
+    "date": "16/08/2026",
+    "word": "Strength",
+    "pronunciation": "/streŋkθ/",
+    "meaning": "Power to withstand challenges."
+  },
+  {
+    "date": "17/08/2026",
+    "word": "Sublimity",
+    "pronunciation": "/səˈblɪ.mɪ.ti/",
+    "meaning": "Greatness or beauty inspiring admiration."
+  },
+  {
+    "date": "18/08/2026",
+    "word": "Support",
+    "pronunciation": "/səˈpɔːt/",
+    "meaning": "Providing help, care, or encouragement."
+  },
+  {
+    "date": "19/08/2026",
+    "word": "Supportiveness",
+    "pronunciation": "/səˈpɔː.tɪv.nəs/",
+    "meaning": "The quality of providing encouragement or help."
+  },
+  {
+    "date": "20/08/2026",
+    "word": "Symmetry",
+    "pronunciation": "/ˈsɪm.ɪ.tri/",
+    "meaning": "Balanced and harmonious proportion."
+  },
+  {
+    "date": "21/08/2026",
+    "word": "Sympathy",
+    "pronunciation": "/ˈsɪm.pə.θi/",
+    "meaning": "Compassionate sharing of others' emotions."
+  },
+  {
+    "date": "22/08/2026",
+    "word": "Synergy",
+    "pronunciation": "/ˈsɪn.ə.dʒi/",
+    "meaning": "Combined strength greater than individual efforts."
+  },
+  {
+    "date": "23/08/2026",
+    "word": "Tact",
+    "pronunciation": "/tækt/",
+    "meaning": "Sensitivity in dealing with others or difficult matters."
+  },
+  {
+    "date": "24/08/2026",
+    "word": "Teamwork",
+    "pronunciation": "/ˈtiːm.wɜːk/",
+    "meaning": "Cooperative effort to achieve a common goal."
+  },
+  {
+    "date": "25/08/2026",
+    "word": "Temperance",
+    "pronunciation": "/ˈtem.pər.əns/",
+    "meaning": "Moderation and self-control in behavior."
+  },
+  {
+    "date": "26/08/2026",
+    "word": "Tenacity",
+    "pronunciation": "/tɪˈnæs.ɪ.ti/",
+    "meaning": "Determination to keep going despite challenges."
+  },
+  {
+    "date": "27/08/2026",
+    "word": "Thoroughness",
+    "pronunciation": "/ˈθʌ.rə.nəs/",
+    "meaning": "Attention to detail; completing something carefully."
+  },
+  {
+    "date": "28/08/2026",
+    "word": "Thoughtfulness",
+    "pronunciation": "/ˈθɔːt.fəl.nəs/",
+    "meaning": "Considerate and reflective attitude."
+  },
+  {
+    "date": "29/08/2026",
+    "word": "Tolerance",
+    "pronunciation": "/ˈtɒl.ər.əns/",
+    "meaning": "Acceptance of differences and ability to remain patient."
+  },
+  {
+    "date": "30/08/2026",
+    "word": "Tranquility",
+    "pronunciation": "/træŋˈkwɪ.lɪ.ti/",
+    "meaning": "State of peace and serenity."
+  },
+  {
+    "date": "31/08/2026",
+    "word": "Transformation",
+    "pronunciation": "/ˌtræns.fəˈmeɪ.ʃən/",
+    "meaning": "Profound and positive change."
+  },
+  {
+    "date": "01/09/2026",
+    "word": "Transcendence",
+    "pronunciation": "/trænˈsen.dəns/",
+    "meaning": "Rising above limitations or ordinary experience."
+  },
+  {
+    "date": "02/09/2026",
+    "word": "Trust",
+    "pronunciation": "/trʌst/",
+    "meaning": "Firm belief in reliability or truth."
+  },
+  {
+    "date": "03/09/2026",
+    "word": "Trustworthiness",
+    "pronunciation": "/ˈtrʌstˌwɜː.ði.nəs/",
+    "meaning": "The quality of being reliable and honest."
+  },
+  {
+    "date": "04/09/2026",
+    "word": "Truth",
+    "pronunciation": "/truːθ/",
+    "meaning": "The quality or state of being factually accurate."
+  },
+  {
+    "date": "05/09/2026",
+    "word": "Truthfulness",
+    "pronunciation": "/ˈtruːθ.fəl.nəs/",
+    "meaning": "The habit of always speaking or acting honestly."
+  },
+  {
+    "date": "06/09/2026",
+    "word": "Unanimity",
+    "pronunciation": "/ˌjuː.nəˈnɪ.mɪ.ti/",
+    "meaning": "Complete agreement among all."
+  },
+  {
+    "date": "07/09/2026",
+    "word": "Understanding",
+    "pronunciation": "/ˌʌn.dəˈstæn.dɪŋ/",
+    "meaning": "Sympathetic comprehension of others or situations."
+  },
+  {
+    "date": "08/09/2026",
+    "word": "Unity",
+    "pronunciation": "/ˈjuː.nɪ.ti/",
+    "meaning": "Togetherness in purpose and harmony."
+  },
+  {
+    "date": "09/09/2026",
+    "word": "Valor",
+    "pronunciation": "/ˈvæl.ər/",
+    "meaning": "Great courage and bravery."
+  },
+  {
+    "date": "10/09/2026",
+    "word": "Valorization",
+    "pronunciation": "/ˌvæl.ər.aɪˈzeɪ.ʃən/",
+    "meaning": "The act of giving value or recognition to something."
+  },
+  {
+    "date": "11/09/2026",
+    "word": "Veracity",
+    "pronunciation": "/vəˈræs.ɪ.ti/",
+    "meaning": "Habitual truthfulness and accuracy."
+  },
+  {
+    "date": "12/09/2026",
+    "word": "Versatility",
+    "pronunciation": "/ˌvɜː.səˈtɪl.ɪ.ti/",
+    "meaning": "The ability to adapt or be useful in many ways."
+  },
+  {
+    "date": "13/09/2026",
+    "word": "Vision",
+    "pronunciation": "/ˈvɪʒ.ən/",
+    "meaning": "The ability to see clearly into the future."
+  },
+  {
+    "date": "14/09/2026",
+    "word": "Visionary",
+    "pronunciation": "/ˈvɪʒ.ən.ər.i/",
+    "meaning": "Someone who imagines future possibilities creatively."
+  },
+  {
+    "date": "15/09/2026",
+    "word": "Vitality",
+    "pronunciation": "/vaɪˈtæl.ɪ.ti/",
+    "meaning": "Energy and liveliness essential to life."
+  },
+  {
+    "date": "16/09/2026",
+    "word": "Vibrancy",
+    "pronunciation": "/ˈvaɪ.brən.si/",
+    "meaning": "Energy and brightness of spirit or color."
+  },
+  {
+    "date": "17/09/2026",
+    "word": "Vulnerability",
+    "pronunciation": "/ˌvʌl.nər.əˈbɪ.lɪ.ti/",
+    "meaning": "Openness to emotional exposure or risk."
+  },
+  {
+    "date": "18/09/2026",
+    "word": "Warmth",
+    "pronunciation": "/wɔːmθ/",
+    "meaning": "Friendliness or kindness that brings comfort."
+  },
+  {
+    "date": "19/09/2026",
+    "word": "Wholeness",
+    "pronunciation": "/ˈhəʊl.nəs/",
+    "meaning": "The state of being complete and undivided."
+  },
+  {
+    "date": "20/09/2026",
+    "word": "Willpower",
+    "pronunciation": "/ˈwɪl.paʊ.ər/",
+    "meaning": "Self-control used to resist temptation and achieve goals."
+  },
+  {
+    "date": "21/09/2026",
+    "word": "Wisdom",
+    "pronunciation": "/ˈwɪz.dəm/",
+    "meaning": "Deep knowledge applied with good judgment."
+  },
+  {
+    "date": "22/09/2026",
+    "word": "Wonder",
+    "pronunciation": "/ˈwʌn.dər/",
+    "meaning": "A feeling of amazement and curiosity."
+  },
+  {
+    "date": "23/09/2026",
+    "word": "Wonderment",
+    "pronunciation": "/ˈwʌn.də.mənt/",
+    "meaning": "A feeling of awe and admiration."
+  },
+  {
+    "date": "24/09/2026",
+    "word": "Zeal",
+    "pronunciation": "/ziːl/",
+    "meaning": "Eager enthusiasm for a noble purpose."
+  },
+  {
+    "date": "25/09/2026",
+    "word": "Zest",
+    "pronunciation": "/zest/",
+    "meaning": "Lively excitement and energy for life."
+  },
+  {
+    "date": "26/09/2026",
+    "word": "Ascendancy",
+    "pronunciation": "/əˈsen.dən.si/",
+    "meaning": "The state of being in a position of influence or power."
+  },
+  {
+    "date": "27/09/2026",
+    "word": "Audacity",
+    "pronunciation": "/ɔːˈdæs.ɪ.ti/",
+    "meaning": "The courage to take bold risks."
+  },
+  {
+    "date": "28/09/2026",
+    "word": "Avarice",
+    "pronunciation": "/ˈæv.ər.ɪs/",
+    "meaning": "Extreme greed for wealth or gain."
+  },
+  {
+    "date": "29/09/2026",
+    "word": "Brilliance",
+    "pronunciation": "/ˈbrɪl.jəns/",
+    "meaning": "Exceptional talent or intelligence."
+  },
+  {
+    "date": "30/09/2026",
+    "word": "Compunction",
+    "pronunciation": "/kəmˈpʌŋk.ʃən/",
+    "meaning": "A feeling of guilt or moral hesitation."
+  },
+  {
+    "date": "01/10/2026",
+    "word": "Confluence",
+    "pronunciation": "/ˈkɒn.fluː.əns/",
+    "meaning": "The merging of two or more things."
+  },
+  {
+    "date": "02/10/2026",
+    "word": "Contemplation",
+    "pronunciation": "/ˌkɒn.təmˈpleɪ.ʃən/",
+    "meaning": "Deep reflective thought."
+  },
+  {
+    "date": "03/10/2026",
+    "word": "Contrition",
+    "pronunciation": "/kənˈtrɪʃ.ən/",
+    "meaning": "Sincere remorse for wrongdoing."
+  },
+  {
+    "date": "04/10/2026",
+    "word": "Credence",
+    "pronunciation": "/ˈkriː.dəns/",
+    "meaning": "Acceptance as true or believable."
+  },
+  {
+    "date": "05/10/2026",
+    "word": "Efficacy",
+    "pronunciation": "/ˈef.ɪ.kə.si/",
+    "meaning": "The ability to produce the intended result."
+  },
+  {
+    "date": "06/10/2026",
+    "word": "Eloquence",
+    "pronunciation": "/ˈel.ə.kwəns/",
+    "meaning": "Fluent, persuasive expression in speaking or writing."
+  },
+  {
+    "date": "07/10/2026",
+    "word": "Empowerment",
+    "pronunciation": "/ɪmˈpaʊə.mənt/",
+    "meaning": "Giving others confidence and strength."
+  },
+  {
+    "date": "08/10/2026",
+    "word": "Equality",
+    "pronunciation": "/ɪˈkwɒl.ɪ.ti/",
+    "meaning": "The state of being equal in status or rights."
+  },
+  {
+    "date": "09/10/2026",
+    "word": "Ascendancy",
+    "pronunciation": "/əˈsen.dən.si/",
+    "meaning": "Rising position of power or dominance."
+  },
+  {
+    "date": "10/10/2026",
+    "word": "Explore",
+    "pronunciation": "/ɪkˈsplɔːr/",
+    "meaning": "To look into or travel around to learn new things."
+  },
+  {
+    "date": "11/10/2026",
+    "word": "Concentration",
+    "pronunciation": "/ˌkɒn.sənˈtreɪ.ʃən/",
+    "meaning": "Focusing one's mental effort on a task."
+  },
+  {
+    "date": "12/10/2026",
+    "word": "Fragility",
+    "pronunciation": "/frəˈdʒɪl.ɪ.ti/",
+    "meaning": "The quality of being delicate or vulnerable."
+  },
+  {
+    "date": "13/10/2026",
+    "word": "Incandescence",
+    "pronunciation": "/ˌɪn.kænˈdes.əns/",
+    "meaning": "Glowing brilliance of light or spirit."
+  },
+  {
+    "date": "14/10/2026",
+    "word": "Incisiveness",
+    "pronunciation": "/ɪnˈsaɪ.sɪv.nəs/",
+    "meaning": "Sharpness of intellect or expression."
+  },
+  {
+    "date": "15/10/2026",
+    "word": "Innovation",
+    "pronunciation": "/ˌɪn.əˈveɪ.ʃən/",
+    "meaning": "The introduction of new ideas and methods."
+  },
+  {
+    "date": "16/10/2026",
+    "word": "Ascendancy",
+    "pronunciation": "/əˈsen.dən.si/",
+    "meaning": "The state of being in a position of influence or power."
+  },
+  {
+    "date": "17/10/2026",
+    "word": "Continuity",
+    "pronunciation": "/ˌkɒn.tɪˈnjuː.ɪ.ti/",
+    "meaning": "The unbroken and connected nature of things."
+  },
+  {
+    "date": "18/10/2026",
+    "word": "Devotion",
+    "pronunciation": "/dɪˈvəʊ.ʃən/",
+    "meaning": "Love and loyalty to a person or cause."
+  },
+  {
+    "date": "19/10/2026",
+    "word": "Efficacy",
+    "pronunciation": "/ˈef.ɪ.kə.si/",
+    "meaning": "The ability to produce the intended result."
+  },
+  {
+    "date": "20/10/2026",
+    "word": "Foresight",
+    "pronunciation": "/ˈfɔː.saɪt/",
+    "meaning": "The ability to see or plan for the future."
+  }
+]
+[
+  {
+    "date": "21/10/2026",
+    "word": "Harmony",
+    "pronunciation": "/ˈhɑː.mə.ni/",
+    "meaning": "Peaceful and balanced coexistence."
+  },
+  {
+    "date": "22/10/2026",
+    "word": "Healing",
+    "pronunciation": "/ˈhiː.lɪŋ/",
+    "meaning": "The process of becoming whole and healthy."
+  },
+  {
+    "date": "23/10/2026",
+    "word": "Hope",
+    "pronunciation": "/həʊp/",
+    "meaning": "Expectation and desire for positive outcomes."
+  },
+  {
+    "date": "24/10/2026",
+    "word": "Hopefulness",
+    "pronunciation": "/ˈhəʊp.fəl.nəs/",
+    "meaning": "The feeling of optimism or expectation of good."
+  },
+  {
+    "date": "25/10/2026",
+    "word": "Honor",
+    "pronunciation": "/ˈɒn.ər/",
+    "meaning": "High respect; adherence to moral code."
+  },
+  {
+    "date": "26/10/2026",
+    "word": "Honesty",
+    "pronunciation": "/ˈɒn.ɪ.sti/",
+    "meaning": "The quality of being truthful and sincere."
+  },
+  {
+    "date": "27/10/2026",
+    "word": "Humanity",
+    "pronunciation": "/hjuːˈmæn.ɪ.ti/",
+    "meaning": "The quality of being kind, compassionate, and humane."
+  },
+  {
+    "date": "28/10/2026",
+    "word": "Humility",
+    "pronunciation": "/hjuːˈmɪl.ɪ.ti/",
+    "meaning": "Modest view of one's own importance."
+  },
+  {
+    "date": "29/10/2026",
+    "word": "Idealism",
+    "pronunciation": "/aɪˈdɪə.lɪ.zəm/",
+    "meaning": "Belief in pursuing noble or perfect goals."
+  },
+  {
+    "date": "30/10/2026",
+    "word": "Illumination",
+    "pronunciation": "/ɪˌluː.mɪˈneɪ.ʃən/",
+    "meaning": "Insight or enlightenment."
+  },
+  {
+    "date": "31/10/2026",
+    "word": "Imagination",
+    "pronunciation": "/ɪˌmædʒ.ɪˈneɪ.ʃən/",
+    "meaning": "The power to create ideas in the mind."
+  },
+  {
+    "date": "01/11/2026",
+    "word": "Impeccability",
+    "pronunciation": "/ɪmˌpek.əˈbɪl.ɪ.ti/",
+    "meaning": "The quality of being flawless or perfect."
+  },
+  {
+    "date": "02/11/2026",
+    "word": "Imperturbability",
+    "pronunciation": "/ɪmˌpɜː.tɜː.bəˈbɪl.ɪ.ti/",
+    "meaning": "Remaining calm in difficult situations."
+  },
+  {
+    "date": "03/11/2026",
+    "word": "Inclusion",
+    "pronunciation": "/ɪnˈkluː.ʒən/",
+    "meaning": "The act of involving and valuing everyone equally."
+  },
+  {
+    "date": "04/11/2026",
+    "word": "Indelibility",
+    "pronunciation": "/ɪnˌdel.ɪˈbɪl.ɪ.ti/",
+    "meaning": "Permanence; inability to be erased."
+  },
+  {
+    "date": "05/11/2026",
+    "word": "Independence",
+    "pronunciation": "/ˌɪn.dɪˈpen.dəns/",
+    "meaning": "Freedom to act or think for oneself."
+  },
+  {
+    "date": "06/11/2026",
+    "word": "Industry",
+    "pronunciation": "/ˈɪn.də.stri/",
+    "meaning": "Steady, diligent, and hardworking effort."
+  },
+  {
+    "date": "07/11/2026",
+    "word": "Ineffable",
+    "pronunciation": "/ɪnˈef.ə.bəl/",
+    "meaning": "Too great or beautiful to be expressed in words."
+  },
+  {
+    "date": "08/11/2026",
+    "word": "Inevitability",
+    "pronunciation": "/ɪnˌev.ɪ.təˈbɪl.ɪ.ti/",
+    "meaning": "The state of being certain to happen."
+  },
+  {
+    "date": "09/11/2026",
+    "word": "Ingenuity",
+    "pronunciation": "/ˌɪn.dʒəˈnjuː.ɪ.ti/",
+    "meaning": "Cleverness and inventiveness."
+  },
+  {
+    "date": "10/11/2026",
+    "word": "Innocence",
+    "pronunciation": "/ˈɪn.ə.səns/",
+    "meaning": "The state of being pure and free from guilt."
+  },
+  {
+    "date": "11/11/2026",
+    "word": "Insight",
+    "pronunciation": "/ˈɪn.saɪt/",
+    "meaning": "Deep understanding of a person or situation."
+  },
+  {
+    "date": "12/11/2026",
+    "word": "Insightfulness",
+    "pronunciation": "/ˈɪn.saɪt.fəl.nəs/",
+    "meaning": "Having deep perception and understanding."
+  },
+  {
+    "date": "13/11/2026",
+    "word": "Inspiration",
+    "pronunciation": "/ˌɪn.spɪˈreɪ.ʃən/",
+    "meaning": "The process of being mentally stimulated to act."
+  },
+  {
+    "date": "14/11/2026",
+    "word": "Integrity",
+    "pronunciation": "/ɪnˈteɡ.rə.ti/",
+    "meaning": "Moral uprightness; unity between thought and action."
+  },
+  {
+    "date": "15/11/2026",
+    "word": "Introspection",
+    "pronunciation": "/ˌɪn.trəˈspek.ʃən/",
+    "meaning": "Thoughtful examination of one's feelings."
+  },
+  {
+    "date": "16/11/2026",
+    "word": "Intuition",
+    "pronunciation": "/ˌɪn.tjuˈɪ.ʃən/",
+    "meaning": "Knowing something instinctively, without reasoning."
+  },
+  {
+    "date": "17/11/2026",
+    "word": "Invigoration",
+    "pronunciation": "/ɪnˌvɪɡ.əˈreɪ.ʃən/",
+    "meaning": "A feeling of renewed energy or vitality."
+  },
+  {
+    "date": "18/11/2026",
+    "word": "Joy",
+    "pronunciation": "/dʒɔɪ/",
+    "meaning": "Great happiness and delight."
+  },
+  {
+    "date": "19/11/2026",
+    "word": "Judiciousness",
+    "pronunciation": "/dʒuːˈdɪʃ.əs.nəs/",
+    "meaning": "Wisdom in making fair and sensible decisions."
+  },
+  {
+    "date": "20/11/2026",
+    "word": "Justice",
+    "pronunciation": "/ˈdʒʌs.tɪs/",
+    "meaning": "Fair treatment and moral rightness."
+  },
+  {
+    "date": "21/11/2026",
+    "word": "Kindheartedness",
+    "pronunciation": "/ˌkaɪndˈhɑː.tɪd.nəs/",
+    "meaning": "Warm, generous nature full of goodwill."
+  },
+  {
+    "date": "22/11/2026",
+    "word": "Kindness",
+    "pronunciation": "/ˈkaɪnd.nəs/",
+    "meaning": "The quality of being friendly, generous, and considerate."
+  },
+  {
+    "date": "23/11/2026",
+    "word": "Kindred",
+    "pronunciation": "/ˈkɪn.drɪd/",
+    "meaning": "Having a natural connection or similarity."
+  },
+  {
+    "date": "24/11/2026",
+    "word": "Knowledge",
+    "pronunciation": "/ˈnɒl.ɪdʒ/",
+    "meaning": "Information, awareness, and understanding gained by learning."
+  },
+  {
+    "date": "25/11/2026",
+    "word": "Learning",
+    "pronunciation": "/ˈlɜː.nɪŋ/",
+    "meaning": "Acquiring new knowledge, skills, or attitudes."
+  },
+  {
+    "date": "26/11/2026",
+    "word": "Legacy",
+    "pronunciation": "/ˈleɡ.ə.si/",
+    "meaning": "Something handed down from the past; lasting impact."
+  },
+  {
+    "date": "27/11/2026",
+    "word": "Liberty",
+    "pronunciation": "/ˈlɪb.ə.ti/",
+    "meaning": "Freedom to think and act according to one's will."
+  },
+  {
+    "date": "28/11/2026",
+    "word": "Listening",
+    "pronunciation": "/ˈlɪs.ən.ɪŋ/",
+    "meaning": "Giving thoughtful attention to what is said."
+  },
+  {
+    "date": "29/11/2026",
+    "word": "Logic",
+    "pronunciation": "/ˈlɒdʒ.ɪk/",
+    "meaning": "Reasoning conducted according to principles of validity."
+  },
+  {
+    "date": "30/11/2026",
+    "word": "Longevity",
+    "pronunciation": "/lɒnˈdʒev.ɪ.ti/",
+    "meaning": "Long life or duration of existence."
+  },
+  {
+    "date": "01/12/2026",
+    "word": "Love",
+    "pronunciation": "/lʌv/",
+    "meaning": "Deep affection, care, and connectedness."
+  },
+  {
+    "date": "02/12/2026",
+    "word": "Lucidity",
+    "pronunciation": "/luːˈsɪd.ɪ.ti/",
+    "meaning": "Clarity of thought and expression."
+  },
+  {
+    "date": "03/12/2026",
+    "word": "Magnanimity",
+    "pronunciation": "/ˌmæɡ.nəˈnɪ.mɪ.ti/",
+    "meaning": "Generosity toward those less powerful."
+  },
+  {
+    "date": "04/12/2026",
+    "word": "Maturity",
+    "pronunciation": "/məˈtʃʊə.rɪ.ti/",
+    "meaning": "Full development of mind or character."
+  },
+  {
+    "date": "05/12/2026",
+    "word": "Meditation",
+    "pronunciation": "/ˌmed.ɪˈteɪ.ʃən/",
+    "meaning": "Focused practice to develop awareness or calm."
+  },
+  {
+    "date": "06/12/2026",
+    "word": "Metacognition",
+    "pronunciation": "/ˌmet.ə.kɒɡˈnɪ.ʃən/",
+    "meaning": "Thinking about one's own thinking process."
+  },
+  {
+    "date": "07/12/2026",
+    "word": "Metamorphosis",
+    "pronunciation": "/ˌmet.əˈmɔː.fə.sɪs/",
+    "meaning": "A profound transformation or change."
+  },
+  {
+    "date": "08/12/2026",
+    "word": "Mindfulness",
+    "pronunciation": "/ˈmaɪnd.f(ə)l.nəs/",
+    "meaning": "Focused awareness on the present moment."
+  },
+  {
+    "date": "09/12/2026",
+    "word": "Mindset",
+    "pronunciation": "/ˈmaɪnd.set/",
+    "meaning": "Established set of attitudes or outlook."
+  },
+  {
+    "date": "10/12/2026",
+    "word": "Mitigation",
+    "pronunciation": "/ˌmɪt.ɪˈɡeɪ.ʃən/",
+    "meaning": "The act of making something less severe or harmful."
+  },
+  {
+    "date": "11/12/2026",
+    "word": "Modesty",
+    "pronunciation": "/ˈmɒd.ɪ.sti/",
+    "meaning": "Humbleness; not seeking attention for oneself."
+  },
+  {
+    "date": "12/12/2026",
+    "word": "Morality",
+    "pronunciation": "/məˈræl.ɪ.ti/",
+    "meaning": "Principles concerning right and wrong behavior."
+  },
+  {
+    "date": "13/12/2026",
+    "word": "Motivation",
+    "pronunciation": "/ˌməʊ.tɪˈveɪ.ʃən/",
+    "meaning": "The reason or drive behind actions."
+  },
+  {
+    "date": "14/12/2026",
+    "word": "Nobility",
+    "pronunciation": "/nəʊˈbɪl.ɪ.ti/",
+    "meaning": "The quality of having high moral character."
+  },
+  {
+    "date": "15/12/2026",
+    "word": "Nostalgia",
+    "pronunciation": "/nɒˈstæl.dʒə/",
+    "meaning": "A sentimental longing for the past."
+  },
+  {
+    "date": "16/12/2026",
+    "word": "Nurturing",
+    "pronunciation": "/ˈnɜː.tʃər.ɪŋ/",
+    "meaning": "Supporting growth and development with care."
+  },
+  {
+    "date": "17/12/2026",
+    "word": "Objectivity",
+    "pronunciation": "/ˌɒb.dʒekˈtɪv.ɪ.ti/",
+    "meaning": "Judgment free from bias or emotion."
+  },
+  {
+    "date": "18/12/2026",
+    "word": "Observation",
+    "pronunciation": "/ˌɒb.zəˈveɪ.ʃən/",
+    "meaning": "Careful attention to details and patterns."
+  },
+  {
+    "date": "19/12/2026",
+    "word": "Omniscience",
+    "pronunciation": "/ɒmˈnɪʃ.əns/",
+    "meaning": "Unlimited knowledge and understanding."
+  },
+  {
+    "date": "20/12/2026",
+    "word": "Openness",
+    "pronunciation": "/ˈəʊ.pən.nəs/",
+    "meaning": "Willingness to listen and accept new ideas."
+  },
+  {
+    "date": "21/12/2026",
+    "word": "Optimism",
+    "pronunciation": "/ˈɒp.tɪ.mɪ.zəm/",
+    "meaning": "Hopeful confidence about future outcomes."
+  },
+  {
+    "date": "22/12/2026",
+    "word": "Order",
+    "pronunciation": "/ˈɔː.dər/",
+    "meaning": "Neat, harmonious arrangement; structure."
+  },
+  {
+    "date": "23/12/2026",
+    "word": "Orderliness",
+    "pronunciation": "/ˈɔː.də.li.nəs/",
+    "meaning": "The state of being well-organized and tidy."
+  },
+  {
+    "date": "24/12/2026",
+    "word": "Originality",
+    "pronunciation": "/əˌrɪdʒ.ɪˈnæl.ɪ.ti/",
+    "meaning": "The ability to think or do something new and creative."
+  },
+  {
+    "date": "25/12/2026",
+    "word": "Peace",
+    "pronunciation": "/piːs/",
+    "meaning": "Freedom from disturbance or conflict."
+  },
+  {
+    "date": "26/12/2026",
+    "word": "Perseverance",
+    "pronunciation": "/ˌpɜː.sɪˈvɪə.rəns/",
+    "meaning": "Persistent effort to reach a goal despite obstacles."
+  },
+  {
+    "date": "27/12/2026",
+    "word": "Perspective",
+    "pronunciation": "/pəˈspek.tɪv/",
+    "meaning": "A particular viewpoint or way of understanding something."
+  },
+  {
+    "date": "28/12/2026",
+    "word": "Positivity",
+    "pronunciation": "/ˌpɒ.zɪˈtɪ.vɪ.ti/",
+    "meaning": "The practice of focusing on good and hopeful outcomes."
+  },
+  {
+    "date": "29/12/2026",
+    "word": "Potential",
+    "pronunciation": "/pəˈten.ʃəl/",
+    "meaning": "Hidden ability or capacity for growth."
+  },
+  {
+    "date": "30/12/2026",
+    "word": "Presence",
+    "pronunciation": "/ˈprez.əns/",
+    "meaning": "Being fully engaged and centered in the moment."
+  },
+  {
+    "date": "31/12/2026",
+    "word": "Purpose",
+    "pronunciation": "/ˈpɜː.pəs/",
+    "meaning": "The reason for which something is done; one's life direction."
+  }
+]

@@ -3,139 +3,343 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Loom Play AI - New Chat</title>
+    <title>Loom Thread AI - New Chat</title>
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Roboto', sans-serif;
+        body { font-family: 'Roboto', sans-serif; }
+
+        /* --- PRO 3D LIQUID GLASS --- */
+        .pro-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px) saturate(120%);
+            -webkit-backdrop-filter: blur(20px) saturate(120%);
+            border-radius: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 10px 20px rgba(255, 255, 255, 0.03);
         }
+
+        /* --- PRO GLASS BUTTONS (Dropdowns) --- */
+        .pro-glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: 9999px; 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.3); 
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pro-glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-top-color: rgba(255, 255, 255, 0.5); 
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        /* --- CIRCULAR GLASS BUTTON (Header) --- */
+        .glass-circle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: none; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .glass-circle-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* --- GLASS INPUTS --- */
+        .glass-input {
+            background-color: rgba(0, 0, 0, 0.3) !important; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            transition: all 0.3s ease;
+            color: white; 
+        }
+        .glass-input:focus {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            border-color: rgba(168, 85, 247, 0.5) !important; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(168, 85, 247, 0.2); 
+            outline: none;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse-overlay { 0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; } }
+        .beam-overlay { animation: pulse-overlay 10s ease-in-out infinite; backdrop-filter: blur(50px); }
+        @keyframes menu-pop-entry { 0% { opacity: 0; transform: translateY(-10px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .menu-animate-item { opacity: 0; animation: menu-pop-entry 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .menu-animate-item:nth-child(1) { animation-delay: 0.05s; }
+        .menu-animate-item:nth-child(2) { animation-delay: 0.1s; }
+        .menu-animate-item:nth-child(3) { animation-delay: 0.15s; }
+        .menu-animate-item:nth-child(4) { animation-delay: 0.2s; }
+        .rotate-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .rotate-active { transform: rotate(90deg); }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="relative min-h-screen flex flex-col">
-        <div class="absolute inset-0">
-            <img alt="Abstract purple and blue waves on a black background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZu9QWRIEFnKKG6SMF74gPyyMfKcVyImI8TeqE1aWnAEy17Z3Ob2KGfLCIeZhHwB3m8sldZ1JAvfz-y5wpsgDaZBSRb6S0wGB7p4XJL3VQ2JsWLB9gz3iT3yeNwq-tNnZaFJxCUbLxoqWIsjBrpFCc0ZdkKon35yRcmiw-mgn98WRAe4u-dsImTEuWVOqThZVmtgidaXz8oNaw_j2UG7odXaYWTgDIAYkh0fnLndUDkSH7Ho0BSd03oOllL7bpSfju2Yxnxa_HiMs" />
-            <div class="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+
+<body class="bg-neutral-950 text-white overflow-x-hidden selection:bg-purple-500/30">
+
+    <div id="page-curtain" class="fixed inset-0 bg-neutral-950 z-[100] transition-opacity duration-500 ease-in-out pointer-events-none opacity-100"></div>
+
+    <canvas id="beams-canvas" class="fixed inset-0 w-full h-full z-0" style="filter: blur(15px); opacity: 0.6; pointer-events: none;"></canvas>
+    <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none z-0"></div>
+
+    <div class="relative min-h-screen z-10 flex flex-col">
+        
+        <header class="relative z-20 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center bg-transparent">
             <div class="flex items-center space-x-4">
-                <!-- Main Navigation Menu -->
+                
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="text-white focus:outline-none">
-                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    <button @click="open = !open" class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full">
+                        <span class="material-symbols-outlined text-3xl rotate-icon select-none" :class="{ 'rotate-active': open }" x-text="open ? 'close' : 'menu'">menu</span>
                     </button>
-                    <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/dashboard.html">
+                    
+                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/dashboard.html">
                             <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm font-bold text-white bg-purple-600" href="/new-chat.html">
-                            <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm font-bold text-white bg-purple-600/20" href="/new-chat.html">
+                            <span class="material-symbols-outlined mr-3 text-purple-400">add</span> Weave a New Lesson
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/History.html">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/History.html">
                             <span class="material-symbols-outlined mr-3">history</span> Threads of the Past
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/collective-loom.html">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/collective-loom.html">
                             <span class="material-symbols-outlined mr-3">groups</span> The Collective Loom
                         </a>
                     </div>
                 </div>
-                <h1 class="text-2xl font-bold">Loom Play AI</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-white drop-shadow-md">Loom Thread AI</h1>
             </div>
+            
             <div class="flex items-center">
-                <!-- User Profile Menu -->
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                        <span id="welcome-message" class="hidden sm:inline mr-2">Welcome, User!</span>
-                        <span class="material-symbols-outlined text-4xl">account_circle</span>
+                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group">
+                        <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition text-shadow">Welcome, User!</span>
+                        <div class="glass-circle-btn flex items-center justify-center w-10 h-10 rounded-full">
+                            <span class="material-symbols-outlined text-4xl rotate-icon select-none" :class="{ 'rotate-active': open, 'text-purple-400': open }" x-text="open ? 'close' : 'account_circle'">account_circle</span>
+                        </div>
                     </button>
-                    <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/profile.html">
+                    
+                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/profile.html">
                             <span class="material-symbols-outlined mr-3">account_circle</span> The Weaver
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/change-password.html">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/change-password.html">
                             <span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord
                         </a>
-                        <div class="border-t border-gray-700 my-1"></div>
-                        <button id="logoutButton" class="w-full text-left flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white">
+                        <button id="logoutButton" class="menu-animate-item pro-glass-btn w-full text-left flex items-center px-4 py-3 text-sm text-red-400 hover:text-red-300">
                             <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
                         </button>
                     </div>
                 </div>
             </div>
         </header>
-        <main class="relative flex flex-col flex-grow items-center justify-center text-center px-4 sm:px-6 lg:px-8">
-            <div class="max-w-3xl w-full bg-black/30 backdrop-blur-sm p-8 rounded-lg">
-                 <a href="/dashboard.html" class="flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-300 mb-6 inline-flex">
+
+        <main class="relative flex flex-col flex-grow items-center justify-center text-center px-4 sm:px-6 lg:px-8 z-10 py-8">
+            
+            <div class="max-w-3xl w-full pro-glass p-8 relative overflow-hidden shadow-2xl">
+                
+                <div class="absolute -top-[150px] -right-[150px] w-[300px] h-[300px] bg-purple-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <a href="/dashboard.html" class="transition-link flex items-center text-purple-400 hover:text-purple-300 transition-colors duration-300 mb-6 inline-flex relative z-10 font-medium">
                     <span class="material-symbols-outlined mr-2">arrow_back</span>
                     Back to Dashboard
                 </a>
-                <h2 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-8">Spin a New Thread of Learning</h2>
                 
-                <div id="error-message" class="hidden bg-red-900/50 border border-red-500 rounded-md p-3 mb-6">
+                <h2 class="text-4xl sm:text-5xl font-extrabold leading-tight mb-8 text-white drop-shadow-md relative z-10">Spin a New Thread of Learning</h2>
+                
+                <div id="error-message" class="hidden bg-red-500/10 border border-red-500/30 rounded-lg p-3 mb-6 backdrop-blur-sm">
                     <div class="flex">
                         <div class="flex-shrink-0">
                             <span class="material-symbols-outlined text-red-400">error</span>
                         </div>
                         <div class="ml-3 text-left">
-                            <p class="text-sm text-red-300" id="error-text"></p>
+                            <p class="text-sm text-red-200" id="error-text"></p>
                         </div>
                     </div>
                 </div>
 
-                <form class="space-y-6 text-left" id="generator-form">
+                <form class="space-y-6 text-left relative z-10" id="generator-form">
                     <div>
                         <label for="topic" class="block text-sm font-medium text-gray-300 mb-1">Enter a Topic or Idea for a Montessori Lesson</label>
-                        <input id="topic" name="topic" type="text" required class="w-full py-3 px-4 bg-gray-800/60 border border-purple-500 rounded-lg text-white placeholder-gray-400 focus:ring-purple-400 focus:border-purple-400 text-lg" placeholder="e.g., Practical life: Pouring water" />
+                        <input id="topic" name="topic" type="text" required class="glass-input w-full py-3 px-4 rounded-xl text-white placeholder-gray-500 focus:outline-none text-lg" placeholder="e.g., Practical life: Pouring water" />
                     </div>
                     
-                    <!-- ** THE FIX **: Language selector added -->
-                    <div>
+                    <div class="bg-white/5 p-4 rounded-xl border border-white/5">
                         <label class="block text-sm font-medium text-gray-300 mb-2">Choose Generation Language</label>
-                        <fieldset class="flex space-x-4">
-                            <label for="lang-en" class="flex items-center space-x-2 text-white cursor-pointer">
-                                <input type="radio" id="lang-en" name="language" value="English" class="h-4 w-4 text-purple-600 bg-gray-700 border-gray-500 focus:ring-purple-500" checked>
-                                <span>English</span>
+                        <fieldset class="flex space-x-6">
+                            <label for="lang-en" class="flex items-center space-x-2 text-white cursor-pointer group">
+                                <input type="radio" id="lang-en" name="language" value="English" class="form-radio h-4 w-4 text-purple-600 bg-gray-900 border-gray-600 focus:ring-purple-500 focus:ring-offset-gray-900" checked>
+                                <span class="group-hover:text-purple-300 transition-colors">English</span>
                             </label>
-                            <label for="lang-hi" class="flex items-center space-x-2 text-white cursor-pointer">
-                                <input type="radio" id="lang-hi" name="language" value="Hindi" class="h-4 w-4 text-purple-600 bg-gray-700 border-gray-500 focus:ring-purple-500">
-                                <span>Hindi</span>
+                            <label for="lang-hi" class="flex items-center space-x-2 text-white cursor-pointer group">
+                                <input type="radio" id="lang-hi" name="language" value="Hindi" class="form-radio h-4 w-4 text-purple-600 bg-gray-900 border-gray-600 focus:ring-purple-500 focus:ring-offset-gray-900">
+                                <span class="group-hover:text-purple-300 transition-colors">Hindi</span>
                             </label>
                         </fieldset>
                     </div>
-<div class="mt-6">
-    <label for="age-select" class="block text-sm font-medium text-gray-300 mb-2">
-        <span class="material-symbols-outlined align-middle text-lg mr-1">school</span>
-        Class Level
-    </label>
-    <select id="age-select" class="w-full bg-gray-800 border border-gray-700 text-white rounded-md px-4 py-3 focus:ring-2 focus:ring-purple-500 focus:outline-none transition-all cursor-pointer hover:border-purple-500">
-        <option value="Nursery">Nursery</option>
-        <option value="Juniors">Juniors</option>
-        <option value="Seniors">Seniors</option>
-    </select>
-    <p class="text-xs text-gray-500 mt-2 ml-1">The AI will adapt the lesson complexity for this class.</p>
-</div>
 
+                    <div>
+                        <label for="age-select" class="block text-sm font-medium text-gray-300 mb-2">
+                            <span class="material-symbols-outlined align-middle text-lg mr-1 text-purple-400">school</span>
+                            Class Level
+                        </label>
+                        <div class="relative">
+                            <select id="age-select" class="glass-input w-full px-4 py-3 rounded-xl text-white appearance-none cursor-pointer">
+                                <option value="Nursery" class="bg-gray-900">Nursery</option>
+                                <option value="Juniors" class="bg-gray-900">Juniors</option>
+                                <option value="Seniors" class="bg-gray-900">Seniors</option>
+                            </select>
+                            <div class="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                                <span class="material-symbols-outlined text-gray-400">expand_more</span>
+                            </div>
+                        </div>
+                        <p class="text-xs text-gray-500 mt-2 ml-1">The AI will adapt the lesson complexity for this class.</p>
+                    </div>
 
-                    <div class="text-center pt-4">
-                         <button class="bg-purple-600 hover:bg-purple-700 text-white font-bold py-3 px-8 rounded-lg transition duration-300 flex items-center justify-center w-full sm:w-auto sm:min-w-[200px] mx-auto" type="submit" id="generate-btn">
+                    <div class="text-center pt-6">
+                         <button class="w-full sm:w-auto sm:min-w-[200px] mx-auto flex justify-center items-center py-3.5 px-8 border border-transparent rounded-xl shadow-[0_4px_15px_rgba(147,51,234,0.4)] text-lg font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 hover:shadow-[0_6px_25px_rgba(147,51,234,0.6)] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-gray-900 focus:ring-purple-500 transition-all duration-300 transform hover:-translate-y-0.5" type="submit" id="generate-btn">
                             <span class="material-symbols-outlined align-middle mr-2 button-text">
                                 auto_awesome
                             </span>
                             <span class="button-text">Weave Lesson</span>
-                            <div class="button-spinner hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
+                            <svg class="button-spinner hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
                         </button>
                     </div>
                 </form>
             </div>
         </main>
-        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8">
-            <p class="text-sm text-gray-400">Made By: Monika Pathak</p>
+        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto z-10">
+            <p class="text-xs text-gray-500">Made By: Monika Pathak</p>
         </footer>
     </div>
+
     <script type="module" src="js/new-chat.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('beams-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let beams = [];
+        const MINIMUM_BEAMS = 50; 
+        const intensity = 'strong'; 
+        const opacityMap = { subtle: 0.7, medium: 0.85, strong: 1 };
+        
+        function createBeam(width, height) {
+            const angle = -35 + Math.random() * 10;
+            return {
+                x: Math.random() * width * 1.5 - width * 0.25,
+                y: Math.random() * height * 1.5 - height * 0.25,
+                width: 30 + Math.random() * 60,
+                length: height * 2.5,
+                angle: angle,
+                speed: 0.6 + Math.random() * 1.2,
+                opacity: 0.12 + Math.random() * 0.16,
+                hue: 250 + Math.random() * 40, 
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.03
+            };
+        }
+
+        function resetBeam(beam, index, totalBeams) {
+            const column = index % 3;
+            const spacing = canvas.width / 3;
+            beam.y = canvas.height + 100;
+            beam.x = column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+            beam.width = 100 + Math.random() * 100;
+            beam.speed = 0.5 + Math.random() * 0.4;
+            beam.hue = 240 + (index * 50) / totalBeams;
+            beam.opacity = 0.2 + Math.random() * 0.1;
+        }
+
+        function drawBeam(ctx, beam) {
+            ctx.save();
+            ctx.translate(beam.x, beam.y);
+            ctx.rotate((beam.angle * Math.PI) / 180);
+            const pulsingOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2) * opacityMap[intensity];
+            const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+            gradient.addColorStop(0, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            gradient.addColorStop(0.1, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(0.4, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.6, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.9, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(1, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+            ctx.restore();
+        }
+
+        function updateCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            const totalBeams = MINIMUM_BEAMS * 1.5;
+            beams = Array.from({ length: totalBeams }, () => createBeam(canvas.width, canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            beams.forEach((beam, index) => {
+                beam.y -= beam.speed;
+                beam.pulse += beam.pulseSpeed;
+                if (beam.y + beam.length < -100) {
+                    resetBeam(beam, index, beams.length);
+                }
+                drawBeam(ctx, beam);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', updateCanvasSize);
+        updateCanvasSize();
+        animate();
+    });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const curtain = document.getElementById('page-curtain');
+            
+            setTimeout(() => {
+                curtain.classList.add('opacity-0');
+            }, 100); 
+
+            const links = document.querySelectorAll('.transition-link');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('href');
+                    
+                    curtain.classList.remove('opacity-0');
+                    
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 500); 
+                });
+            });
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    curtain.classList.add('opacity-0');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
-

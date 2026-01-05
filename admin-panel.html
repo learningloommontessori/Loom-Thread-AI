@@ -4,42 +4,95 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin - User Approvals</title>
+    
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet">
+    
+    <style type="text/tailwindcss">
+        body { font-family: 'Roboto', sans-serif; }
+
+        /* --- PRO 3D LIQUID GLASS --- */
+        .pro-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px) saturate(120%);
+            -webkit-backdrop-filter: blur(20px) saturate(120%);
+            border-radius: 1rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 10px 20px rgba(255, 255, 255, 0.03);
+        }
+
+        /* --- PRO GLASS BUTTONS --- */
+        .pro-glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: 9999px;
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pro-glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse-overlay { 0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; } }
+        .beam-overlay { animation: pulse-overlay 10s ease-in-out infinite; backdrop-filter: blur(50px); }
+    </style>
 </head>
-<body class="bg-gray-900 text-white font-sans">
-    <div class="max-w-4xl mx-auto p-8">
-        <header class="flex justify-between items-center mb-8 pb-4 border-b border-gray-700">
-            <div>
-                <h1 class="text-3xl font-bold text-white">Admin Control</h1>
-                <p class="text-gray-400">Manage user access requests</p>
-            </div>
-            <a href="/dashboard.html" class="text-gray-400 hover:text-white flex items-center">
-                <span class="material-symbols-outlined mr-1">arrow_back</span> Back to Dashboard
-            </a>
-        </header>
 
-        <div class="grid grid-cols-2 gap-4 mb-8">
-            <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-yellow-500">
-                <h3 class="text-gray-400 text-sm">Pending Requests</h3>
-                <p class="text-3xl font-bold text-white" id="pending-count">0</p>
-            </div>
-            <div class="bg-gray-800 p-4 rounded-lg border-l-4 border-green-500">
-                <h3 class="text-gray-400 text-sm">Active Users</h3>
-                <p class="text-3xl font-bold text-white" id="active-count">0</p>
-            </div>
-        </div>
+<body class="bg-neutral-950 text-white overflow-x-hidden selection:bg-purple-500/30">
 
-        <div class="bg-gray-800 rounded-lg shadow-lg overflow-hidden">
-            <div class="p-4 bg-gray-700/50 border-b border-gray-600 flex justify-between items-center">
-                <h2 class="font-bold text-lg">User Registry</h2>
-                <button id="refresh-btn" class="text-sm text-purple-400 hover:text-white flex items-center">
-                    <span class="material-symbols-outlined text-sm mr-1">refresh</span> Refresh
-                </button>
+    <div id="page-curtain" class="fixed inset-0 bg-neutral-950 z-[100] transition-opacity duration-500 ease-in-out pointer-events-none opacity-100"></div>
+
+    <canvas id="beams-canvas" class="fixed inset-0 w-full h-full z-0" style="filter: blur(15px); opacity: 0.6; pointer-events: none;"></canvas>
+    <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none z-0"></div>
+
+    <div class="relative z-10 min-h-screen flex flex-col">
+        <div class="max-w-4xl mx-auto p-8 w-full">
+            
+            <header class="flex justify-between items-center mb-10 pb-6 border-b border-white/10">
+                <div>
+                    <h1 class="text-3xl font-bold text-white drop-shadow-md">Admin Control</h1>
+                    <p class="text-gray-400 mt-1">Manage user access requests</p>
+                </div>
+                <a href="dashboard.html" class="transition-link pro-glass-btn flex items-center px-5 py-2.5 text-sm text-gray-300 hover:text-white transition-colors">
+                    <span class="material-symbols-outlined mr-2 text-lg">arrow_back</span> Back to Dashboard
+                </a>
+            </header>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 mb-10">
+                <div class="pro-glass p-6 border-l-4 border-l-yellow-500/80">
+                    <h3 class="text-yellow-400/80 text-sm font-bold uppercase tracking-wider">Pending Requests</h3>
+                    <p class="text-4xl font-extrabold text-white mt-2" id="pending-count">0</p>
+                </div>
+                <div class="pro-glass p-6 border-l-4 border-l-green-500/80">
+                    <h3 class="text-green-400/80 text-sm font-bold uppercase tracking-wider">Active Users</h3>
+                    <p class="text-4xl font-extrabold text-white mt-2" id="active-count">0</p>
+                </div>
             </div>
-            <div id="user-list" class="divide-y divide-gray-700">
-                <div class="p-8 text-center text-gray-500">Loading...</div>
+
+            <div class="pro-glass overflow-hidden shadow-2xl">
+                <div class="p-5 border-b border-white/10 flex justify-between items-center bg-white/5">
+                    <h2 class="font-bold text-lg text-white flex items-center">
+                        <span class="material-symbols-outlined mr-2 text-purple-400">group</span> User Registry
+                    </h2>
+                    <button id="refresh-btn" class="text-sm text-purple-400 hover:text-purple-300 flex items-center transition-colors">
+                        <span class="material-symbols-outlined text-lg mr-1">refresh</span> Refresh List
+                    </button>
+                </div>
+                
+                <div id="user-list" class="divide-y divide-white/5">
+                    <div class="p-8 text-center text-gray-500 animate-pulse">Loading users...</div>
+                </div>
             </div>
         </div>
     </div>
@@ -47,7 +100,7 @@
     <script type="module">
         import getSupabase from './js/supabaseClient.js';
         
-        // ** ADMIN CONFIGURATION (Updated to match main.js) **
+        // ** ADMIN CONFIGURATION **
         const ADMIN_EMAILS = [
             "monika.pathak@choithramschool.com",
             "vip.pathak.ai@gmail.com", 
@@ -60,7 +113,6 @@
             // 1. Verify Admin
             const { data: { session } } = await supabase.auth.getSession();
             
-            // Debugging: Log the user attempting to access
             if (session) {
                 console.log("Logged in as:", session.user.email);
             }
@@ -77,7 +129,7 @@
 
         async function loadUsers(supabase) {
             const listContainer = document.getElementById('user-list');
-            listContainer.innerHTML = '<div class="p-8 text-center text-gray-500">Loading...</div>';
+            listContainer.innerHTML = '<div class="p-8 text-center text-gray-500 animate-pulse">Loading...</div>';
 
             const { data: users, error } = await supabase
                 .from('profiles')
@@ -85,7 +137,7 @@
                 .order('created_at', { ascending: false });
 
             if (error) {
-                listContainer.innerHTML = `<div class="p-4 text-red-400">Error: ${error.message}</div>`;
+                listContainer.innerHTML = `<div class="p-6 text-red-400 text-center">Error: ${error.message}</div>`;
                 return;
             }
 
@@ -104,27 +156,26 @@
             let html = '';
             users.forEach(user => {
                 const statusBadge = user.is_approved 
-                    ? `<span class="bg-green-900/50 text-green-300 text-xs px-2 py-1 rounded border border-green-700">Active</span>`
-                    : `<span class="bg-yellow-900/50 text-yellow-300 text-xs px-2 py-1 rounded border border-yellow-700">Pending</span>`;
+                    ? `<span class="bg-green-500/10 text-green-400 text-xs font-bold px-2.5 py-1 rounded border border-green-500/20">Active</span>`
+                    : `<span class="bg-yellow-500/10 text-yellow-400 text-xs font-bold px-2.5 py-1 rounded border border-yellow-500/20">Pending</span>`;
 
                 const actionButton = user.is_approved
-                    ? `<button onclick="window.toggleUser('${user.id}', false)" class="text-red-400 hover:text-red-300 text-sm border border-red-500/50 px-3 py-1 rounded hover:bg-red-900/20">Revoke</button>`
-                    : `<button onclick="window.toggleUser('${user.id}', true)" class="bg-green-600 hover:bg-green-700 text-white text-sm font-bold px-4 py-1.5 rounded hover:bg-green-600/80">Approve</button>`;
+                    ? `<button onclick="window.toggleUser('${user.id}', false)" class="text-red-400 hover:text-white text-sm border border-red-500/30 hover:bg-red-500/80 px-3 py-1.5 rounded transition-all duration-300">Revoke</button>`
+                    : `<button onclick="window.toggleUser('${user.id}', true)" class="bg-green-600 hover:bg-green-500 text-white text-sm font-bold px-4 py-1.5 rounded shadow-lg shadow-green-900/20 transition-all duration-300">Approve</button>`;
 
-                // Protect Admins from being revoked
                 const actions = ADMIN_EMAILS.includes(user.email) 
-                    ? '<span class="text-gray-500 text-sm font-bold">Admin</span>' 
+                    ? '<span class="text-gray-500 text-sm font-bold flex items-center"><span class="material-symbols-outlined text-sm mr-1">verified_user</span> Admin</span>' 
                     : actionButton;
 
                 html += `
-                    <div class="p-4 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-gray-700/30 transition">
-                        <div class="mb-2 sm:mb-0">
-                            <div class="flex items-center gap-3">
+                    <div class="p-5 flex flex-col sm:flex-row justify-between items-start sm:items-center hover:bg-white/5 transition-colors duration-200">
+                        <div class="mb-3 sm:mb-0">
+                            <div class="flex items-center gap-3 mb-1">
                                 <h3 class="font-bold text-white text-lg">${user.full_name || 'Unknown'}</h3>
                                 ${statusBadge}
                             </div>
                             <p class="text-sm text-gray-400">${user.email}</p>
-                            <p class="text-xs text-gray-600 mt-1">Joined: ${new Date(user.created_at).toLocaleDateString()}</p>
+                            <p class="text-xs text-gray-600 mt-1 flex items-center"><span class="material-symbols-outlined text-[10px] mr-1">calendar_today</span> ${new Date(user.created_at).toLocaleDateString()}</p>
                         </div>
                         <div>${actions}</div>
                     </div>
@@ -134,7 +185,6 @@
             listContainer.innerHTML = html;
         }
 
-        // Attach toggle function to window so onclick works
         window.toggleUser = async (userId, newStatus) => {
             const supabase = await getSupabase();
             if(!confirm(newStatus ? "Grant access?" : "Revoke access?")) return;
@@ -144,5 +194,119 @@
             else loadUsers(supabase);
         };
     </script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('beams-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let beams = [];
+        const MINIMUM_BEAMS = 50; 
+        const intensity = 'strong'; 
+        const opacityMap = { subtle: 0.7, medium: 0.85, strong: 1 };
+        
+        function createBeam(width, height) {
+            const angle = -35 + Math.random() * 10;
+            return {
+                x: Math.random() * width * 1.5 - width * 0.25,
+                y: Math.random() * height * 1.5 - height * 0.25,
+                width: 30 + Math.random() * 60,
+                length: height * 2.5,
+                angle: angle,
+                speed: 0.6 + Math.random() * 1.2,
+                opacity: 0.12 + Math.random() * 0.16,
+                hue: 250 + Math.random() * 40, 
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.03
+            };
+        }
+
+        function resetBeam(beam, index, totalBeams) {
+            const column = index % 3;
+            const spacing = canvas.width / 3;
+            beam.y = canvas.height + 100;
+            beam.x = column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+            beam.width = 100 + Math.random() * 100;
+            beam.speed = 0.5 + Math.random() * 0.4;
+            beam.hue = 240 + (index * 50) / totalBeams;
+            beam.opacity = 0.2 + Math.random() * 0.1;
+        }
+
+        function drawBeam(ctx, beam) {
+            ctx.save();
+            ctx.translate(beam.x, beam.y);
+            ctx.rotate((beam.angle * Math.PI) / 180);
+            const pulsingOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2) * opacityMap[intensity];
+            const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+            gradient.addColorStop(0, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            gradient.addColorStop(0.1, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(0.4, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.6, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.9, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(1, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+            ctx.restore();
+        }
+
+        function updateCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            const totalBeams = MINIMUM_BEAMS * 1.5;
+            beams = Array.from({ length: totalBeams }, () => createBeam(canvas.width, canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            beams.forEach((beam, index) => {
+                beam.y -= beam.speed;
+                beam.pulse += beam.pulseSpeed;
+                if (beam.y + beam.length < -100) {
+                    resetBeam(beam, index, beams.length);
+                }
+                drawBeam(ctx, beam);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', updateCanvasSize);
+        updateCanvasSize();
+        animate();
+    });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const curtain = document.getElementById('page-curtain');
+            
+            setTimeout(() => {
+                curtain.classList.add('opacity-0');
+            }, 100); 
+
+            const links = document.querySelectorAll('.transition-link');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('href');
+                    
+                    curtain.classList.remove('opacity-0');
+                    
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 500); 
+                });
+            });
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    curtain.classList.add('opacity-0');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>

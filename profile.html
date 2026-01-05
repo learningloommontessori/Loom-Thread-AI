@@ -3,63 +3,143 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Loom Play AI - User Profile</title>
+    <title>Loom Thread AI - User Profile</title>
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&amp;display=swap" rel="stylesheet" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Roboto', sans-serif;
+        body { font-family: 'Roboto', sans-serif; }
+
+        /* --- PRO 3D LIQUID GLASS --- */
+        .pro-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px) saturate(120%);
+            -webkit-backdrop-filter: blur(20px) saturate(120%);
+            border-radius: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 10px 20px rgba(255, 255, 255, 0.03);
         }
+
+        /* --- PRO GLASS BUTTONS --- */
+        .pro-glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: 9999px; 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.3); 
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+        .pro-glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-top-color: rgba(255, 255, 255, 0.5); 
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
+        }
+
+        /* --- CIRCULAR GLASS BUTTON --- */
+        .glass-circle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: none; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
+        }
+        .glass-circle-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            transform: scale(1.05);
+        }
+
+        /* --- GLASS INPUTS --- */
+        .glass-input {
+            background-color: rgba(0, 0, 0, 0.3) !important; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 1px 0 rgba(255, 255, 255, 0.1);
+            border: 1px solid rgba(255, 255, 255, 0.08) !important;
+            transition: all 0.3s ease;
+            color: white; 
+        }
+        .glass-input:focus {
+            background-color: rgba(0, 0, 0, 0.5) !important;
+            border-color: rgba(168, 85, 247, 0.5) !important; 
+            box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5), 0 0 0 2px rgba(168, 85, 247, 0.2); 
+            outline: none;
+        }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse-overlay { 0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; } }
+        .beam-overlay { animation: pulse-overlay 10s ease-in-out infinite; backdrop-filter: blur(50px); }
+        @keyframes menu-pop-entry { 0% { opacity: 0; transform: translateY(-10px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .menu-animate-item { opacity: 0; animation: menu-pop-entry 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .menu-animate-item:nth-child(1) { animation-delay: 0.05s; }
+        .menu-animate-item:nth-child(2) { animation-delay: 0.1s; }
+        .menu-animate-item:nth-child(3) { animation-delay: 0.15s; }
+        .menu-animate-item:nth-child(4) { animation-delay: 0.2s; }
+        .rotate-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .rotate-active { transform: rotate(90deg); }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="relative min-h-screen flex flex-col">
-        <div class="absolute inset-0">
-            <img alt="Abstract purple and blue waves on a black background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZu9QWRIEFnKKG6SMF74gPyyMfKcVyImI8TeqE1aWnAEy17Z3Ob2KGfLCIeZhHwB3m8sldZ1JAvfz-y5wpsgDaZBSRb6S0wGB7p4XJL3VQ2JsWLB9gz3iT3yeNwq-tNnZaFJxCUbLxoqWIsjBrpFCc0ZdkKon35yRcmiw-mgn98WRAe4u-dsImTEuWVOqThZVmtgidaXz8oNaw_j2UG7odXaYWTgDIAYkh0fnLndUDkSH7Ho0BSd03oOllL7bpSfju2Yxnxa_HiMs" />
-            <div class="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+
+<body class="bg-neutral-950 text-white overflow-x-hidden selection:bg-purple-500/30">
+
+    <div id="page-curtain" class="fixed inset-0 bg-neutral-950 z-[100] transition-opacity duration-500 ease-in-out pointer-events-none opacity-100"></div>
+
+    <canvas id="beams-canvas" class="fixed inset-0 w-full h-full z-0" style="filter: blur(15px); opacity: 0.6; pointer-events: none;"></canvas>
+    <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none z-0"></div>
+
+    <div class="relative min-h-screen z-10 flex flex-col">
+        
+        <header class="relative z-20 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center bg-transparent">
             <div class="flex items-center space-x-4">
-                <!-- Main Navigation Menu -->
+                
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="text-white focus:outline-none">
-                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    <button @click="open = !open" class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full">
+                        <span class="material-symbols-outlined text-3xl rotate-icon select-none" :class="{ 'rotate-active': open }" x-text="open ? 'close' : 'menu'">menu</span>
                     </button>
-                    <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/dashboard.html">
+                    
+                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/dashboard.html">
                             <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/new-chat.html">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/new-chat.html">
                             <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/History.html">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/History.html">
                             <span class="material-symbols-outlined mr-3">history</span> Threads of the Past
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/collective-loom.html">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/collective-loom.html">
                             <span class="material-symbols-outlined mr-3">groups</span> The Collective Loom
                         </a>
                     </div>
                 </div>
-                <h1 class="text-2xl font-bold">Loom Play AI</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-white drop-shadow-md">Loom Thread AI</h1>
             </div>
+            
             <div class="flex items-center">
-                <!-- User Profile Menu -->
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                        <span id="welcome-message" class="hidden sm:inline mr-2">Welcome, User!</span>
-                        <span class="material-symbols-outlined text-4xl">account_circle</span>
+                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group">
+                        <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition text-shadow">Welcome, User!</span>
+                        <div class="glass-circle-btn flex items-center justify-center w-10 h-10 rounded-full">
+                            <span class="material-symbols-outlined text-4xl rotate-icon select-none" :class="{ 'rotate-active': open, 'text-purple-400': open }" x-text="open ? 'close' : 'account_circle'">account_circle</span>
+                        </div>
                     </button>
-                    <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
-                        <a class="flex items-center px-4 py-3 text-sm font-bold text-white bg-purple-600" href="/profile.html">
-                            <span class="material-symbols-outlined mr-3">account_circle</span> The Weaver
+                    
+                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm font-bold text-white bg-purple-600/20" href="/profile.html">
+                            <span class="material-symbols-outlined mr-3 text-purple-400">account_circle</span> The Weaver
                         </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/change-password.html">
-                            <span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/change-password.html">
+                            <span class="material-symbols-outlined mr-3 text-gray-400">lock_reset</span> Twist a Stronger Cord
                         </a>
-                        <div class="border-t border-gray-700 my-1"></div>
-                        <button id="logoutButton" class="w-full text-left flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white">
+                        <button id="logoutButton" class="menu-animate-item pro-glass-btn w-full text-left flex items-center px-4 py-3 text-sm text-red-400 hover:text-red-300">
                             <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
                         </button>
                     </div>
@@ -67,79 +147,203 @@
             </div>
         </header>
 
-        <main class="relative flex flex-col flex-grow items-center px-4 sm:px-6 lg:px-8 py-8">
-            <div class="w-full max-w-4xl bg-black/30 backdrop-blur-sm p-8 rounded-lg">
-                <div class="flex flex-col md:flex-row items-center md:items-start text-center md:text-left">
-                    <div class="relative mb-4 md:mb-0 md:mr-8">
-                        <img alt="User Profile Picture" class="w-32 h-32 rounded-full ring-4 ring-purple-500 object-cover" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" id="profile-pic" />
-                        <button id="edit-pic-btn" class="absolute bottom-0 right-0 bg-purple-600 hover:bg-purple-700 p-2 rounded-full text-white" title="Change profile picture">
-                            <span class="material-symbols-outlined">edit</span>
+        <main class="relative flex flex-col flex-grow items-center px-4 sm:px-6 lg:px-8 py-8 z-10">
+            
+            <div class="w-full max-w-4xl pro-glass p-8 relative overflow-hidden shadow-2xl">
+                
+                <div class="absolute -top-[150px] -right-[150px] w-[300px] h-[300px] bg-purple-500/20 blur-[100px] rounded-full pointer-events-none"></div>
+
+                <div class="relative z-10 flex flex-col md:flex-row items-center md:items-start text-center md:text-left">
+                    <div class="relative mb-6 md:mb-0 md:mr-8 group">
+                        <img alt="User Profile Picture" class="w-32 h-32 rounded-full border-4 border-purple-500/50 shadow-[0_0_20px_rgba(147,51,234,0.3)] object-cover" src="https://i.pravatar.cc/150?u=a042581f4e29026704d" id="profile-pic" />
+                        
+                        <button id="edit-pic-btn" class="glass-circle-btn absolute bottom-0 right-0 p-2 rounded-full text-white bg-purple-600 hover:bg-purple-500 shadow-lg transition-transform hover:scale-110" title="Change profile picture">
+                            <span class="material-symbols-outlined text-lg">edit</span>
                         </button>
                         <input type="file" id="avatar-input" class="hidden" accept="image/png, image/jpeg" />
                     </div>
+                    
                     <div class="flex-1">
-                        <h2 class="text-4xl font-bold" id="profile-name-header">Your Name</h2>
-                        <p class="text-purple-300 mt-1" id="profile-email-header">your.email@example.com</p>
-                        <p class="mt-4 text-gray-300 max-w-prose" id="profile-bio-header">Your bio will appear here.</p>
+                        <h2 class="text-4xl font-extrabold text-white drop-shadow-sm" id="profile-name-header">Your Name</h2>
+                        <p class="text-purple-300 mt-1 font-medium" id="profile-email-header">your.email@example.com</p>
+                        <p class="mt-4 text-gray-300 max-w-prose leading-relaxed" id="profile-bio-header">Your bio will appear here.</p>
                     </div>
                 </div>
 
-                <div class="mt-10 border-t border-gray-700 pt-8">
-                    <h3 class="text-2xl font-bold mb-6">Profile Settings</h3>
-                    <div id="success-message" class="bg-green-900/50 border border-green-500 rounded-md p-3 mb-6 hidden">
-                        <div class="flex">
-                            <div class="flex-shrink-0">
-                                <span class="material-symbols-outlined text-green-400">check_circle</span>
-                            </div>
-                            <div class="ml-3">
-                                <p class="text-sm font-medium text-green-300" id="success-text">Profile updated successfully!</p>
-                            </div>
+                <div class="mt-10 border-t border-white/10 pt-8 relative z-10">
+                    <h3 class="text-2xl font-bold mb-6 text-white">Profile Settings</h3>
+                    
+                    <div id="success-message" class="bg-green-500/10 border border-green-500/30 rounded-xl p-4 mb-6 hidden backdrop-blur-sm">
+                        <div class="flex items-center">
+                            <span class="material-symbols-outlined text-green-400 mr-3">check_circle</span>
+                            <p class="text-sm font-medium text-green-300" id="success-text">Profile updated successfully!</p>
                         </div>
                     </div>
+
                     <form id="profile-form">
                         <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                             <div>
-                                <label class="flex items-center text-sm font-medium text-gray-300" for="full_name">
-                                    Full Name <span class="material-symbols-outlined text-sm ml-1 align-middle text-gray-400">edit</span>
+                                <label class="flex items-center text-sm font-medium text-gray-300 mb-1" for="full_name">
+                                    Full Name <span class="material-symbols-outlined text-sm ml-1 text-gray-500">edit</span>
                                 </label>
-                                <input class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm" id="full_name" name="full_name" type="text" />
+                                <input class="glass-input w-full py-2.5 px-4 rounded-lg text-white" id="full_name" name="full_name" type="text" />
                             </div>
+                            
                             <div>
-                                <label class="block text-sm font-medium text-gray-300" for="email">Email Address</label>
-                                <input class="mt-1 block w-full bg-gray-700 border-gray-600 rounded-md shadow-sm py-2 px-3 text-gray-400 focus:outline-none sm:text-sm cursor-not-allowed" id="email" name="email" type="email" readonly />
+                                <label class="block text-sm font-medium text-gray-300 mb-1" for="email">Email Address</label>
+                                <input class="glass-input w-full py-2.5 px-4 rounded-lg text-gray-400 cursor-not-allowed opacity-70" id="email" name="email" type="email" readonly />
                             </div>
+                            
                              <div>
-                                <label class="block text-sm font-medium text-gray-300" for="member_since">Member Since</label>
-                                <p class="mt-1 text-white sm:text-sm py-2 px-3" id="member_since">Loading...</p>
+                                <label class="block text-sm font-medium text-gray-300 mb-1" for="member_since">Member Since</label>
+                                <div class="glass-input w-full py-2.5 px-4 rounded-lg text-gray-300 flex items-center" id="member_since">
+                                    <span class="material-symbols-outlined text-sm mr-2">calendar_today</span> Loading...
+                                </div>
                             </div>
+                            
                             <div class="md:col-span-2">
-                                <label class="block text-sm font-medium text-gray-300" for="bio">Bio</label>
-                                <textarea class="mt-1 block w-full bg-gray-800 border-gray-600 rounded-md shadow-sm py-2 px-3 text-white focus:outline-none focus:ring-purple-500 focus:border-purple-500 sm:text-sm" id="bio" name="bio" rows="3"></textarea>
+                                <label class="block text-sm font-medium text-gray-300 mb-1" for="bio">Bio</label>
+                                <textarea class="glass-input w-full py-2.5 px-4 rounded-lg text-white" id="bio" name="bio" rows="3"></textarea>
                             </div>
                         </div>
-                        <div class="mt-8 flex justify-between items-center">
+                        
+                        <div class="mt-10 flex flex-col sm:flex-row justify-between items-center gap-4">
                              <div>
-                                <button id="delete-profile-btn" type="button" class="bg-red-900/80 hover:bg-red-800 text-red-300 font-semibold py-2 px-4 rounded-md transition duration-300 flex items-center">
+                                <button id="delete-profile-btn" type="button" class="pro-glass-btn flex items-center px-5 py-2.5 text-sm font-bold text-red-400 hover:text-red-300 hover:bg-red-500/10 border border-red-500/20 transition-all">
                                     <span class="material-symbols-outlined mr-2">delete_forever</span>
                                     Delete Profile
                                 </button>
                             </div>
-                            <div class="flex space-x-4">
-                                <button class="bg-purple-600 hover:bg-purple-700 text-white font-semibold py-2 px-6 rounded-md transition duration-300 flex items-center justify-center min-w-[120px]" type="submit">
-                                    <span class="button-text">Save Changes</span>
-                                    <div class="button-spinner hidden animate-spin rounded-full h-5 w-5 border-b-2 border-white"></div>
-                                </button>
-                            </div>
+                            
+                            <button class="w-full sm:w-auto flex justify-center items-center py-3 px-8 border border-transparent rounded-xl shadow-[0_4px_15px_rgba(147,51,234,0.4)] text-sm font-bold text-white bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 hover:shadow-[0_6px_25px_rgba(147,51,234,0.6)] focus:outline-none transition-all duration-300 transform hover:-translate-y-0.5" type="submit">
+                                <span class="button-text">Save Changes</span>
+                                <svg class="button-spinner hidden animate-spin ml-2 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path></svg>
+                            </button>
                         </div>
                     </form>
                 </div>
             </div>
         </main>
-        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto">
-            <p class="text-sm text-gray-400">Made By: Monika Pathak</p>
+        
+        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto z-10">
+            <p class="text-xs text-gray-500">Made By: Monika Pathak</p>
         </footer>
     </div>
+
     <script type="module" src="js/profile.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('beams-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let beams = [];
+        const MINIMUM_BEAMS = 50; 
+        const intensity = 'strong'; 
+        const opacityMap = { subtle: 0.7, medium: 0.85, strong: 1 };
+        
+        function createBeam(width, height) {
+            const angle = -35 + Math.random() * 10;
+            return {
+                x: Math.random() * width * 1.5 - width * 0.25,
+                y: Math.random() * height * 1.5 - height * 0.25,
+                width: 30 + Math.random() * 60,
+                length: height * 2.5,
+                angle: angle,
+                speed: 0.6 + Math.random() * 1.2,
+                opacity: 0.12 + Math.random() * 0.16,
+                hue: 250 + Math.random() * 40, 
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.03
+            };
+        }
+
+        function resetBeam(beam, index, totalBeams) {
+            const column = index % 3;
+            const spacing = canvas.width / 3;
+            beam.y = canvas.height + 100;
+            beam.x = column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+            beam.width = 100 + Math.random() * 100;
+            beam.speed = 0.5 + Math.random() * 0.4;
+            beam.hue = 240 + (index * 50) / totalBeams;
+            beam.opacity = 0.2 + Math.random() * 0.1;
+        }
+
+        function drawBeam(ctx, beam) {
+            ctx.save();
+            ctx.translate(beam.x, beam.y);
+            ctx.rotate((beam.angle * Math.PI) / 180);
+            const pulsingOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2) * opacityMap[intensity];
+            const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+            gradient.addColorStop(0, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            gradient.addColorStop(0.1, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(0.4, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.6, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.9, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(1, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+            ctx.restore();
+        }
+
+        function updateCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            const totalBeams = MINIMUM_BEAMS * 1.5;
+            beams = Array.from({ length: totalBeams }, () => createBeam(canvas.width, canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            beams.forEach((beam, index) => {
+                beam.y -= beam.speed;
+                beam.pulse += beam.pulseSpeed;
+                if (beam.y + beam.length < -100) {
+                    resetBeam(beam, index, beams.length);
+                }
+                drawBeam(ctx, beam);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', updateCanvasSize);
+        updateCanvasSize();
+        animate();
+    });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const curtain = document.getElementById('page-curtain');
+            
+            setTimeout(() => {
+                curtain.classList.add('opacity-0');
+            }, 100); 
+
+            const links = document.querySelectorAll('.transition-link');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('href');
+                    
+                    curtain.classList.remove('opacity-0');
+                    
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 500); 
+                });
+            });
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    curtain.classList.add('opacity-0');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
-

@@ -3,144 +3,403 @@
 <head>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Loom Play AI - Generated Content</title>
+    <title>Loom Play AI - Generated Content (Preview)</title>
+    
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&amp;display=swap" rel="stylesheet" />
+    
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;500;700&display=swap" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
+    
     <style type="text/tailwindcss">
-        body {
-            font-family: 'Roboto', sans-serif;
+        body { font-family: 'Roboto', sans-serif; }
+        
+        /* --- PRO 3D LIQUID GLASS --- */
+        .pro-glass {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.03) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(20px) saturate(120%);
+            -webkit-backdrop-filter: blur(20px) saturate(120%);
+            border-radius: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.2);
+            border-left: 1px solid rgba(255, 255, 255, 0.1);
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            box-shadow: 0 15px 35px -5px rgba(0, 0, 0, 0.5), inset 0 0 0 1px rgba(255, 255, 255, 0.02), inset 0 10px 20px rgba(255, 255, 255, 0.03);
         }
-        .active-tab {
-            background-color: #A855F7;
-            color: white;
-            font-weight: 700;
+
+        /* --- PRO GLASS BUTTONS --- */
+        .pro-glass-btn {
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.05) 0%, rgba(255, 255, 255, 0.01) 100%);
+            backdrop-filter: blur(12px);
+            border-radius: 9999px; 
+            border: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(255, 255, 255, 0.3); 
+            border-left: 1px solid rgba(255, 255, 255, 0.2);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
         }
-        .tab-content, .tag-content {
-            display: none;
+        .pro-glass-btn:hover {
+            transform: translateY(-2px) scale(1.02);
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.1) 0%, rgba(255, 255, 255, 0.05) 100%);
+            border-top-color: rgba(255, 255, 255, 0.5); 
+            box-shadow: 0 8px 20px rgba(139, 92, 246, 0.3);
         }
-        .active-tab-content, .active-tag-content {
-            display: block;
+
+        /* --- CIRCULAR BUTTONS --- */
+        .glass-circle-btn {
+            background: rgba(255, 255, 255, 0.05);
+            backdrop-filter: blur(10px);
+            border: none; 
+            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            transition: all 0.3s ease;
         }
-        .active-tag {
-            background-color: #6D28D9 !important;
-            color: white !important;
+        .glass-circle-btn:hover {
+            background: rgba(255, 255, 255, 0.15);
+            box-shadow: 0 0 15px rgba(139, 92, 246, 0.4);
+            transform: scale(1.05);
         }
+
+        /* --- TABS & TAGS --- */
+        .glass-tab { color: rgba(255, 255, 255, 0.6); border-radius: 0.75rem; transition: all 0.2s ease; }
+        .glass-tab:hover { background: rgba(255, 255, 255, 0.05); color: white; }
+        .active-tab { background: rgba(168, 85, 247, 0.2) !important; color: white !important; font-weight: 700; border: 1px solid rgba(168, 85, 247, 0.4); box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.1); }
+
+        .glass-tag { padding: 0.5rem 1rem; border-radius: 9999px; font-size: 0.875rem; font-weight: 500; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); color: rgba(255,255,255,0.7); transition: all 0.2s; cursor: pointer; }
+        .glass-tag:hover { background: rgba(255,255,255,0.1); color: white; }
+        .active-tag { background-color: #6D28D9 !important; color: white !important; border-color: #8B5CF6 !important; box-shadow: 0 0 10px rgba(139, 92, 246, 0.4); }
+
+        /* --- UTILS --- */
+        .tab-content { display: none; }
+        .active-tab-content { display: block; }
+        .rotate-icon { transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1); }
+        .rotate-active { transform: rotate(90deg); }
+
+        /* --- ANIMATIONS --- */
+        @keyframes pulse-overlay { 0% { opacity: 0.05; } 50% { opacity: 0.15; } 100% { opacity: 0.05; } }
+        .beam-overlay { animation: pulse-overlay 10s ease-in-out infinite; backdrop-filter: blur(50px); }
+        @keyframes menu-pop-entry { 0% { opacity: 0; transform: translateY(-10px) scale(0.95); } 100% { opacity: 1; transform: translateY(0) scale(1); } }
+        .menu-animate-item { opacity: 0; animation: menu-pop-entry 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards; }
+        .menu-animate-item:nth-child(1) { animation-delay: 0.05s; }
+        .menu-animate-item:nth-child(2) { animation-delay: 0.1s; }
+        .menu-animate-item:nth-child(3) { animation-delay: 0.15s; }
+        .menu-animate-item:nth-child(4) { animation-delay: 0.2s; }
     </style>
 </head>
-<body class="bg-gray-900 text-white">
-    <div class="relative min-h-screen flex flex-col">
-        <div class="absolute inset-0">
-            <img alt="Abstract purple and blue waves on a black background" class="w-full h-full object-cover" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCAZu9QWRIEFnKKG6SMF74gPyyMfKcVyImI8TeqE1aWnAEy17Z3Ob2KGfLCIeZhHwB3m8sldZ1JAvfz-y5wpsgDaZBSRb6S0wGB7p4XJL3VQ2JsWLB9gz3iT3yeNwq-tNnZaFJxCUbLxoqWIsjBrpFCc0ZdkKon35yRcmiw-mgn98WRAe4u-dsImTEuWVOqThZVmtgidaXz8oNaw_j2UG7odXaYWTgDIAYkh0fnLndUDkSH7Ho0BSd03oOllL7bpSfju2Yxnxa_HiMs" />
-            <div class="absolute inset-0 bg-black opacity-50"></div>
-        </div>
-        <header class="relative z-10 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
+
+<body class="bg-neutral-950 text-white overflow-x-hidden selection:bg-purple-500/30">
+
+    <div id="page-curtain" class="fixed inset-0 bg-neutral-950 z-[100] transition-opacity duration-500 ease-in-out pointer-events-none opacity-100"></div>
+
+    <canvas id="beams-canvas" class="fixed inset-0 w-full h-full z-0" style="filter: blur(15px); opacity: 0.6; pointer-events: none;"></canvas>
+    <div class="fixed inset-0 bg-neutral-950/5 beam-overlay pointer-events-none z-0"></div>
+
+    <div class="relative min-h-screen z-10 flex flex-col">
+        
+        <header class="relative z-20 px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center bg-transparent">
             <div class="flex items-center space-x-4">
-                <!-- Main Navigation Menu -->
+                
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="text-white focus:outline-none">
-                        <span class="material-symbols-outlined text-3xl">menu</span>
+                    <button @click="open = !open" class="glass-circle-btn text-white focus:outline-none flex items-center justify-center w-10 h-10 rounded-full">
+                        <span class="material-symbols-outlined text-3xl rotate-icon select-none" :class="{ 'rotate-active': open }" x-text="open ? 'close' : 'menu'">menu</span>
                     </button>
-                    <div x-show="open" @click.away="open = false" x-transition class="absolute left-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/dashboard.html">
-                            <span class="material-symbols-outlined mr-3">dashboard</span> Dashboard
-                        </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/new-chat.html">
-                            <span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson
-                        </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/History.html">
-                            <span class="material-symbols-outlined mr-3">history</span> Threads of the Past
-                        </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/collective-loom.html">
-                            <span class="material-symbols-outlined mr-3">groups</span> The Collective Loom
-                        </a>
+                    <div x-show="open" @click.away="open = false" class="absolute left-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/dashboard.html"><span class="material-symbols-outlined mr-3">dashboard</span> Dashboard</a>
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/new-chat.html"><span class="material-symbols-outlined mr-3">add</span> Weave a New Lesson</a>
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/History.html"><span class="material-symbols-outlined mr-3">history</span> Threads of the Past</a>
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/collective-loom.html"><span class="material-symbols-outlined mr-3">groups</span> The Collective Loom</a>
                     </div>
                 </div>
-                <h1 class="text-2xl font-bold">Loom Play AI</h1>
+                <h1 class="text-2xl font-bold tracking-tight text-white drop-shadow-md">Loom Play AI</h1>
             </div>
+            
             <div class="flex items-center">
-                <!-- User Profile Menu -->
                 <div x-data="{ open: false }" class="relative">
-                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none">
-                        <span id="welcome-message" class="hidden sm:inline mr-2">Welcome, User!</span>
-                        <span class="material-symbols-outlined text-4xl">account_circle</span>
+                    <button @click="open = !open" class="flex items-center space-x-2 focus:outline-none hover:text-purple-400 transition group">
+                        <span id="welcome-message" class="hidden sm:inline mr-2 text-sm font-medium opacity-80 group-hover:opacity-100 transition text-shadow">Welcome, User!</span>
+                        <div class="glass-circle-btn flex items-center justify-center w-10 h-10 rounded-full">
+                            <span class="material-symbols-outlined text-4xl rotate-icon select-none" :class="{ 'rotate-active': open, 'text-purple-400': open }" x-text="open ? 'close' : 'account_circle'">account_circle</span>
+                        </div>
                     </button>
-                    <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-64 bg-gray-800/90 backdrop-blur-sm rounded-md shadow-lg py-1 z-20" style="display: none;">
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/profile.html">
-                            <span class="material-symbols-outlined mr-3">account_circle</span> The Weaver
-                        </a>
-                        <a class="flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white" href="/change-password.html">
-                            <span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord
-                        </a>
-                        <div class="border-t border-gray-700 my-1"></div>
-                        <button id="logoutButton" class="w-full text-left flex items-center px-4 py-3 text-sm text-gray-300 hover:bg-purple-600 hover:text-white">
-                            <span class="material-symbols-outlined mr-3">logout</span> Exit the Loom
-                        </button>
+                    <div x-show="open" @click.away="open = false" class="absolute right-0 mt-3 w-56 flex flex-col space-y-3 z-50 p-2" style="display: none;">
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/profile.html"><span class="material-symbols-outlined mr-3">account_circle</span> The Weaver</a>
+                        <a class="transition-link menu-animate-item pro-glass-btn flex items-center px-4 py-3 text-sm text-gray-300 hover:text-white" href="/change-password.html"><span class="material-symbols-outlined mr-3">lock_reset</span> Twist a Stronger Cord</a>
+                        <button id="logoutButton" class="menu-animate-item pro-glass-btn w-full text-left flex items-center px-4 py-3 text-sm text-red-400 hover:text-red-300"><span class="material-symbols-outlined mr-3">logout</span> Exit the Loom</button>
                     </div>
                 </div>
             </div>
         </header>
 
-        <main class="relative flex-grow flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8">
-            <!-- Loading Spinner -->
-            <div id="loader" class="flex flex-col items-center justify-center h-full w-full flex-grow">
-                <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500"></div>
-                <p class="mt-4 text-xl font-semibold">Weaving your lesson...</p>
+        <main class="relative flex-grow flex flex-col items-center px-4 sm:px-6 lg:px-8 py-8 z-10">
+            
+            <div id="loader" class="hidden flex-col items-center justify-center h-full w-full flex-grow">
+                <div class="animate-spin rounded-full h-32 w-32 border-t-2 border-b-2 border-purple-500 shadow-[0_0_15px_rgba(168,85,247,0.5)]"></div>
+                <p class="mt-4 text-xl font-semibold text-gray-300 animate-pulse">Weaving your lesson...</p>
             </div>
 
-            <!-- Main Content (hidden by default) -->
-            <div class="w-full max-w-7xl bg-black/30 backdrop-blur-sm p-8 rounded-lg hidden" id="main-content">
+            <div class="w-full max-w-7xl pro-glass p-8" id="main-content">
+                
+                <div class="flex flex-col md:flex-row justify-between items-center mb-6 pb-6 border-b border-white/10 gap-4">
+                    <h2 class="text-2xl font-bold text-white drop-shadow-md">Your Lesson Plan</h2>
+                    
+                    <div class="flex space-x-4">
+                        
+                        <div x-data="{ open: false }" class="relative z-50">
+                            <button 
+                                @click="open = !open" 
+                                class="pro-glass-btn flex items-center px-5 py-2.5 text-sm font-bold text-white hover:text-purple-300 transition-colors"
+                            >
+                                <span class="material-symbols-outlined mr-2">crop_free</span> Export Section
+                                <span class="material-symbols-outlined ml-1 text-xs transition-transform duration-300" :class="{'rotate-180': open}">expand_more</span>
+                            </button>
+                            
+                            <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-48 pro-glass p-2 shadow-2xl flex flex-col space-y-1" style="display: none;">
+                                <button id="export-section-pdf" class="w-full text-left px-3 py-2 text-sm text-gray-200 hover:bg-white/10 rounded-xl transition-colors flex items-center group">
+                                    <span class="material-symbols-outlined text-base mr-3 text-purple-400 group-hover:text-white">picture_as_pdf</span> PDF
+                                </button>
+                                <button id="export-section-word" class="w-full text-left px-3 py-2 text-sm text-gray-200 hover:bg-white/10 rounded-xl transition-colors flex items-center group">
+                                    <span class="material-symbols-outlined text-base mr-3 text-blue-400 group-hover:text-white">description</span> Word
+                                </button>
+                            </div>
+                        </div>
+
+                        <div x-data="{ open: false }" class="relative z-50">
+                            <button 
+                                @click="open = !open" 
+                                class="pro-glass-btn flex items-center px-5 py-2.5 text-sm font-bold text-white hover:text-purple-300 transition-colors bg-purple-600/20 border-purple-500/30"
+                            >
+                                <span class="material-symbols-outlined mr-2">download_for_offline</span> Download Full Lesson
+                                <span class="material-symbols-outlined ml-1 text-xs transition-transform duration-300" :class="{'rotate-180': open}">expand_more</span>
+                            </button>
+                            
+                            <div x-show="open" @click.away="open = false" x-transition class="absolute right-0 mt-2 w-64 pro-glass p-3 shadow-2xl flex flex-col space-y-2" style="display: none;">
+                                
+                                <div x-data="{ subOpen: false }">
+                                    <button @click="subOpen = !subOpen" class="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-gray-200 hover:bg-white/10 rounded-xl transition-colors">
+                                        <div class="flex items-center"><span class="material-symbols-outlined text-purple-400 mr-2">picture_as_pdf</span> PDF</div>
+                                        <span class="material-symbols-outlined text-xs text-gray-400 transition-transform duration-200" :class="{'rotate-90': subOpen}">chevron_right</span>
+                                    </button>
+                                    <div x-show="subOpen" class="pl-4 mt-1 space-y-1" x-transition>
+                                        <button class="w-full text-left px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center">
+                                            <span class="material-symbols-outlined text-sm mr-2">image</span> With Images
+                                        </button>
+                                        <button class="w-full text-left px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center">
+                                            <span class="material-symbols-outlined text-sm mr-2">article</span> Text Only
+                                        </button>
+                                    </div>
+                                </div>
+
+                                <div x-data="{ subOpen: false }">
+                                    <button @click="subOpen = !subOpen" class="w-full flex items-center justify-between px-3 py-2 text-sm font-semibold text-gray-200 hover:bg-white/10 rounded-xl transition-colors">
+                                        <div class="flex items-center"><span class="material-symbols-outlined text-blue-400 mr-2">description</span> Word</div>
+                                        <span class="material-symbols-outlined text-xs text-gray-400 transition-transform duration-200" :class="{'rotate-90': subOpen}">chevron_right</span>
+                                    </button>
+                                    <div x-show="subOpen" class="pl-4 mt-1 space-y-1" x-transition>
+                                        <button class="w-full text-left px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center">
+                                            <span class="material-symbols-outlined text-sm mr-2">image</span> With Images
+                                        </button>
+                                        <button class="w-full text-left px-3 py-1.5 text-sm text-gray-400 hover:text-white hover:bg-white/5 rounded-lg transition-colors flex items-center">
+                                            <span class="material-symbols-outlined text-sm mr-2">article</span> Text Only
+                                        </button>
+                                    </div>
+                                </div>
+
+                            </div>
+                        </div>
+
+                    </div>
+                </div>
+
                 <div class="flex flex-col lg:flex-row">
-                    <!-- Vertical Tabs Navigation -->
-                    <nav id="tabs-navigation" aria-label="Tabs" class="flex flex-col space-y-2 w-full lg:w-1/4 lg:pr-8 mb-8 lg:mb-0 lg:border-r lg:border-gray-700">
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="generatedImage" href="#"><span class="material-symbols-outlined mr-3">image</span>Generated Image</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200 active-tab" data-tab="newlyCreatedContent" href="#"><span class="material-symbols-outlined mr-3">auto_awesome</span>Newly Created</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="newActivities" href="#"><span class="material-symbols-outlined mr-3">pan_tool</span>New Activities</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="classicResources" href="#"><span class="material-symbols-outlined mr-3">menu_book</span>Classic Resources</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="montessoriConnections" href="#"><span class="material-symbols-outlined mr-3">child_care</span>Montessori Connections</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="movementAndMusic" href="#"><span class="material-symbols-outlined mr-3">sports_gymnastics</span>Movement & Music</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="socialAndEmotionalLearning" href="#"><span class="material-symbols-outlined mr-3">psychology</span>Social & Emotional</a>
-                        <a class="whitespace-nowrap py-3 px-4 font-medium text-base text-gray-300 hover:bg-purple-800/40 hover:text-white flex items-center rounded-lg transition-colors duration-200" data-tab="teacherResources" href="#"><span class="material-symbols-outlined mr-3">school</span>Teacher Resources</a>
+                    <nav id="tabs-navigation" aria-label="Tabs" class="flex flex-col space-y-2 w-full lg:w-1/4 lg:pr-8 mb-8 lg:mb-0 lg:border-r lg:border-white/10">
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="generatedImage" href="#">
+                            <span class="material-symbols-outlined mr-3">image</span>Generated Image
+                        </a>
+                        <a class="glass-tab active-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="newlyCreatedContent" href="#">
+                            <span class="material-symbols-outlined mr-3">auto_awesome</span>Newly Created
+                        </a>
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="newActivities" href="#">
+                            <span class="material-symbols-outlined mr-3">pan_tool</span>New Activities
+                        </a>
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="classicResources" href="#">
+                            <span class="material-symbols-outlined mr-3">menu_book</span>Classic Resources
+                        </a>
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="montessoriConnections" href="#">
+                            <span class="material-symbols-outlined mr-3">child_care</span>Montessori Connections
+                        </a>
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="movementAndMusic" href="#">
+                            <span class="material-symbols-outlined mr-3">sports_gymnastics</span>Movement & Music
+                        </a>
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="socialAndEmotionalLearning" href="#">
+                            <span class="material-symbols-outlined mr-3">psychology</span>Social & Emotional
+                        </a>
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="teacherResources" href="#">
+                            <span class="material-symbols-outlined mr-3">school</span>Teacher Resources
+                        </a>
                     </nav>
                     
-                    <!-- Tab Content Area: JS will populate this -->
                     <div class="w-full lg:w-3/4 lg:pl-8" id="content-container">
-                     
+                        
+                        <div id="generatedImage-content" class="tab-content">
+                            <div class="p-4 text-center">
+                                <h3 class="text-2xl font-bold text-gray-100 drop-shadow-md mb-2">✨ Visual Gallery</h3>
+                                <p class="text-gray-400">Your generated images will appear here.</p>
+                            </div>
+                        </div>
 
-  <!-- Empty containers for each tab's content -->
-<div id="generatedImage-content" class="tab-content">
-    <div class="p-6">
-        <div class="mb-6 text-center">
-            <h3 class="text-2xl font-bold text-gray-200">✨ Visual Gallery</h3>
-            <p class="text-gray-400">Create illustrations for specific parts of your lesson.</p>
-        </div>
+                        <div id="newlyCreatedContent-content" class="tab-content active-tab-content">
+                            <div class="p-2">
+                                <h3 class="text-xl font-bold text-white mb-4">Lesson Overview</h3>
+                                
+                                <div class="mb-6">
+                                    <div class="flex flex-wrap gap-2">
+                                        <button class="glass-tag active-tag">Overview</button>
+                                        <button class="glass-tag">Key Concepts</button>
+                                        <button class="glass-tag">Vocabulary</button>
+                                        <button class="glass-tag">Materials Needed</button>
+                                    </div>
+                                </div>
 
-        <div id="image-gallery-grid" class="grid grid-cols-1 md:grid-cols-2 gap-6 pb-10">
-            </div>
-    </div>
-</div>
-                        <div id="newlyCreatedContent-content" class="tab-content active-tab-content"></div>
-                        <div id="newActivities-content" class="tab-content"></div>
-                        <div id="classicResources-content" class="tab-content"></div>
-                        <div id="montessoriConnections-content" class="tab-content"></div>
-                        <div id="movementAndMusic-content" class="tab-content"></div>
-                        <div id="socialAndEmotionalLearning-content" class="tab-content"></div>
-                        <div id="teacherResources-content" class="tab-content"></div>
+                                <div class="prose prose-invert max-w-none">
+                                    <p class="text-gray-300 leading-relaxed">
+                                        This is a <strong>preview area</strong>. Use the <strong>Export</strong> buttons above to test the nested dropdown interactions.
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div id="newActivities-content" class="tab-content"><p class="p-4 text-gray-500">Activities content placeholder...</p></div>
+                        <div id="classicResources-content" class="tab-content"><p class="p-4 text-gray-500">Classic resources placeholder...</p></div>
+                        <div id="montessoriConnections-content" class="tab-content"><p class="p-4 text-gray-500">Montessori content placeholder...</p></div>
+                        <div id="movementAndMusic-content" class="tab-content"><p class="p-4 text-gray-500">Movement content placeholder...</p></div>
+                        <div id="socialAndEmotionalLearning-content" class="tab-content"><p class="p-4 text-gray-500">SEL content placeholder...</p></div>
+                        <div id="teacherResources-content" class="tab-content"><p class="p-4 text-gray-500">Teacher resources placeholder...</p></div>
                     </div>
                 </div>
             </div>
         </main>
-        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto">
-            <p class="text-sm text-gray-400">Made By: Monika Pathak</p>
+        
+        <footer class="relative w-full text-right py-4 px-4 sm:px-6 lg:px-8 mt-auto z-10">
+            <p class="text-xs text-gray-500">Made By: Monika Pathak</p>
         </footer>
     </div>
 
-    <!-- JS Libraries for Exporting -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/html-to-docx@1.8.0/dist/html-to-docx.js"></script>
     
-    <!-- Main page logic -->
     <script type="module" src="js/generation-page.js"></script>
+
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const canvas = document.getElementById('beams-canvas');
+        if (!canvas) return;
+        const ctx = canvas.getContext('2d');
+        let beams = [];
+        const MINIMUM_BEAMS = 50; 
+        const intensity = 'strong'; 
+        const opacityMap = { subtle: 0.7, medium: 0.85, strong: 1 };
+        
+        function createBeam(width, height) {
+            const angle = -35 + Math.random() * 10;
+            return {
+                x: Math.random() * width * 1.5 - width * 0.25,
+                y: Math.random() * height * 1.5 - height * 0.25,
+                width: 30 + Math.random() * 60,
+                length: height * 2.5,
+                angle: angle,
+                speed: 0.6 + Math.random() * 1.2,
+                opacity: 0.12 + Math.random() * 0.16,
+                hue: 250 + Math.random() * 40, 
+                pulse: Math.random() * Math.PI * 2,
+                pulseSpeed: 0.02 + Math.random() * 0.03
+            };
+        }
+
+        function resetBeam(beam, index, totalBeams) {
+            const column = index % 3;
+            const spacing = canvas.width / 3;
+            beam.y = canvas.height + 100;
+            beam.x = column * spacing + spacing / 2 + (Math.random() - 0.5) * spacing * 0.5;
+            beam.width = 100 + Math.random() * 100;
+            beam.speed = 0.5 + Math.random() * 0.4;
+            beam.hue = 240 + (index * 50) / totalBeams;
+            beam.opacity = 0.2 + Math.random() * 0.1;
+        }
+
+        function drawBeam(ctx, beam) {
+            ctx.save();
+            ctx.translate(beam.x, beam.y);
+            ctx.rotate((beam.angle * Math.PI) / 180);
+            const pulsingOpacity = beam.opacity * (0.8 + Math.sin(beam.pulse) * 0.2) * opacityMap[intensity];
+            const gradient = ctx.createLinearGradient(0, 0, 0, beam.length);
+            gradient.addColorStop(0, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            gradient.addColorStop(0.1, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(0.4, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.6, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity})`);
+            gradient.addColorStop(0.9, `hsla(${beam.hue}, 85%, 65%, ${pulsingOpacity * 0.5})`);
+            gradient.addColorStop(1, `hsla(${beam.hue}, 85%, 65%, 0)`);
+            ctx.fillStyle = gradient;
+            ctx.fillRect(-beam.width / 2, 0, beam.width, beam.length);
+            ctx.restore();
+        }
+
+        function updateCanvasSize() {
+            const dpr = window.devicePixelRatio || 1;
+            canvas.width = window.innerWidth * dpr;
+            canvas.height = window.innerHeight * dpr;
+            ctx.scale(dpr, dpr);
+            const totalBeams = MINIMUM_BEAMS * 1.5;
+            beams = Array.from({ length: totalBeams }, () => createBeam(canvas.width, canvas.height));
+        }
+
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            beams.forEach((beam, index) => {
+                beam.y -= beam.speed;
+                beam.pulse += beam.pulseSpeed;
+                if (beam.y + beam.length < -100) {
+                    resetBeam(beam, index, beams.length);
+                }
+                drawBeam(ctx, beam);
+            });
+            requestAnimationFrame(animate);
+        }
+
+        window.addEventListener('resize', updateCanvasSize);
+        updateCanvasSize();
+        animate();
+    });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const curtain = document.getElementById('page-curtain');
+            
+            setTimeout(() => {
+                curtain.classList.add('opacity-0');
+            }, 100); 
+
+            const links = document.querySelectorAll('.transition-link');
+            
+            links.forEach(link => {
+                link.addEventListener('click', (e) => {
+                    e.preventDefault();
+                    const target = link.getAttribute('href');
+                    
+                    curtain.classList.remove('opacity-0');
+                    
+                    setTimeout(() => {
+                        window.location.href = target;
+                    }, 500); 
+                });
+            });
+
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    curtain.classList.add('opacity-0');
+                }
+            });
+        });
+    </script>
+
 </body>
 </html>
