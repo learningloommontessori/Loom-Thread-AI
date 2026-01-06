@@ -343,7 +343,7 @@ async function handleDownloadPost(postId) {
     } else { Array.from(tempDiv.childNodes).forEach(child => processNode(child)); }
     const pageCount = doc.internal.getNumberOfPages();
     for(let i = 1; i <= pageCount; i++) {
-        doc.setPage(i); doc.setFontSize(10); doc.setTextColor(150); doc.text(`Page ${i} of ${pageCount} - Loom Play AI`, pageWidth / 2, 290, { align: 'center' });
+        doc.setPage(i); doc.setFontSize(10); doc.setTextColor(150); doc.text(`Page ${i} of ${pageCount} - Loom Thread AI`, pageWidth / 2, 290, { align: 'center' });
     }
     doc.save(`${toTitleCase(post.topic).replace(/\s+/g, '_')}_LoomIdea.pdf`);
 }
