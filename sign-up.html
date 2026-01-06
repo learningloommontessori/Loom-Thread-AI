@@ -206,6 +206,69 @@
   
   <script src="/js/main.js" type="module"></script>
 
+<script type="module">
+    import supabase from './js/supabaseClient.js';
+
+    document.getElementById('signUpForm').addEventListener('submit', async (e) => {
+        e.preventDefault();
+
+        const fullName = document.getElementById('full-name').value;
+        const email = document.getElementById('email').value;
+        const password = document.getElementById('password').value;
+        const employeeId = document.getElementById('employee-id').value;
+        
+        const btn = document.getElementById('submit-btn');
+        const spinner = btn.querySelector('.button-spinner');
+        const btnText = btn.querySelector('.button-text');
+        const successBox = document.getElementById('success-message');
+        const errorBox = document.getElementById('error-message');
+        const errorText = document.getElementById('error-text');
+
+        // UI: Loading State
+        btn.disabled = true;
+        spinner.classList.remove('hidden');
+        btnText.textContent = "Creating Account...";
+        successBox.classList.add('hidden');
+        errorBox.classList.add('hidden');
+
+        try {
+            // 1. Sign Up with Metadata
+            // We pass full_name here so the SQL trigger can save it to the profiles table
+            const { data, error } = await supabase.auth.signUp({
+                email: email,
+                password: password,
+                options: {
+                    data: {
+                        full_name: fullName,
+                        employee_id: employeeId // Stored in metadata
+                    }
+                }
+            });
+
+            if (error) throw error;
+
+            // 2. Success Feedback
+            // Note: We don't redirect to dashboard because they aren't approved yet.
+            successBox.classList.remove('hidden');
+            document.getElementById('success-text').textContent = "Account created! verification email sent. Please wait for admin approval.";
+            
+            // Clear form
+            e.target.reset();
+            btnText.textContent = "Weave My Account";
+            spinner.classList.add('hidden');
+
+        } catch (error) {
+            errorText.textContent = error.message;
+            errorBox.classList.remove('hidden');
+            btn.disabled = false;
+            spinner.classList.add('hidden');
+            btnText.textContent = "Weave My Account";
+        }
+    });
+</script>
+
+
+
   <script>
     document.addEventListener('DOMContentLoaded', () => {
         const canvas = document.getElementById('beams-canvas');

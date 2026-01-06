@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
     if (logoutButton) {
         logoutButton.addEventListener('click', async () => {
             await supabase.auth.signOut();
-            window.location.href = '/';
+            window.location.href = '/index.html';
         });
     }
 
@@ -55,27 +55,41 @@ async function fetchAndDisplayPosts() {
     grid.style.display = 'none';
     emptyState.style.display = 'none';
 
+    // 1. Fetch Posts
     let { data: posts, error } = await supabase
         .from('CommunityHub')
         .select('*')
         .order('created_at', { ascending: false });
 
-    loader.style.display = 'none';
-
     if (error) {
         console.error('Error fetching posts:', error);
+        loader.style.display = 'none';
         grid.innerHTML = `<p class="text-red-400 col-span-full text-center">Could not fetch community posts. Please try again later.</p>`;
         grid.style.display = 'block';
         return;
     }
+
+    // 2. Fetch User's Favorites to see which ones are liked
+    let { data: userFavs, error: favError } = await supabase
+        .from('favorites')
+        .select('post_id')
+        .eq('user_id', currentUserId);
+
+    loader.style.display = 'none';
+
+    // Create a Set of favorited IDs for easy lookup (O(1) complexity)
+    const favoriteSet = new Set(userFavs ? userFavs.map(f => f.post_id) : []);
 
     if (!posts || posts.length === 0) {
         grid.style.display = 'none';
         emptyState.style.display = 'flex';
     } else {
         grid.style.display = 'grid';
+        // Save posts globally for modals
         window.communityPosts = new Map(posts.map(p => [p.post_id, p]));
-        const postCards = posts.map(post => createPostCard(post)).join('');
+        
+        // Render Cards with Favorite Status
+        const postCards = posts.map(post => createPostCard(post, favoriteSet.has(post.post_id))).join('');
         grid.innerHTML = postCards;
         attachCardListeners();
     }
@@ -86,7 +100,7 @@ function toTitleCase(str) {
     return str.replace(/\w\S*/g, (txt) => txt.charAt(0).toUpperCase() + txt.substr(1).toLowerCase());
 }
 
-function createPostCard(post) {
+function createPostCard(post, isFavorited) {
     const formattedDate = new Date(post.created_at).toLocaleString('en-US', {
         month: 'short', day: 'numeric', year: 'numeric'
     });
@@ -100,7 +114,14 @@ function createPostCard(post) {
         </span>
     `).join('');
 
+    // Favorite Icon Logic
+    const favIcon = isFavorited ? 'favorite' : 'favorite_border';
+    const favColor = isFavorited ? 'text-red-500' : 'text-gray-400 hover:text-red-500';
+
     let actionButtons = `
+        <button class="fav-btn ${favColor} transition-colors mr-2" title="Favorite" data-post-id="${post.post_id}" data-is-fav="${isFavorited}">
+            <span class="material-symbols-outlined text-xl">${favIcon}</span>
+        </button>
         <button class="download-btn text-gray-400 hover:text-green-400 transition-colors mr-2" title="Download PDF" data-post-id="${post.post_id}">
             <span class="material-symbols-outlined text-xl">download</span>
         </button>
@@ -167,205 +188,52 @@ function attachCardListeners() {
             handleDownloadPost(postId);
         });
     });
+
+    // NEW: Favorite Listener
+    document.querySelectorAll('.fav-btn').forEach(button => {
+        button.addEventListener('click', handleToggleFavoriteLoom);
+    });
 }
 
-// --- UPGRADED HTML-TO-PDF GENERATOR ---
-async function handleDownloadPost(postId) {
-    const post = window.communityPosts.get(postId);
-    if (!post) return;
+// --- FAVORITE LOGIC FOR COMMUNITY ---
+async function handleToggleFavoriteLoom(e) {
+    const btn = e.currentTarget;
+    const icon = btn.querySelector('span');
+    const postId = btn.dataset.postId;
+    const isCurrentlyFav = btn.dataset.isFav === 'true';
 
-    if (!window.jspdf) return alert("PDF Library not loaded. Please refresh the page.");
-
-    const { jsPDF } = window.jspdf;
-    const doc = new jsPDF();
-    
-    const margin = 15;
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const maxLineWidth = pageWidth - margin * 2;
-    let y = 20;
-
-    // Smart Text Adder (handles page breaks)
-    const addText = (text, size, weight, color, indent = 0) => {
-        if (!text) return;
-        doc.setFontSize(size);
-        doc.setFont(undefined, weight);
-        doc.setTextColor(...color);
-        
-        const splitText = doc.splitTextToSize(text, maxLineWidth - indent);
-        const textHeight = doc.getTextDimensions(splitText).h;
-        
-        if (y + textHeight > 280) {
-            doc.addPage();
-            y = 20;
-        }
-        
-        doc.text(splitText, margin + indent, y);
-        y += textHeight + 2; 
-    };
-
-    // 1. Header (Matches History Page Style)
-    addText("Shared Lesson Idea", 10, 'normal', [100, 100, 100]);
-    addText(toTitleCase(post.topic), 22, 'bold', [102, 51, 153]); // Purple Title
-    
-    doc.setLineWidth(0.5);
-    doc.setDrawColor(200, 200, 200);
-    doc.line(margin, y + 2, pageWidth - margin, y + 2);
-    y += 12;
-
-    addText(`Shared By: ${post.user_name}`, 11, 'italic', [80, 80, 80]);
-    addText(`Age Group: ${post.age || 'General'}`, 11, 'normal', [80, 80, 80]);
-    y += 10;
-
-    // 2. Recursive HTML Parser
-    const tempDiv = document.createElement('div');
-    tempDiv.innerHTML = post.content;
-
-    const processNode = (node) => {
-        if (node.nodeType === Node.TEXT_NODE) {
-            const text = node.textContent.trim();
-            if (text && text.length > 1) { // Avoid stray characters
-                // Fallback for loose text
-                addText(text, 11, 'normal', [50, 50, 50]);
-                y += 2;
-            }
-            return;
-        }
-
-        const tagName = node.tagName;
-
-        // ** Section Header (e.g., New Activities) **
-        if (tagName === 'H4') {
-            y += 6;
-            // Draw background bar like history PDF
-            doc.setFillColor(245, 245, 255);
-            doc.rect(margin, y - 5, maxLineWidth, 10, 'F');
-            
-            // Clean up title (remove icon names like 'music_note')
-            let title = node.innerText.replace(/^[a-z_]+\s/i, '').trim();
-            addText(title, 14, 'bold', [50, 0, 100]); // Purple header
-            y += 2;
-        }
-        // ** Sub-Activity Header (e.g., Art Craft) **
-        else if (tagName === 'H5') {
-            y += 4;
-            addText(node.innerText.trim(), 12, 'bold', [0, 0, 0]); // Bold Black
-            y += 1;
-        }
-        // ** Paragraphs **
-        else if (tagName === 'P') {
-            addText(node.innerText.trim(), 11, 'normal', [50, 50, 50]);
-            y += 3;
-        }
-        // ** Lists **
-        else if (tagName === 'UL') {
-            Array.from(node.children).forEach(li => {
-                if(li.tagName === 'LI') {
-                    addText(`• ${li.innerText.trim()}`, 11, 'normal', [50, 50, 50], 5); // Indent
-                    y -= 1; // Tighter list spacing
-                }
-            });
-            y += 3;
-        }
-        // ** Images (Skip them for text PDF to keep it clean) **
-        else if (tagName === 'IMG' || tagName === 'FIGURE') {
-            // Optional: You could add logic here to extract alt text or ignore
-        }
-        // ** Recursion for Divs/Spans **
-        else if (node.childNodes.length > 0) {
-            node.childNodes.forEach(child => processNode(child));
-        }
-    };
-
-    // Process the bundled content items
-    const items = tempDiv.querySelectorAll('.shared-item');
-    if(items.length > 0){
-        items.forEach(item => {
-            // Process the H4 inside shared-item directly first to ensure header styling
-            const header = item.querySelector('h4');
-            if(header) processNode(header);
-
-            // Process the content div
-            const body = item.querySelector('div');
-            if(body) {
-                body.childNodes.forEach(child => processNode(child));
-            }
-            y += 5; // Spacing between bundled items
-        });
+    // Optimistic Update
+    const newStatus = !isCurrentlyFav;
+    btn.dataset.isFav = newStatus;
+    icon.textContent = newStatus ? 'favorite' : 'favorite_border';
+    if(newStatus) {
+        btn.classList.remove('text-gray-400');
+        btn.classList.add('text-red-500');
     } else {
-        // Fallback for single/legacy posts
-        Array.from(tempDiv.childNodes).forEach(child => processNode(child));
+        btn.classList.add('text-gray-400');
+        btn.classList.remove('text-red-500');
     }
 
-    // 3. Footer
-    const pageCount = doc.internal.getNumberOfPages();
-    for(let i = 1; i <= pageCount; i++) {
-        doc.setPage(i);
-        doc.setFontSize(10);
-        doc.setTextColor(150);
-        doc.text(`Page ${i} of ${pageCount} - Loom Play AI`, pageWidth / 2, 290, { align: 'center' });
-    }
-
-    doc.save(`${toTitleCase(post.topic).replace(/\s+/g, '_')}_LoomIdea.pdf`);
-}
-
-async function handleDeletePost(event) {
-    const button = event.currentTarget;
-    const card = button.closest('.community-card');
-    const postId = button.dataset.postId;
-
-    if (window.confirm('Are you sure you want to permanently delete this shared post?')) {
+    if (newStatus) {
+        // Add to favorites table
         const { error } = await supabase
-            .from('CommunityHub')
+            .from('favorites')
+            .insert([{ user_id: currentUserId, post_id: postId }]);
+        if(error) console.error(error);
+    } else {
+        // Remove from favorites table
+        const { error } = await supabase
+            .from('favorites')
             .delete()
-            .eq('post_id', postId);
-
-        if (error) {
-            console.error('Error deleting post:', error);
-            alert('Failed to delete post: ' + error.message);
-        } else {
-            card.remove(); 
-            if (document.querySelectorAll('.community-card').length === 0) {
-                 document.getElementById('community-grid').style.display = 'none';
-                 document.getElementById('empty-state').style.display = 'flex';
-            }
-        }
+            .match({ user_id: currentUserId, post_id: postId });
+        if(error) console.error(error);
     }
 }
 
-function showPostModal(postId) {
-    const post = window.communityPosts.get(postId);
-    if (!post) return;
-
-    const displayTopic = toTitleCase(post.topic);
-    document.getElementById('modal-title').textContent = `${displayTopic}`;
-    
-    document.getElementById('modal-content').innerHTML = post.content;
-    document.getElementById('post-modal').classList.remove('hidden');
-}
-
-function setupModalListeners() {
-    const modal = document.getElementById('post-modal');
-    if (!modal) return;
-
-    const closeBtn = document.getElementById('modal-close-btn');
-    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
-
-    modal.addEventListener('click', (e) => {
-        if (e.target.id === 'post-modal') {
-            modal.classList.add('hidden');
-        }
-    });
-
-    window.addEventListener('keydown', (e) => {
-        if (e.key === 'Escape' && !modal.classList.contains('hidden')) {
-            modal.classList.add('hidden');
-        }
-    });
-}
-
+// --- UPDATED FILTER LOGIC ---
 function filterPosts(searchTerm, ageFilter) {
     const term = searchTerm.toLowerCase();
-    const selectedAge = ageFilter.toLowerCase(); 
+    const selectedAge = ageFilter; 
 
     const cards = document.querySelectorAll('.community-card');
     let visibleCount = 0;
@@ -375,9 +243,19 @@ function filterPosts(searchTerm, ageFilter) {
         const content = card.querySelector('.prose').textContent.toLowerCase();
         const authorElement = card.querySelector('.font-medium.text-purple-300');
         const authorName = authorElement ? authorElement.textContent.toLowerCase() : '';
+        const cardAge = card.dataset.age; 
+        
+        // Favorite Status Check
+        const isFav = card.querySelector('.fav-btn').dataset.isFav === 'true';
+
         const isTextMatch = title.includes(term) || content.includes(term) || authorName.includes(term);
-        const cardAge = card.dataset.age.toLowerCase(); 
-        const isAgeMatch = (selectedAge === 'all') || cardAge.includes(selectedAge);
+        
+        let isAgeMatch = true;
+        if (selectedAge === 'favorites') {
+            isAgeMatch = isFav;
+        } else if (selectedAge !== 'all') {
+            isAgeMatch = cardAge === selectedAge;
+        }
 
         if (isTextMatch && isAgeMatch) {
             card.style.display = 'flex';
@@ -399,4 +277,110 @@ function filterPosts(searchTerm, ageFilter) {
         grid.style.display = 'grid';
         emptyState.style.display = 'none';
     }
+}
+
+// --- EXISTING FUNCTIONS (Download, Delete, Modal) ---
+async function handleDownloadPost(postId) {
+    const post = window.communityPosts.get(postId);
+    if (!post) return;
+    if (!window.jspdf) return alert("PDF Library not loaded. Please refresh the page.");
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    const margin = 15;
+    const pageWidth = doc.internal.pageSize.getWidth();
+    const maxLineWidth = pageWidth - margin * 2;
+    let y = 20;
+    const addText = (text, size, weight, color, indent = 0) => {
+        if (!text) return;
+        doc.setFontSize(size);
+        doc.setFont(undefined, weight);
+        doc.setTextColor(...color);
+        const splitText = doc.splitTextToSize(text, maxLineWidth - indent);
+        const textHeight = doc.getTextDimensions(splitText).h;
+        if (y + textHeight > 280) { doc.addPage(); y = 20; }
+        doc.text(splitText, margin + indent, y);
+        y += textHeight + 2; 
+    };
+    addText("Shared Lesson Idea", 10, 'normal', [100, 100, 100]);
+    addText(toTitleCase(post.topic), 22, 'bold', [102, 51, 153]); 
+    doc.setLineWidth(0.5); doc.setDrawColor(200, 200, 200); doc.line(margin, y + 2, pageWidth - margin, y + 2); y += 12;
+    addText(`Shared By: ${post.user_name}`, 11, 'italic', [80, 80, 80]);
+    addText(`Age Group: ${post.age || 'General'}`, 11, 'normal', [80, 80, 80]);
+    y += 10;
+    const tempDiv = document.createElement('div');
+    tempDiv.innerHTML = post.content;
+    const processNode = (node) => {
+        if (node.nodeType === Node.TEXT_NODE) {
+            const text = node.textContent.trim();
+            if (text && text.length > 1) { addText(text, 11, 'normal', [50, 50, 50]); y += 2; }
+            return;
+        }
+        const tagName = node.tagName;
+        if (tagName === 'H4') {
+            y += 6;
+            doc.setFillColor(245, 245, 255); doc.rect(margin, y - 5, maxLineWidth, 10, 'F');
+            let title = node.innerText.replace(/^[a-z_]+\s/i, '').trim();
+            addText(title, 14, 'bold', [50, 0, 100]); y += 2;
+        } else if (tagName === 'H5') {
+            y += 4; addText(node.innerText.trim(), 12, 'bold', [0, 0, 0]); y += 1;
+        } else if (tagName === 'P') {
+            addText(node.innerText.trim(), 11, 'normal', [50, 50, 50]); y += 3;
+        } else if (tagName === 'UL') {
+            Array.from(node.children).forEach(li => {
+                if(li.tagName === 'LI') { addText(`• ${li.innerText.trim()}`, 11, 'normal', [50, 50, 50], 5); y -= 1; }
+            }); y += 3;
+        } else if (node.childNodes.length > 0) {
+            node.childNodes.forEach(child => processNode(child));
+        }
+    };
+    const items = tempDiv.querySelectorAll('.shared-item');
+    if(items.length > 0){
+        items.forEach(item => {
+            const header = item.querySelector('h4'); if(header) processNode(header);
+            const body = item.querySelector('div'); if(body) body.childNodes.forEach(child => processNode(child));
+            y += 5; 
+        });
+    } else { Array.from(tempDiv.childNodes).forEach(child => processNode(child)); }
+    const pageCount = doc.internal.getNumberOfPages();
+    for(let i = 1; i <= pageCount; i++) {
+        doc.setPage(i); doc.setFontSize(10); doc.setTextColor(150); doc.text(`Page ${i} of ${pageCount} - Loom Play AI`, pageWidth / 2, 290, { align: 'center' });
+    }
+    doc.save(`${toTitleCase(post.topic).replace(/\s+/g, '_')}_LoomIdea.pdf`);
+}
+
+async function handleDeletePost(event) {
+    const button = event.currentTarget;
+    const card = button.closest('.community-card');
+    const postId = button.dataset.postId;
+    if (window.confirm('Are you sure you want to permanently delete this shared post?')) {
+        const { error } = await supabase.from('CommunityHub').delete().eq('post_id', postId);
+        if (error) {
+            console.error('Error deleting post:', error);
+            alert('Failed to delete post: ' + error.message);
+        } else {
+            card.remove(); 
+            if (document.querySelectorAll('.community-card').length === 0) {
+                 document.getElementById('community-grid').style.display = 'none';
+                 document.getElementById('empty-state').style.display = 'flex';
+            }
+        }
+    }
+}
+
+function showPostModal(postId) {
+    const post = window.communityPosts.get(postId);
+    if (!post) return;
+    const displayTopic = toTitleCase(post.topic);
+    document.getElementById('modal-title').textContent = `${displayTopic}`;
+    document.getElementById('modal-content').innerHTML = post.content;
+    document.getElementById('post-modal').classList.remove('hidden');
+}
+
+function setupModalListeners() {
+    const modal = document.getElementById('post-modal');
+    if (!modal) return;
+    const closeBtn = document.getElementById('modal-close-btn');
+    closeBtn.addEventListener('click', () => modal.classList.add('hidden'));
+    modal.addEventListener('click', (e) => { if (e.target.id === 'post-modal') { modal.classList.add('hidden'); } });
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !modal.classList.contains('hidden')) { modal.classList.add('hidden'); } });
 }
