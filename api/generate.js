@@ -2,7 +2,7 @@
 import { createClient } from '@supabase/supabase-js';
 
 export const config = {
-  runtime: 'edge',
+  runtime: 'nodejs',
 };
 
 export default async function handler(request) {
