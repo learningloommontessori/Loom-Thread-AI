@@ -13,6 +13,24 @@ export default async function handler(request) {
   }
 
   try {
+
+// ... inside the try block ...
+
+    const geminiApiKey = process.env.GEMINI_API_KEY;
+    
+    // Check API Key FIRST
+    if (!geminiApiKey) {
+        return new Response(JSON.stringify({ error: 'Server Config Error: GEMINI_API_KEY is missing' }), { status: 500 });
+    }
+
+    // Check Topic SECOND
+    if (!topic) {
+        return new Response(JSON.stringify({ error: 'User Error: Topic is missing from request' }), { status: 400 });
+    }
+
+    // ... continue with the rest of the code ...
+
+
     // 1. GET DATA (NOW INCLUDES AGE)
     const { topic, language, age } = await request.json(); // <--- Retrieving age
     
