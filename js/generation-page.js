@@ -62,17 +62,13 @@ async function generateAndDisplayContent(topic, language, age, token) {
             throw new Error(errorData.error || 'Failed to generate content.');
         }
 
-        // --- FIX STARTS HERE ---
-        // 1. Get the raw JSON first
-        const result = await response.json();
+        // --- CORRECTED LOGIC START ---
+        // We unpack 'lessonPlan' directly because api/generate.js returns { lessonPlan: ... }
+        const { lessonPlan } = await response.json();
         
-        // 2. Extract the lesson plan from the 'data' property
-        const lessonPlan = result.data; 
-
-        // 3. Image URL is likely not sent by the backend (it's generated client-side in setupImageTab)
-        // So we pass null or empty string if it's undefined
-        const imageUrl = result.imageUrl || null;
-        // --- FIX ENDS HERE ---
+        // Image URL is handled client-side in setupImageTab, so we don't need it from the backend here
+        const imageUrl = null; 
+        // --- CORRECTED LOGIC END ---
 
         currentLessonData = lessonPlan; 
         
@@ -84,6 +80,7 @@ async function generateAndDisplayContent(topic, language, age, token) {
         loader.innerHTML = `<div class="text-center"><p class="text-red-400 text-lg">Sorry, something went wrong.</p><p class="text-gray-400 text-sm mt-2">${err.message}</p><a href="/new-chat.html" class="mt-4 inline-block bg-purple-600 text-white px-4 py-2 rounded-lg">Try Again</a></div>`;
     }
 }
+
 // ... (Rest of your file: populatePage, setupTabInteractions, handlePdfDownload, etc. remains exactly the same) ...
 // Copy the rest of the functions from your previous file starting from "function populatePage" downwards.
 // OR just paste the logic above into the top of your existing file.
