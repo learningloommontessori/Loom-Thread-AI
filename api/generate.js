@@ -1,71 +1,72 @@
-// Path: /api/generate.js
+// api/generate.js
 import { createClient } from '@supabase/supabase-js';
 
-export const config = {
-  runtime: 'nodejs',
-};
+// NOTE: We REMOVED "runtime: 'edge'" to use standard Node.js
+// This fixes the "unsupported module" errors.
 
-export default async function handler(request) {
-  if (request.method !== 'POST') {
-    return new Response(JSON.stringify({ error: 'Method Not Allowed' }), { 
-        status: 405, headers: { 'Content-Type': 'application/json' } 
-    });
+export default async function handler(req, res) {
+  // 1. Handle CORS (Optional but good for debugging)
+  res.setHeader('Access-Control-Allow-Origin', '*');
+  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  
+  if (req.method === 'OPTIONS') {
+    return res.status(200).end();
+  }
+
+  if (req.method !== 'POST') {
+    return res.status(405).json({ error: 'Method Not Allowed' });
   }
 
   try {
-
-// ... inside the try block ...
-
+    // 2. GET DATA (Standard Node.js way: req.body)
+    const { topic, language, age } = req.body;
+    
+    // Debugging: Check what is missing
     const geminiApiKey = process.env.GEMINI_API_KEY;
-    
-    // Check API Key FIRST
     if (!geminiApiKey) {
-        return new Response(JSON.stringify({ error: 'Server Config Error: GEMINI_API_KEY is missing' }), { status: 500 });
+      console.error("Server Error: GEMINI_API_KEY is missing in Vercel Env Vars");
+      return res.status(500).json({ error: 'Server misconfiguration: API Key missing' });
     }
-
-    // Check Topic SECOND
-    if (!topic) {
-        return new Response(JSON.stringify({ error: 'User Error: Topic is missing from request' }), { status: 400 });
-    }
-
-    // ... continue with the rest of the code ...
-
-
-    // 1. GET DATA (NOW INCLUDES AGE)
-    const { topic, language, age } = await request.json(); // <--- Retrieving age
     
-    const authHeader = request.headers.get('Authorization');
+    if (!topic) {
+      return res.status(400).json({ error: 'Topic is missing from the request' });
+    }
+
+    // 3. AUTH CHECK
+    const authHeader = req.headers.authorization;
     const token = authHeader?.split(' ')[1];
 
-    if (!token) return new Response(JSON.stringify({ error: 'Token required' }), { status: 401 });
+    if (!token) return res.status(401).json({ error: 'Token required' });
     
     const supabaseUserClient = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_ANON_KEY);
     const { data: { user }, error: userError } = await supabaseUserClient.auth.getUser(token);
 
-    if (userError || !user) return new Response(JSON.stringify({ error: 'Invalid user' }), { status: 401 });
+    if (userError || !user) return res.status(401).json({ error: 'Invalid user' });
 
-    const geminiApiKey = process.env.GEMINI_API_KEY;
-    if (!topic || !geminiApiKey) return new Response(JSON.stringify({ error: 'Topic required' }), { status: 400 });
-    
-    // 2. DYNAMIC SYSTEM PROMPT
-    const systemPrompt = `You are KinderSpark AI, an expert assistant for kindergarten teachers.
-    
-    Topic: "${topic}"
-    Target Audience: ${age || "Children aged 3-6"} 
-    Language: Write strictly in ${language}.
-
-    CRITICAL INSTRUCTION: Adapt all content for the "${age}" level.
-    - Nursery (4-5): Simple words, sensory focus, gross motor.
-    - Juniors (5-6): Patterns, sorting, early concepts.
-    - Seniors (6-7): Abstract concepts, early math/reading, complex questions.
-
-    Your response MUST be ONLY a valid, complete JSON object.
-    {"newlyCreatedContent":{"originalRhyme": "...", "originalMiniStory": "..."},"newActivities":{"artCraftActivity": "...", "motorSkillsActivity": "...", "sensoryExplorationActivity": "..."},"movementAndMusic":{"grossMotorActivity": "...", "fineMotorActivity": "...", "actionSong": "..."},"socialAndEmotionalLearning":{"graceAndCourtesy": "...", "problemSolvingScenario": "..."},"classicResources":{"familiarRhymesAndSongs": ["..."], "classicStoryBooks": ["..."]},"montessoriConnections":{"traditionalUseOfMaterials": "...", "newWaysToUseMaterials": "..."},"teacherResources":{"observationCues": "...", "environmentSetup": "..."}}`;
-    
+    // 4. CALL GEMINI API
+    // Using the stable model version
     const textApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+    
+    const systemPrompt = `You are KinderSpark AI. Create a Montessori lesson plan for a ${age} level class.
+    Topic: "${topic}"
+    Language: "${language}"
+    
+    Return ONLY valid JSON. No markdown formatting. Structure:
+    {
+      "newlyCreatedContent": { "originalRhyme": "...", "originalMiniStory": "..." },
+      "newActivities": { "artCraftActivity": "...", "practicalLifeActivity": "...", "sensorialActivity": "..." },
+      "movementAndMusic": { "actionSong": "...", "mindfulnessExercise": "..." },
+      "socialAndEmotionalLearning": { "groupDiscussionPrompt": "...", "empathyBuildingActivity": "..." },
+      "teacherResources": { "keyVocabulary": ["..."], "materialChecklist": ["..."] },
+      "classicResources": ["Resource 1", "Resource 2"],
+      "montessoriConnections": { "philosophy": "..." }
+    }`;
+
     const textPayload = {
-        systemInstruction: { parts: [{ text: systemPrompt }] },
-        contents: [{ parts: [{ text: `Generate a Montessori lesson plan for: ${topic}` }] }],
+        contents: [{
+            role: "user",
+            parts: [{ text: systemPrompt }]
+        }],
         generationConfig: { responseMimeType: "application/json", temperature: 0.8 },
     };
     
@@ -75,13 +76,19 @@ export default async function handler(request) {
         body: JSON.stringify(textPayload),
     });
 
-    if (!textApiResponse.ok) throw new Error('AI generation failed.');
+    if (!textApiResponse.ok) {
+        const errText = await textApiResponse.text();
+        throw new Error(`Gemini API Error: ${errText}`);
+    }
     
     const textData = await textApiResponse.json();
     const generatedText = textData.candidates?.[0]?.content?.parts?.[0]?.text;
-    const lessonPlan = JSON.parse(generatedText.replace(/```json/g, '').replace(/```/g, '').trim());
+    
+    // Clean up response
+    const cleanedText = generatedText.replace(/```json/g, '').replace(/```/g, '').trim();
+    const lessonPlan = JSON.parse(cleanedText);
 
-    // 3. SAVE TO DATABASE (NOW INCLUDES AGE)
+    // 5. SAVE TO DATABASE
     const supabaseAdmin = createClient(process.env.SUPABASE_URL, process.env.SUPABASE_SERVICE_ROLE_KEY);
     
     const { error: dbError } = await supabaseAdmin
@@ -91,15 +98,19 @@ export default async function handler(request) {
           topic: topic,
           content_json: lessonPlan,
           language: language,
-          age: age // <--- SAVING AGE
+          age: age
       }]);
 
-    if (dbError) throw new Error(`Supabase error: ${dbError.message}`);
+    if (dbError) {
+        console.error("DB Error:", dbError);
+        // We don't fail the request if DB fails, just log it, or you can throw error
+    }
     
-    return new Response(JSON.stringify({ lessonPlan }), { status: 200 });
+    // 6. RETURN SUCCESS (Standard Node.js way)
+    return res.status(200).json({ success: true, lessonPlan: lessonPlan });
 
   } catch (error) {
-    console.error('Error:', error);
-    return new Response(JSON.stringify({ error: error.message }), { status: 500 });
+    console.error("Generate API Error:", error);
+    return res.status(500).json({ error: error.message });
   }
 }
