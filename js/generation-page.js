@@ -49,9 +49,7 @@ async function generateContent(topic, language, age, token) {
 
         const result = await response.json();
         
-        // --- FIX IS HERE: UNWRAP THE DATA ---
-        // Your API sends { success: true, lessonPlan: {...} }
-        // We must extract .lessonPlan to get the actual content
+        // Unwrap data (Handles both {lessonPlan: ...} and direct object)
         let lessonPlan = result.lessonPlan || result; 
 
         if (!lessonPlan || Object.keys(lessonPlan).length === 0) throw new Error("Received empty data.");
@@ -70,32 +68,69 @@ function populatePageUI(lessonPlan) {
     const loader = document.getElementById('loader');
     const mainContent = document.getElementById('main-content');
 
-    // --- 1. SPECIAL HANDLING FOR CLASSIC RESOURCES (YouTube/Amazon Links) ---
+    // --- 1. SPECIAL HANDLING FOR CLASSIC RESOURCES (Grouped by Tags) ---
     const classicContainer = document.getElementById('classicResources-content');
-    if (classicContainer && lessonPlan.classicResources) {
-        let html = '<div class="grid gap-4 md:grid-cols-2">';
+    
+    if (classicContainer && lessonPlan.classicResources && Array.isArray(lessonPlan.classicResources)) {
+        // A. Group items by Type (e.g., "Story Book", "Rhyme/Song")
+        const grouped = {};
         lessonPlan.classicResources.forEach(item => {
-            html += `
-            <div class="bg-white/5 p-4 rounded-lg border border-white/10 flex flex-col justify-between">
-                <div>
-                    <span class="text-xs font-medium text-purple-300 uppercase tracking-wider">${item.type}</span>
-                    <h3 class="text-lg font-bold text-white mt-1 mb-3">${item.title}</h3>
-                </div>
-                <div class="flex gap-2 mt-2">
-                    <a href="${item.youtubeLink}" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-red-600/80 hover:bg-red-600 text-white text-sm py-2 rounded transition-colors">
-                        <span class="material-symbols-outlined text-base">play_circle</span> YouTube
-                    </a>
-                    <a href="${item.amazonLink}" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-orange-500/80 hover:bg-orange-500 text-white text-sm py-2 rounded transition-colors">
-                        <span class="material-symbols-outlined text-base">shopping_cart</span> Amazon
-                    </a>
-                </div>
-                 <button onclick="shareSingleItem('${item.type}: ${item.title}', 'Find it here: ${item.youtubeLink} or ${item.amazonLink}')" class="mt-3 w-full flex justify-center items-center gap-1 text-xs text-purple-300 hover:text-purple-100 transition-colors">
-                    <span class="material-symbols-outlined text-sm">share</span> Share Resource
-                 </button>
-            </div>`;
+            const typeKey = item.type || "General";
+            if(!grouped[typeKey]) grouped[typeKey] = [];
+            grouped[typeKey].push(item);
         });
-        html += '</div>';
-        classicContainer.innerHTML = html;
+
+        // B. Build Tabs & Content
+        let tagsHtml = '<div class="flex flex-wrap gap-2 mb-6 border-b border-white/10 pb-4">';
+        let contentHtml = '<div class="mt-4">';
+        let isFirst = true;
+
+        for (const [type, items] of Object.entries(grouped)) {
+            // Create a safe ID string (remove spaces)
+            const safeId = type.replace(/[^a-zA-Z0-9]/g, '');
+            const activeClass = isFirst ? 'active-tag' : '';
+            const displayClass = isFirst ? 'block' : 'hidden';
+
+            // Tag Button
+            tagsHtml += `<button class="glass-tag ${activeClass}" onclick="switchTag('classicResources', '${safeId}', this)">${type}</button>`;
+
+            // Generate Cards Grid for this specific Type
+            let cardsHtml = '<div class="grid gap-4 md:grid-cols-2">';
+            items.forEach(item => {
+                cardsHtml += `
+                <div class="bg-white/5 p-4 rounded-lg border border-white/10 flex flex-col justify-between">
+                    <div>
+                        <h3 class="text-lg font-bold text-white mt-1 mb-3">${item.title}</h3>
+                    </div>
+                    <div class="flex gap-2 mt-2">
+                        <a href="${item.youtubeLink}" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-red-600/80 hover:bg-red-600 text-white text-sm py-2 rounded transition-colors">
+                            <span class="material-symbols-outlined text-base">play_circle</span> YouTube
+                        </a>
+                        <a href="${item.amazonLink}" target="_blank" class="flex-1 flex items-center justify-center gap-2 bg-orange-500/80 hover:bg-orange-500 text-white text-sm py-2 rounded transition-colors">
+                            <span class="material-symbols-outlined text-base">shopping_cart</span> Amazon
+                        </a>
+                    </div>
+                     <button onclick="shareSingleItem('${item.type}: ${item.title}', 'Find it here: ${item.youtubeLink} or ${item.amazonLink}')" class="mt-3 w-full flex justify-center items-center gap-1 text-xs text-purple-300 hover:text-purple-100 transition-colors">
+                        <span class="material-symbols-outlined text-sm">share</span> Share Resource
+                     </button>
+                </div>`;
+            });
+            cardsHtml += '</div>';
+
+            // Wrap it in the content div
+            contentHtml += `
+                <div id="classicResources-${safeId}" class="tag-content-item ${displayClass}">
+                    <h3 class="text-xl font-bold text-white mb-3">${type}</h3>
+                    ${cardsHtml}
+                </div>
+            `;
+            isFirst = false;
+        }
+
+        tagsHtml += '</div>';
+        contentHtml += '</div>';
+        
+        classicContainer.innerHTML = tagsHtml + contentHtml;
     }
 
     // --- 2. GENERIC HANDLING FOR OTHER TABS ---
@@ -113,15 +148,18 @@ function populatePageUI(lessonPlan) {
             if (typeof tabData === 'object' && !Array.isArray(tabData)) {
                 for (const contentKey in tabData) {
                     const title = contentKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
+                    // Create safe ID
+                    const safeId = contentKey.replace(/[^a-zA-Z0-9]/g, '');
+                    
                     const activeClass = isFirst ? 'active-tag' : '';
                     const displayClass = isFirst ? 'block' : 'hidden';
 
-                    tagsHtml += `<button class="glass-tag ${activeClass}" onclick="switchTag('${tabKey}', '${contentKey}', this)">${title}</button>`;
+                    tagsHtml += `<button class="glass-tag ${activeClass}" onclick="switchTag('${tabKey}', '${safeId}', this)">${title}</button>`;
                     
                     let bodyContent = formatBodyContent(tabData[contentKey]);
 
                     contentHtml += `
-                        <div id="${tabKey}-${contentKey}" class="tag-content-item ${displayClass}">
+                        <div id="${tabKey}-${safeId}" class="tag-content-item ${displayClass}">
                             <div class="flex justify-between items-start mb-3">
                                 <h3 class="text-xl font-bold text-white">${title}</h3>
                                 <button onclick="shareSingleItem('${title}', '${escapeHtml(bodyContent)}')" class="text-purple-400 hover:text-purple-200 transition-colors p-1" title="Share to Hub">
@@ -164,7 +202,10 @@ window.switchTag = (tabKey, contentKey, clickedBtn) => {
     container.querySelectorAll('.glass-tag').forEach(btn => btn.classList.remove('active-tag'));
     clickedBtn.classList.add('active-tag');
     container.querySelectorAll('.tag-content-item').forEach(div => div.classList.add('hidden'));
-    document.getElementById(`${tabKey}-${contentKey}`).classList.remove('hidden');
+    
+    // We used sanitized IDs in populatePageUI, so we match that here
+    const target = document.getElementById(`${tabKey}-${contentKey}`);
+    if(target) target.classList.remove('hidden');
 };
 
 window.shareSingleItem = async (title, contentHtml) => {
@@ -234,7 +275,7 @@ async function generateFullPDF() {
         doc.setFontSize(12); doc.setTextColor(0);
 
         if (Array.isArray(sectionData)) {
-             // Arrays (like Classic Resources fallback)
+             // Handle arrays (Classic Resources) in PDF
              sectionData.forEach(item => {
                  let text = typeof item === 'object' ? `${item.type}: ${item.title}` : `• ${item}`;
                  if(yPos > 270) { doc.addPage(); yPos = 20; }
