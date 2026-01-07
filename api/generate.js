@@ -45,7 +45,7 @@ export default async function handler(req, res) {
 
     // 4. CALL GEMINI API
     // Using the stable model version
-    const textApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${geminiApiKey}`;
+    const textApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
     
     const systemPrompt = `You are KinderSpark AI. Create a Montessori lesson plan for a ${age} level class.
     Topic: "${topic}"
