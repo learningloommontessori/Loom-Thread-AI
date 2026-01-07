@@ -8,6 +8,7 @@ export default async function handler(req, res) {
   // 1. Handle CORS (Optional but good for debugging)
   res.setHeader('Access-Control-Allow-Origin', '*');
   res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
+  res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   
   if (req.method === 'OPTIONS') {
     return res.status(200).end();
@@ -44,22 +45,48 @@ export default async function handler(req, res) {
     if (userError || !user) return res.status(401).json({ error: 'Invalid user' });
 
     // 4. CALL GEMINI API
-    // Using the stable model version
+    // IMPORTANT: Switched to gemini-1.5-flash (Stable) to avoid model errors
     const textApiUrl = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash:generateContent?key=${geminiApiKey}`;
     
-    const systemPrompt = `You are KinderSpark AI. Create a Montessori lesson plan for a ${age} level class.
-    Topic: "${topic}"
-    Language: "${language}"
-    
-    Return ONLY valid JSON. No markdown formatting. Structure:
+    // UPDATED PROMPT WITH YOUR NEW REQUIREMENTS
+    const systemPrompt = `You are KinderSpark AI, an expert Montessori guide. Create a detailed lesson plan.
+    Topic: "${topic}", Age: "${age}", Language: "${language}".
+
+    You MUST return ONLY valid JSON. Do not include markdown formatting like \`\`\`json.
+    Ensure all fields are filled with high-quality, practical content.
+
+    THE JSON STRUCTURE MUST BE EXACTLY THIS:
     {
-      "newlyCreatedContent": { "originalRhyme": "...", "originalMiniStory": "..." },
-      "newActivities": { "artCraftActivity": "...", "practicalLifeActivity": "...", "sensorialActivity": "..." },
-      "movementAndMusic": { "actionSong": "...", "mindfulnessExercise": "..." },
-      "socialAndEmotionalLearning": { "groupDiscussionPrompt": "...", "empathyBuildingActivity": "..." },
-      "teacherResources": { "keyVocabulary": ["..."], "materialChecklist": ["..."] },
-      "classicResources": ["Resource 1", "Resource 2"],
-      "montessoriConnections": { "philosophy": "..." }
+      "newlyCreatedContent": {
+        "originalRhyme": "Write a short, original rhyme about the topic.",
+        "originalMiniStory": "Write a 3-4 sentence original story."
+      },
+      "newActivities": {
+        "introductoryActivity": "A hook to introduce the topic.",
+        "mainHandsOnActivity": "The core Montessori-style activity description."
+      },
+      "movementAndMusic": {
+        "grossMotorActivities": ["List 2-3 activities involving large body movements related to topic."],
+        "fineMotorActivities": ["List 2-3 activities for finger dexterity related to topic."],
+        "suggestedSongs": ["List 2 known songs related to the topic."]
+      },
+      "montessoriConnections": {
+        "traditionalWays": "Explain how Maria Montessori originally approached similar concepts.",
+        "newWaysAdaptingToModernLife": "How this topic connects to modern child development while keeping Montessori principles."
+      },
+      "teacherResources": {
+        "observationGuidelines": ["Specific things a teacher should look for during the activity."],
+        "environmentSetup": ["How to prepare the shelf or room for this lesson."],
+        "materialChecklist": ["List of physical items needed."]
+      },
+      "socialAndEmotionalLearning": { 
+        "groupDiscussionPrompt": "Question to spark conversation.", 
+        "empathyBuildingActivity": "Activity to build social skills." 
+      },
+      "classicResources": [
+          { "title": "Name of a classic relevant book", "type": "Story Book", "youtubeLink": "(Generate a plausible YouTube search URL for read aloud)", "amazonLink": "(Generate a plausible Amazon search URL)" },
+          { "title": "Name of a classic relevant rhyme/song", "type": "Rhyme/Song", "youtubeLink": "(Generate YouTube URL)", "amazonLink": "(Generate Amazon URL)" }
+      ]
     }`;
 
     const textPayload = {
