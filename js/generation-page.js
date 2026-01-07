@@ -47,13 +47,18 @@ async function generateContent(topic, language, age, token) {
 
         if (!response.ok) throw new Error((await response.json()).error || 'Generation failed.');
 
-        // The API now returns the raw lesson plan object directly
-        const lessonPlan = await response.json();
+        const result = await response.json();
+        
+        // --- FIX IS HERE: UNWRAP THE DATA ---
+        // Your API sends { success: true, lessonPlan: {...} }
+        // We must extract .lessonPlan to get the actual content
+        let lessonPlan = result.lessonPlan || result; 
+
         if (!lessonPlan || Object.keys(lessonPlan).length === 0) throw new Error("Received empty data.");
 
         currentLessonData = lessonPlan;
         populatePageUI(lessonPlan);
-        setupGlobalButtons(); // Setup main download buttons
+        setupGlobalButtons(); 
 
     } catch (err) {
         console.error('Error:', err);
@@ -65,7 +70,7 @@ function populatePageUI(lessonPlan) {
     const loader = document.getElementById('loader');
     const mainContent = document.getElementById('main-content');
 
-    // --- SPECIAL HANDLING FOR CLASSIC RESOURCES (Links) ---
+    // --- 1. SPECIAL HANDLING FOR CLASSIC RESOURCES (YouTube/Amazon Links) ---
     const classicContainer = document.getElementById('classicResources-content');
     if (classicContainer && lessonPlan.classicResources) {
         let html = '<div class="grid gap-4 md:grid-cols-2">';
@@ -93,9 +98,8 @@ function populatePageUI(lessonPlan) {
         classicContainer.innerHTML = html;
     }
 
-    // --- GENERIC HANDLING FOR OTHER TABS (Tags & Content) ---
+    // --- 2. GENERIC HANDLING FOR OTHER TABS ---
     for (const tabKey in lessonPlan) {
-        // Skip already handled or irrelevant keys
         if (tabKey === 'classicResources' || tabKey === 'imagePrompt' || tabKey.startsWith('user_')) continue;
 
         const container = document.getElementById(`${tabKey}-content`);
@@ -105,9 +109,9 @@ function populatePageUI(lessonPlan) {
             let contentHtml = '<div class="mt-4">';
             let isFirst = true;
 
+            // Handle Nested Objects (e.g. Movement & Music -> Gross Motor, Fine Motor)
             if (typeof tabData === 'object' && !Array.isArray(tabData)) {
                 for (const contentKey in tabData) {
-                    // Format Title (e.g., "grossMotorActivities" -> "Gross Motor Activities")
                     const title = contentKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
                     const activeClass = isFirst ? 'active-tag' : '';
                     const displayClass = isFirst ? 'block' : 'hidden';
@@ -131,8 +135,8 @@ function populatePageUI(lessonPlan) {
                     `;
                     isFirst = false;
                 }
-            }
-            container.innerHTML = tagsHtml + tagsHtml ? (tagsHtml + contentHtml) : contentHtml;
+                container.innerHTML = tagsHtml + contentHtml;
+            } 
         }
     }
 
@@ -141,7 +145,7 @@ function populatePageUI(lessonPlan) {
     setupTabNavigation();
 }
 
-// Helper to format lists vs strings
+// Helpers
 function formatBodyContent(content) {
     if (Array.isArray(content)) {
         return `<ul class="list-disc list-inside space-y-2">${content.map(item => `<li>${item}</li>`).join('')}</ul>`;
@@ -149,18 +153,12 @@ function formatBodyContent(content) {
     return content;
 }
 
-// Helper for HTML escaping to prevent breakage in share function
 function escapeHtml(unsafe) {
-    return unsafe
-         .replace(/&/g, "&amp;")
-         .replace(/</g, "&lt;")
-         .replace(/>/g, "&gt;")
-         .replace(/"/g, "&quot;")
-         .replace(/'/g, "&#039;");
- }
+    if (typeof unsafe !== 'string') return '';
+    return unsafe.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;").replace(/"/g, "&quot;").replace(/'/g, "&#039;");
+}
 
-// --- GLOBAL FUNCTIONS (Called by HTML attributes) ---
-
+// Global functions
 window.switchTag = (tabKey, contentKey, clickedBtn) => {
     const container = document.getElementById(`${tabKey}-content`);
     container.querySelectorAll('.glass-tag').forEach(btn => btn.classList.remove('active-tag'));
@@ -169,11 +167,8 @@ window.switchTag = (tabKey, contentKey, clickedBtn) => {
     document.getElementById(`${tabKey}-${contentKey}`).classList.remove('hidden');
 };
 
-// New Share Functionality
 window.shareSingleItem = async (title, contentHtml) => {
     if(!confirm(`Share "${title}" to the Community Hub?`)) return;
-    
-    // Strip HTML for plain text sharing
     const tempDiv = document.createElement("div");
     tempDiv.innerHTML = contentHtml;
     const plainTextContent = tempDiv.textContent || tempDiv.innerText || "";
@@ -191,11 +186,9 @@ window.shareSingleItem = async (title, contentHtml) => {
         alert("Successfully shared to the Collective Loom!");
     } catch (error) {
         console.error("Share error:", error);
-        alert("Failed to share. Please try again.");
+        alert("Failed to share.");
     }
 };
-
-// --- SETUP LISTENERS ---
 
 function setupTabNavigation() {
     const tabs = document.querySelectorAll('.glass-tab');
@@ -211,36 +204,27 @@ function setupTabNavigation() {
 }
 
 function setupGlobalButtons() {
-    // 1. FULL DOWNLOAD BUTTON
     const fullDownloadBtn = document.getElementById('download-plan-btn');
-    if (fullDownloadBtn) {
-        fullDownloadBtn.onclick = generateFullPDF;
-    }
+    if (fullDownloadBtn) fullDownloadBtn.onclick = generateFullPDF;
 
-    // 2. EXPORT SECTION BUTTONS
     const exportPdfBtn = document.getElementById('export-section-pdf');
     const exportWordBtn = document.getElementById('export-section-word');
-    
     if (exportPdfBtn) exportPdfBtn.onclick = () => exportCurrentSection('pdf');
     if (exportWordBtn) exportWordBtn.onclick = () => exportCurrentSection('word');
 }
 
-// --- DOWNLOAD LOGIC ---
-
 async function generateFullPDF() {
-    if (!window.jspdf || !currentLessonData) return alert("Data or libraries not ready.");
+    if (!window.jspdf || !currentLessonData) return alert("Libraries not ready.");
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
     let yPos = 20;
 
     doc.setFontSize(22); doc.setTextColor(102, 51, 153);
     doc.text(currentTopicName, 10, yPos); yPos += 15;
-
     doc.setFontSize(12); doc.setTextColor(0);
 
-    // Iterate through the data structure
     for (const [sectionKey, sectionData] of Object.entries(currentLessonData)) {
-        if (['id', 'user_id', 'created_at', 'imagePrompt'].includes(sectionKey)) continue;
+        if (['id', 'user_id', 'created_at', 'imagePrompt', 'success'].includes(sectionKey)) continue;
 
         const sectionTitle = sectionKey.replace(/([A-Z])/g, ' $1').toUpperCase();
         doc.setFontSize(16); doc.setTextColor(102, 51, 153);
@@ -250,16 +234,15 @@ async function generateFullPDF() {
         doc.setFontSize(12); doc.setTextColor(0);
 
         if (Array.isArray(sectionData)) {
-            // Handle arrays (like Classic Resources)
-            sectionData.forEach(item => {
-                 const text = typeof item === 'object' ? `${item.type}: ${item.title} (Links in web version)` : `• ${item}`;
-                 // Simple page break check
+             // Arrays (like Classic Resources fallback)
+             sectionData.forEach(item => {
+                 let text = typeof item === 'object' ? `${item.type}: ${item.title}` : `• ${item}`;
                  if(yPos > 270) { doc.addPage(); yPos = 20; }
                  doc.text(text, 15, yPos); yPos += 7;
             });
         } else if (typeof sectionData === 'object') {
-             // Handle nested objects (like Movement & Music)
-            for (const [subKey, content] of Object.entries(sectionData)) {
+             // Objects (Movement & Music)
+             for (const [subKey, content] of Object.entries(sectionData)) {
                  const subTitle = subKey.replace(/([A-Z])/g, ' $1').replace(/^./, str => str.toUpperCase());
                  doc.setFont(undefined, 'bold');
                  if(yPos > 270) { doc.addPage(); yPos = 20; }
@@ -267,7 +250,7 @@ async function generateFullPDF() {
                  doc.setFont(undefined, 'normal');
 
                  const bodyText = Array.isArray(content) ? content.map(i => `• ${i}`).join('\n') : content;
-                 const splitText = doc.splitTextToSize(bodyText, 180);
+                 const splitText = doc.splitTextToSize(String(bodyText), 180);
                  if(yPos + splitText.length * 7 > 270) { doc.addPage(); yPos = 20; }
                  doc.text(splitText, 15, yPos);
                  yPos += (splitText.length * 7) + 10;
@@ -282,37 +265,25 @@ async function exportCurrentSection(format) {
     const activeTab = document.querySelector('.glass-tab.active-tab');
     if (!activeTab) return alert("No section selected.");
     const tabId = activeTab.dataset.tab;
-    
-    // Get visible content only
     const visibleContent = document.querySelector(`#${tabId}-content .tag-content-item:not(.hidden)`);
     const container = document.getElementById(`${tabId}-content`);
-    
-    // Use visible content if available (for tabs), otherwise whole container (for classic resources)
     const contentEl = visibleContent || container;
 
-    if (!contentEl || contentEl.innerText.trim().length < 5) return alert("Section appears empty.");
-
+    if (!contentEl || contentEl.innerText.trim().length < 5) return alert("Section empty.");
     const title = activeTab.innerText;
 
     if (format === 'pdf') {
-        if (!window.jspdf) return alert("PDF library missing.");
         const doc = new window.jspdf.jsPDF();
         doc.setFontSize(18); doc.text(title, 10, 20);
         doc.setFontSize(12);
         const splitText = doc.splitTextToSize(contentEl.innerText, 180);
         doc.text(splitText, 10, 30);
         doc.save(`${title}_Section.pdf`);
-    } 
-    else if (format === 'word') {
-        if (!window.htmlToDocx) return alert("Word export library missing. Please refresh.");
-        const htmlContent = `
-            <html><head><style>body { font-family: Arial; }</style></head>
-            <body><h1>${title}</h1>${contentEl.innerHTML}</body></html>
-        `;
+    } else if (format === 'word') {
+        if (!window.htmlToDocx) return alert("Word library missing.");
+        const html = `<html><body><h1>${title}</h1>${contentEl.innerHTML}</body></html>`;
         try {
-            const blob = await window.htmlToDocx(htmlContent, null, {
-                table: { row: { cantSplit: true } }, footer: true, pageNumber: true,
-            });
+            const blob = await window.htmlToDocx(html, null, { table: { row: { cantSplit: true } }, footer: true, pageNumber: true });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
             link.download = `${title}.docx`;
