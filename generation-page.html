@@ -1,10 +1,12 @@
-//Lets test this comment 
 <!DOCTYPE html>
 <html lang="en">
 <head>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/html-to-docx@1.8.0/dist/html-to-docx.umd.min.js"></script>
+<script src="//unpkg.com/alpinejs" defer></script>
     <meta charset="utf-8" />
     <meta content="width=device-width, initial-scale=1.0" name="viewport" />
-    <title>Loom Thread AI - Generated Content (Preview)</title>
+    <title>Loom Thread AI - Primary Lesson Plan</title>
     
     <script src="https://cdn.tailwindcss.com?plugins=forms,typography,container-queries"></script>
     <script src="https://cdn.jsdelivr.net/npm/alpinejs@3.x.x/dist/cdn.min.js"></script>
@@ -61,7 +63,7 @@
         }
 
         /* --- TABS & TAGS --- */
-        .glass-tab { color: rgba(255, 255, 255, 0.6); border-radius: 0.75rem; transition: all 0.2s ease; }
+        .glass-tab { color: rgba(255, 255, 255, 0.6); border-radius: 0.75rem; transition: all 0.2s ease; cursor: pointer; }
         .glass-tab:hover { background: rgba(255, 255, 255, 0.05); color: white; }
         .active-tab { background: rgba(168, 85, 247, 0.2) !important; color: white !important; font-weight: 700; border: 1px solid rgba(168, 85, 247, 0.4); box-shadow: inset 0 0 15px rgba(168, 85, 247, 0.1); }
 
@@ -213,28 +215,28 @@
                 <div class="flex flex-col lg:flex-row">
                     <nav id="tabs-navigation" aria-label="Tabs" class="flex flex-col space-y-2 w-full lg:w-1/4 lg:pr-8 mb-8 lg:mb-0 lg:border-r lg:border-white/10">
                         <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="generatedImage" href="#">
-                            <span class="material-symbols-outlined mr-3">image</span>Generated Image
+                            <span class="material-symbols-outlined mr-3">image</span>Visual Gallery
                         </a>
-                        <a class="glass-tab active-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="newlyCreatedContent" href="#">
-                            <span class="material-symbols-outlined mr-3">auto_awesome</span>Newly Created
+                        <a class="glass-tab active-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="lessonStarters" href="#">
+                            <span class="material-symbols-outlined mr-3">auto_awesome</span>Lesson Starters
                         </a>
-                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="newActivities" href="#">
-                            <span class="material-symbols-outlined mr-3">pan_tool</span>New Activities
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="activeLearning" href="#">
+                            <span class="material-symbols-outlined mr-3">extension</span>Active Learning
                         </a>
-                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="classicResources" href="#">
-                            <span class="material-symbols-outlined mr-3">menu_book</span>Classic Resources
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="teachingGuide" href="#">
+                            <span class="material-symbols-outlined mr-3">school</span>Teaching Guide
                         </a>
-                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="montessoriConnections" href="#">
-                            <span class="material-symbols-outlined mr-3">child_care</span>Montessori Connections
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="practiceAndAssess" href="#">
+                            <span class="material-symbols-outlined mr-3">assignment_turned_in</span>Practice & Assess
                         </a>
-                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="movementAndMusic" href="#">
-                            <span class="material-symbols-outlined mr-3">sports_gymnastics</span>Movement & Music
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="inclusiveCorner" href="#">
+                            <span class="material-symbols-outlined mr-3">diversity_3</span>Inclusive Corner
                         </a>
-                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="socialAndEmotionalLearning" href="#">
-                            <span class="material-symbols-outlined mr-3">psychology</span>Social & Emotional
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="valuesAndSkills" href="#">
+                            <span class="material-symbols-outlined mr-3">psychology</span>Values & Skills
                         </a>
-                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="teacherResources" href="#">
-                            <span class="material-symbols-outlined mr-3">school</span>Teacher Resources
+                        <a class="glass-tab whitespace-nowrap py-3 px-4 font-medium text-base flex items-center" data-tab="resourceHub" href="#">
+                            <span class="material-symbols-outlined mr-3">inventory_2</span>Resource Hub
                         </a>
                     </nav>
                     
@@ -247,33 +249,37 @@
                             </div>
                         </div>
 
-                        <div id="newlyCreatedContent-content" class="tab-content active-tab-content">
+                        <div id="lessonStarters-content" class="tab-content active-tab-content">
                             <div class="p-2">
-                                <h3 class="text-xl font-bold text-white mb-4">Lesson Overview</h3>
-                                
-                                <div class="mb-6">
-                                    <div class="flex flex-wrap gap-2">
-                                        <button class="glass-tag active-tag">Overview</button>
-                                        <button class="glass-tag">Key Concepts</button>
-                                        <button class="glass-tag">Vocabulary</button>
-                                        <button class="glass-tag">Materials Needed</button>
-                                    </div>
-                                </div>
-
-                                <div class="prose prose-invert max-w-none">
-                                    <p class="text-gray-300 leading-relaxed">
-                                        This is a <strong>preview area</strong>. Use the <strong>Export</strong> buttons above to test the nested dropdown interactions.
-                                    </p>
-                                </div>
+                                <h3 class="text-xl font-bold text-white mb-4">Lesson Starters</h3>
+                                <div class="prose prose-invert max-w-none"><p class="text-gray-300">Loading...</p></div>
                             </div>
                         </div>
 
-                        <div id="newActivities-content" class="tab-content"><p class="p-4 text-gray-500">Activities content placeholder...</p></div>
-                        <div id="classicResources-content" class="tab-content"><p class="p-4 text-gray-500">Classic resources placeholder...</p></div>
-                        <div id="montessoriConnections-content" class="tab-content"><p class="p-4 text-gray-500">Montessori content placeholder...</p></div>
-                        <div id="movementAndMusic-content" class="tab-content"><p class="p-4 text-gray-500">Movement content placeholder...</p></div>
-                        <div id="socialAndEmotionalLearning-content" class="tab-content"><p class="p-4 text-gray-500">SEL content placeholder...</p></div>
-                        <div id="teacherResources-content" class="tab-content"><p class="p-4 text-gray-500">Teacher resources placeholder...</p></div>
+                        <div id="activeLearning-content" class="tab-content">
+                            <p class="p-4 text-gray-500">Loading activities...</p>
+                        </div>
+                        
+                        <div id="teachingGuide-content" class="tab-content">
+                            <p class="p-4 text-gray-500">Loading teaching guide...</p>
+                        </div>
+
+                        <div id="practiceAndAssess-content" class="tab-content">
+                            <p class="p-4 text-gray-500">Loading assessments...</p>
+                        </div>
+
+                        <div id="inclusiveCorner-content" class="tab-content">
+                            <p class="p-4 text-gray-500">Loading inclusive strategies...</p>
+                        </div>
+
+                        <div id="valuesAndSkills-content" class="tab-content">
+                            <p class="p-4 text-gray-500">Loading SEL content...</p>
+                        </div>
+
+                        <div id="resourceHub-content" class="tab-content">
+                            <p class="p-4 text-gray-500">Loading resources...</p>
+                        </div>
+
                     </div>
                 </div>
             </div>
